@@ -23,7 +23,7 @@ object Layout {
 
     object BoxFormats extends CustomSerializer[Box](_ => (
       {
-        // broken implementation, normally we never need to deserialize it
+        // broken deserializer, normally we never need to deserialize it
         case JString(title) => Box(title, Seq.empty, vs => vs.head)
       },
       {

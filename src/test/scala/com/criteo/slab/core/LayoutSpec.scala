@@ -7,10 +7,10 @@ class LayoutSpec extends FlatSpec with Matchers {
 
   import Jsonable._
 
-  "Grid" should "serialize" in {
-    val grid = Layout(List(
+  "Layout" should "be serializable to JSON" in {
+    val layout = Layout(List(
       Column("A", 50, List(Row(25, List(Box("box1", Seq.empty, vs => vs.head)))))
     ))
-    grid.toJSON shouldEqual """{"columns":[{"title":"A","percentage":50,"rows":[{"percentage":25,"boxes":["box1"]}]}]}"""
+    layout.toJSON shouldEqual """{"columns":[{"title":"A","percentage":50,"rows":[{"percentage":25,"boxes":["box1"]}]}]}"""
   }
 }

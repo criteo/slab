@@ -20,7 +20,10 @@ module.exports = {
     "rules": {
         "indent": [
             "error",
-            2
+            2,
+            {
+                "SwitchCase": 1
+            }
         ],
         "linebreak-style": [
             "error",
@@ -31,8 +34,11 @@ module.exports = {
             "single"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
-        ]
+        ],
+        "react/jsx-uses-react": 1,
+        "react/jsx-uses-vars": 1,
+        "react/jsx-no-undef": 1
     }
 };
