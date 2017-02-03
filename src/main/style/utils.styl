@@ -1,0 +1,21 @@
+material-icon(name)
+  &::before {
+    content: name
+    -webkit-font-feature-settings: 'liga'
+    font-family: 'Material Icons'
+    font-size: 24px
+    display: inline-block
+    text-transform: none
+    {block}
+  }
+
+second-material-icon(name)
+  &::after {
+    content: name
+    -webkit-font-feature-settings: 'liga'
+    font-family: 'Material Icons'
+    font-size: 24px
+    display: inline-block
+    text-transform: none
+    {block}
+  }

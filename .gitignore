@@ -1,0 +1,6 @@
+.idea
+target/
+project/
+node_modules/
+
+npm-debug.log

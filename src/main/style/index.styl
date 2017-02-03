@@ -1,0 +1,247 @@
+@import 'reset'
+@import 'fonts'
+@import 'utils'
+
+$green = #6bd689
+$red = #e7624f
+$orange = #fdb843
+$black = #2b3238
+$white = #ffffff
+$gray = #e0e0e0
+$darkgray = #bababa
+
+body {
+  padding: 0
+  margin: 0
+  font-family: 'Lato', 'Helvetica', 'Arial', 'Sans'
+  font-size: 14px
+  background: $black
+  overflow: hidden
+
+  input, select, textarea {
+    font-family: 'Lato', 'Helvetica', 'Arial', 'Sans'
+    font-size: 14px
+  }
+
+  #app {
+    height: 100%
+
+    & > div {
+      height: 100%
+      display: flex
+      flex-direction: column
+
+      &.lost-connection {
+        filter: grayscale(100%)
+        -webkit-filter: grayscale(100%)
+      }
+
+      header {
+        background: $white
+        height: 100px
+        cursor: pointer
+        transition: transform 250ms ease-in-out
+        z-index: 10
+
+        &:hover {
+          transform: scale(1.1)
+          box-shadow: 0 0 24px rgba(0,0,0,.5)
+        }
+
+        h1 {
+          flex: 1
+          color: $white
+          font-size: 36px
+          text-align: center
+          font-weight: 400
+          line-height: 65px
+        }
+
+        p {
+          flex: 1
+          color: #fff
+          text-align: center
+          font-weight: 400
+          font-size: 16px
+        }
+
+        &.SUCCESS {
+          background-color: $green
+        }
+
+        &.WARNING {
+          background-color: $orange
+        }
+
+        &.ERROR {
+          background-color: $red
+        }
+
+        &.UNKOWN {
+          background-color: $darkgray
+        }
+
+      }
+
+      main {
+        flex: 1
+        display: flex
+
+        svg {
+          position: absolute
+          left: 0
+          top: 0
+          width: 100%
+          height: 100%
+          pointer-events: none
+
+          .fgLine {
+            stroke-width: 3
+            fill: none
+            stroke: $gray
+          }
+
+          .bgLine {
+            stroke-width: 6
+            fill: none
+            stroke: rgba(255,255,255,.15)
+          }
+        }
+
+        section.group {
+          display: flex
+          flex-direction: column
+          justify-content: center
+          position: relative
+          border-left: 1px dotted rgba(255,255,255,.35)
+
+          &:first-of-type {
+            border: none
+          }
+
+          h2 {
+            font-size: 16px
+            text-align: center
+            font-weight: 300
+            color: $gray
+            position: absolute
+            top: 20px
+            left: 0
+            right: 0
+          }
+
+          section.subgroup {
+            display: flex
+            flex-direction: row
+            justify-content: center
+            position: relative
+            padding-top: 50px
+            border-top: 1px dotted rgba(255,255,255,.35)
+
+            &:first-of-type {
+              border: none
+            }
+
+            h2 {
+              font-size: 16px
+              text-align: center
+              font-weight: 300
+              color: $gray
+              position: absolute
+              top: 20px
+              left: 0
+              right: 0
+            }
+
+            section.column {
+              flex: 1
+              display: flex
+              flex-direction: column
+              justify-content: center
+
+              div.check {
+                background: $white
+                width: 70%
+                margin-left: 15%
+                margin-bottom: 50px
+                border-radius: 3px
+                box-shadow: 0 0 24px rgba(0,0,0,.5)
+                display: flex
+                flex-direction: column
+                justify-content: center
+                padding: 20px
+                box-sizing: border-box
+                cursor: pointer
+                transition: .25s
+
+                &:hover {
+                  transform: scale(1.1)
+                  box-shadow: 0 0 36px rgba(0,0,0,.75)
+                }
+
+                &.SUCCESS {
+                  background: $green
+                }
+
+                &.ERROR {
+                  background: $red
+                }
+
+                &.WARNING {
+                  background: $orange
+                }
+
+                &.UNKNOWN {
+                  background: $darkgray
+                }
+
+                div {
+                  &.sub-check {
+                    span {
+                      &.SUCCESS {
+                        background: $green
+                      }
+                      &.ERROR {
+                        background: $red
+                      }
+                      &.WARNING {
+                        background: $orange
+                      }
+                      &.UNKNOWN {
+                        background: $darkgray
+                      }
+
+                      border: 1px solid white
+                      margin: 0px 3px
+                      padding: 0px 3px
+                      border-radius: 2px
+                      color: white
+                    }
+                    float: right
+                    margin-top: 5px
+                  }
+
+                  h3 {
+                    font-size: 16px
+                    color: $white
+                    font-weight: 500
+                    float: none
+                  }
+
+                  strong {
+                    float: left
+                    font-size: 14px
+                    display: block
+                    margin-top: 5px
+                    font-weight: 400
+                    color: $white
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
