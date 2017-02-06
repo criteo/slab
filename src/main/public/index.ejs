@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% for(var i = 0; i < htmlWebpackPlugin.files.css.length; ++i) { %>
+    <link rel="stylesheet" type="text/css" href="<%=htmlWebpackPlugin.files.css[i] %>"></script>
+    <% } %>
+</head>
+<body>
+    <div id="app"></div>
+    <% for(var i = 0; i < htmlWebpackPlugin.files.js.length; ++i) { %>
+    <script type="text/javascript" src="<%=htmlWebpackPlugin.files.js[i] %>"></script>
+    <% } %>
+</body>
+</html>

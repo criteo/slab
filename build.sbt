@@ -1,3 +1,4 @@
+
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
@@ -17,3 +18,13 @@ lazy val root = (project in file(".")).
       "org.mockito" % "mockito-core" % "2.7.0" % Test
     )
   )
+
+lazy val buildWebapp = taskKey[Unit]("build webapp")
+
+buildWebapp := {
+  "npm install" !
+
+  "npm run build -- -p --env.out=target/scala-2.11/classes" !
+}
+
+packageBin in Compile <<= (packageBin in Compile) dependsOn (buildWebapp)
