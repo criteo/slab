@@ -1,0 +1,5 @@
+{
+    "env": {},
+    "mainClass": "com.criteo.slab.example.MockServer",
+    "extraClasspath": "example/target/scala-2.11/classes"
+}

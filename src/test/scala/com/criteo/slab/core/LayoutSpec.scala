@@ -9,8 +9,8 @@ class LayoutSpec extends FlatSpec with Matchers {
 
   "Layout" should "be serializable to JSON" in {
     val layout = Layout(List(
-      Column("A", 50, List(Row(25, List(Box("box1", Seq.empty, vs => vs.head)))))
+      Column(50, List(Row("A", 25, List(Box("box1", Seq.empty, vs => vs.head)))))
     ))
-    layout.toJSON shouldEqual """{"columns":[{"title":"A","percentage":50,"rows":[{"percentage":25,"boxes":["box1"]}]}]}"""
+    layout.toJSON shouldEqual """{"columns":[{"percentage":50,"rows":[{"title":"A","percentage":25,"boxes":["box1"]}]}]}"""
   }
 }

@@ -1,16 +1,22 @@
 var path = require('path');
 var yargs = require('yargs').argv;
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = {
+yargs.env = yargs.env || {};
+var baseDir = path.resolve(__dirname, 'src/main/webapp');
+var outPath = path.resolve(__dirname, yargs.env.out || 'dist');
+var isProdMode = yargs.p || false;
+var config = {
   entry: [
     'whatwg-fetch',
-    path.resolve(__dirname, 'src/main/javascript/index.js'),
-    path.resolve(__dirname, 'src/main/style/index.styl')
+    'babel-polyfill',
+    path.resolve(baseDir, 'js/index.js'),
+    path.resolve(baseDir, 'style/index.styl')
   ],
   output: {
-    path: path.resolve(__dirname, yargs.env.out),
+    path: outPath,
     filename: 'index.js'
   },
   module: {
@@ -34,24 +40,54 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      'react': 'inferno-compat',
+      'react-dom': 'inferno-compat',
+      'react-redux': 'inferno-redux'
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.resolve(__dirname, 'src/main/public/index.ejs'),
+      template: path.resolve(baseDir, 'public/index.ejs'),
       inject: false,
       title: 'Slab'
     }),
-    new CopyWebpackPlugin([
+    new CopyWebpackPlugin(
+      [
+        {
+          from: path.resolve(baseDir, 'public'),
+          to: 'public'
+        }
+      ],
       {
-        from: path.resolve(__dirname, 'src/main/public'),
-        to: 'public'
+        ignore: [
+          '*.ejs'
+        ]
       }
-    ],
-    {
-      ignore: [
-        '*.ejs'
-      ]
-    })
+    ),
+    new webpack.ProvidePlugin({
+      'React': 'react'
+    }),
+    new webpack.NamedModulesPlugin()
   ],
+  devServer: {
+    contentBase: outPath,
+    compress: true,
+    port: 9001,
+    historyApiFallback: true,
+    proxy: {
+      '/api': 'http://localhost:' + (yargs.env.serverPort || 8080)
+    },
+    hot: !isProdMode
+  },
   devtool: 'cheap-module-source-map'
+};
+
+if (!isProdMode) {
+  config.plugins.push(new webpack.NamedModulesPlugin());
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
+
+module.exports = config;

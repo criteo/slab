@@ -3,13 +3,13 @@ package com.criteo.slab.core
 import com.criteo.slab.utils.Jsonable
 import org.json4s.JsonAST.JString
 import org.json4s.{CustomSerializer, DefaultFormats}
-import org.json4s.jackson.Serialization
+import org.json4s.native.Serialization
 
 import scala.util.Try
 
-case class Column(title: String, percentage: Int, rows: List[Row])
+case class Column(percentage: Int, rows: Seq[Row])
 
-case class Row(percentage: Int, boxes: List[Box])
+case class Row(title: String, percentage: Int, boxes: Seq[Box])
 
 case class Layout(columns: Seq[Column])
 

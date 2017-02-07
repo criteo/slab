@@ -3,7 +3,7 @@ package com.criteo.slab.core
 import com.criteo.slab.utils.Jsonable
 import org.json4s.JsonAST._
 import org.json4s.JsonDSL._
-import org.json4s.jackson.Serialization
+import org.json4s.native.Serialization
 import org.json4s.{CustomSerializer, DefaultFormats, Extraction}
 
 import scala.util.Try

@@ -1,6 +1,7 @@
 .idea
 target/
-project/
+project/*
+!project/*.sbt
 node_modules/
 
 npm-debug.log
