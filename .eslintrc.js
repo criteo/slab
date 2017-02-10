@@ -3,7 +3,8 @@ module.exports = {
         "browser": true,
         "commonjs": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "mocha": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -40,5 +41,8 @@ module.exports = {
         "react/jsx-uses-react": 1,
         "react/jsx-uses-vars": 1,
         "react/jsx-no-undef": 1
+    },
+    "globals": {
+        "expect": true
     }
 };

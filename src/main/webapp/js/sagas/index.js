@@ -1,20 +1,20 @@
 import { takeLatest, call, put, fork } from 'redux-saga/effects';
 import * as api from '../api';
 
-function* fetchBoard(action) {
+export function* fetchBoard(action, combineFn = combine) {
   try {
     const res = yield [
       call(api.fetchBoard, action.board),
       call(api.fetchLayout, action.board)
     ];
     const [board, layout] = res;
-    yield put({ type: 'FETCH_BOARD_SUCCESS', payload: combine(board, layout) });
+    yield put({ type: 'FETCH_BOARD_SUCCESS', payload: combineFn(board, layout) });
   } catch (error) {
     yield put({ type: 'FETCH_BOARD_FAILURE', payload: error });
   }
 }
 
-function* watchFetchBoard() {
+export function* watchFetchBoard() {
   yield takeLatest('FETCH_BOARD', fetchBoard);
 }
 

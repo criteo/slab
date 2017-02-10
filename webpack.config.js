@@ -44,7 +44,8 @@ var config = {
     alias: {
       'react': 'inferno-compat',
       'react-dom': 'inferno-compat',
-      'react-redux': 'inferno-redux'
+      'react-redux': 'inferno-redux',
+      'src': path.resolve(__dirname, 'src/main/webapp/js') // for testing
     }
   },
   plugins: [
