@@ -20,7 +20,7 @@ object MockServer extends HttpServer {
       .add(MockController)
       .add(new SlabController(
         List(
-          simpleBoard -> simpleBoardLayout
+          simpleBoard
         )
       ))
   }

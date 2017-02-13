@@ -5,7 +5,8 @@ import com.twitter.util.Future
 case class Board(
                   title: String,
                   groups: Seq[Box],
-                  aggregate: (Seq[View]) => View
+                  aggregate: Seq[View] => View,
+                  layout: Layout
                 ) {
   def apply(context: Option[Context])(implicit valueStore: ValueStore): Future[ViewTree] =
     Future.collect(

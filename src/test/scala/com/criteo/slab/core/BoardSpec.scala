@@ -11,10 +11,12 @@ class BoardSpec extends FlatSpec with Matchers with MockitoSugar with TwitterFut
 
   val box1 = mock[Box]
   val box2 = mock[Box]
+  val layout = mock[Layout]
   val board = Board(
     "a test board",
     box1 :: box2 :: Nil,
-    views => views.sorted.reverse.head
+    views => views.sorted.reverse.head,
+    layout
   )
 
   "apply()" should "return" in {

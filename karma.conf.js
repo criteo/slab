@@ -1,4 +1,3 @@
-// var path = require('path');
 var webpackConfig = require('./webpack.config');
 module.exports = function(config) {
   config.set({
