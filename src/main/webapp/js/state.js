@@ -29,8 +29,11 @@ export type Board = {
   title: string,
   status: Status,
   message: string,
-  columns: Array<Column>
+  columns: Array<Column>,
+  links: Array<Link>
 };
+
+export type Link = [string, string];
 
 type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
 

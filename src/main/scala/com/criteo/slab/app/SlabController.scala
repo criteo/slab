@@ -7,9 +7,9 @@ import com.twitter.finatra.http.Controller
 
 
 class SlabController(
-                      val settings: Seq[Board]
+                      val boards: Seq[Board]
                     )(implicit valueStore: ValueStore) extends Controller {
-  private val boardsMap: Map[String, Board] = settings.foldLeft(Map.empty[String, Board]) {
+  private val boardsMap: Map[String, Board] = boards.foldLeft(Map.empty[String, Board]) {
     case (acc, board) => acc + (board.title -> board)
   }
 
@@ -23,7 +23,7 @@ class SlabController(
 
     board.fold(response.notFound(s"board requested does not exist").toFuture) { board =>
       board.apply(None)
-        .map(view => BoardResponse(view, board.layout).toJSON)
+        .map(view => BoardResponse(view, board.layout, board.links).toJSON)
         .map(response.ok.json)
     }
   }

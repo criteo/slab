@@ -10,6 +10,7 @@ object Boards {
     "Example board",
     Seq(webserver, gateway, pipelineZeta, pipelineOmega),
     takeHighestLevel,
-    simpleBoardLayout
+    simpleBoardLayout,
+    Seq(webserver -> gateway, gateway -> pipelineZeta)
   )
 }

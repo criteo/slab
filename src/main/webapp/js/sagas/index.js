@@ -19,8 +19,8 @@ export default function* rootSaga() {
 }
 
 // transform board response, merge views with layout
-export const combine = (board) => {
-  const { view, layout } = board;
+export const combine = board => {
+  const { view, layout, links } = board;
   const map = new Map();
   layout.columns.forEach((col, i) =>
     col.rows.forEach((row, j) =>
@@ -29,6 +29,7 @@ export const combine = (board) => {
   );
   view.children.forEach(box => {
     const [i, j, k] = map.get(box.title);
+    // mutate layout
     layout.columns[i].rows[j].boxes[k] = {
       title: box.title,
       status: box.status,
@@ -38,6 +39,7 @@ export const combine = (board) => {
   });
   return {
     ...layout,
+    links,
     title: view.title,
     message: view.message,
     status: view.status
