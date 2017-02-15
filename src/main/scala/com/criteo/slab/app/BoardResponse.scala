@@ -23,10 +23,9 @@ object BoardResponse {
     object LinkSer extends CustomSerializer[Box Tuple2 Box](_ => ( {
       case _ => throw new NotImplementedError("Not deserializable")
     }, {
-      case (box1: Box, box2: Box) => JArray(List(JString(box1.title), JString(box2.title)))
+      case (Box(title1, _, _), Box(title2, _, _)) => JArray(List(JString(title1), JString(title2)))
     }
     ))
 
   }
-
 }
