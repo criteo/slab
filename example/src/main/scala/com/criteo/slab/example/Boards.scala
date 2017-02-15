@@ -42,24 +42,38 @@ object Boards {
     takeHighestLevel
   )
 
+  lazy val databaseKappa = Box(
+    "Database Kappa",
+    Seq(
+      makeLatencyCheck("DC1", "DC1 Latency", 500, Status.Success),
+      makeLatencyCheck("DC2", "DC2 Latency", 1000, Status.Warning)
+    ),
+    takeHighestLevel
+  )
+
   lazy val simpleBoardLayout = Layout(
     Seq(Column(
-      50,
+      33.3,
       Seq(Row("Tier 1", 100, Seq(webserver)))
     ), Column(
-      50,
+      33.3,
       Seq(
         Row("Tier 2 - 1", 50, Seq(gateway)),
         Row("Tier 2 - 2", 50, Seq(pipelineZeta, pipelineOmega))
+      )
+    ), Column(
+      33.3,
+      Seq(
+        Row("Database", 100, Seq(databaseKappa))
       )
     ))
   )
 
   lazy val simpleBoard = Board(
     "Example board",
-    Seq(webserver, gateway, pipelineZeta, pipelineOmega),
+    Seq(webserver, gateway, pipelineZeta, pipelineOmega, databaseKappa),
     takeHighestLevel,
     simpleBoardLayout,
-    Seq(webserver -> gateway, gateway -> pipelineZeta)
+    Seq(webserver -> gateway, gateway -> pipelineZeta, pipelineZeta -> databaseKappa)
   )
 }

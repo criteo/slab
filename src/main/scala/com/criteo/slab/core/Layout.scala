@@ -3,9 +3,9 @@ package com.criteo.slab.core
 import com.criteo.slab.utils.Jsonable
 import org.json4s.Serializer
 
-case class Column(percentage: Int, rows: Seq[Row])
+case class Column(percentage: Double, rows: Seq[Row])
 
-case class Row(title: String, percentage: Int, boxes: Seq[Box])
+case class Row(title: String, percentage: Double, boxes: Seq[Box])
 
 case class Layout(columns: Seq[Column])
 
