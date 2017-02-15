@@ -11,15 +11,37 @@ class BoardSpec extends FlatSpec with Matchers with MockitoSugar with TwitterFut
 
   val box1 = mock[Box]
   val box2 = mock[Box]
-  val layout = mock[Layout]
   val board = Board(
     "a test board",
     box1 :: box2 :: Nil,
     views => views.sorted.reverse.head,
-    layout
+    Layout(
+      Seq(
+        Column(100, Seq(
+          Row("col-1-row-1", 100, Seq(box1, box2))
+        ))
+      )
+    )
   )
 
-  "apply()" should "return" in {
+  "constructor" should "require that boxes and layout are correctly defined" in {
+    val exception = intercept[IllegalArgumentException] {
+      Board(
+        "a broken board",
+        box1 :: Nil,
+        views => views.head,
+        Layout(
+          Seq(Column(
+            100,
+            Seq(Row("row", 10, box2 :: Nil))
+          )
+        ))
+      )
+    }
+    exception.getMessage shouldEqual "requirement failed: Board definition error, please make sure all boxes are present both in board and layout"
+  }
+
+  "apply()" should "return a ViewTree" in {
     val box1Node = ViewNode(
       "box1",
       View(Status.Error, "box1 down"),

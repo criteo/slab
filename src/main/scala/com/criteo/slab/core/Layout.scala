@@ -11,7 +11,7 @@ case class Layout(columns: Seq[Column])
 
 object Layout {
 
-  implicit object ToJson extends Jsonable[Layout] {
+  implicit object ToJSON extends Jsonable[Layout] {
     override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[Box]].serializers
   }
 }
