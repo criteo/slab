@@ -1,17 +1,18 @@
 package com.criteo.slab.utils
 
-import scala.util.Try
+import org.json4s.native.Serialization
+import org.json4s.{DefaultFormats, Serializer}
 
 trait Jsonable[T] {
-  def parse(in: String): Try[T]
-  def serialize(in: T): String
+  val serializers: Seq[Serializer[_]]
 }
 
 object Jsonable {
-  implicit class ToJSON[T: Jsonable](in: T) {
-    def toJSON: String = implicitly[Jsonable[T]].serialize(in)
+
+  implicit class ToJson[T <: AnyRef : Jsonable](in: T) {
+    implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
+
+    def toJSON: String = Serialization.write(in)
   }
-  implicit class FromJSON(in: String) {
-    def parseTo[T: Jsonable]: Try[T] = implicitly[Jsonable[T]].parse(in)
-  }
+
 }

@@ -1,6 +1,9 @@
 package com.criteo.slab.core
 
+import com.criteo.slab.utils.Jsonable
 import com.twitter.util.Future
+import org.json4s.CustomSerializer
+import org.json4s.JsonAST.JString
 
 case class Box(
                 title: String,
@@ -17,5 +20,20 @@ case class Box(
           viewLeaves
         )
       )
+  }
+}
+
+object Box {
+  implicit object toJSON extends Jsonable[Box] {
+    override val serializers = List(Ser)
+
+    object Ser extends CustomSerializer[Box](_ => (
+      {
+        case _ => throw new NotImplementedError("Not deserializable")
+      },
+      {
+        case box: Box => JString(box.title)
+      }
+    ))
   }
 }

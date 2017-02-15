@@ -1,11 +1,9 @@
 package com.criteo.slab.core
 
 import org.scalatest.{FlatSpec, Matchers}
-import com.criteo.slab.utils.Jsonable
+import com.criteo.slab.utils.Jsonable._
 
 class LayoutSpec extends FlatSpec with Matchers {
-
-  import Jsonable._
 
   "Layout" should "be serializable to JSON" in {
     val layout = Layout(List(

@@ -3,10 +3,7 @@ package com.criteo.slab.core
 import com.criteo.slab.utils.Jsonable
 import org.json4s.JsonAST._
 import org.json4s.JsonDSL._
-import org.json4s.native.Serialization
-import org.json4s.{CustomSerializer, DefaultFormats, Extraction}
-
-import scala.util.Try
+import org.json4s.{CustomSerializer, DefaultFormats, Extraction, Serializer}
 
 sealed trait ViewTree {
   val title: String
@@ -18,13 +15,11 @@ case class ViewLeaf(title: String, view: View) extends ViewTree
 case class ViewNode(title: String, view: View, children: Seq[ViewTree]) extends ViewTree
 
 object ViewTree {
-  implicit val json = new Jsonable[ViewTree] {
-    implicit val formats = DefaultFormats + Serializer
-    override def parse(in: String): Try[ViewTree] = Try { Serialization.read[ViewTree](in) }
+  implicit object ToJSON extends Jsonable[ViewTree] {
+    implicit val formats = DefaultFormats + Ser
+    override val serializers: Seq[Serializer[_]] = List(Ser)
 
-    override def serialize(in: ViewTree): String = Serialization.write(in)
-
-    object Serializer extends CustomSerializer[ViewTree](format => (
+    object Ser extends CustomSerializer[ViewTree](format => (
       {
         case JObject(JField("title", JString(title))::JField("status", JString(status))::JField("message", JString(message))::Nil) =>
           ViewLeaf(title, View(Status.from(status), message))

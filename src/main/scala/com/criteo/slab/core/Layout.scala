@@ -1,11 +1,7 @@
 package com.criteo.slab.core
 
 import com.criteo.slab.utils.Jsonable
-import org.json4s.JsonAST.JString
-import org.json4s.{CustomSerializer, DefaultFormats}
-import org.json4s.native.Serialization
-
-import scala.util.Try
+import org.json4s.Serializer
 
 case class Column(percentage: Int, rows: Seq[Row])
 
@@ -14,21 +10,8 @@ case class Row(title: String, percentage: Int, boxes: Seq[Box])
 case class Layout(columns: Seq[Column])
 
 object Layout {
-  implicit val json = new Jsonable[Layout] {
-    implicit val formats = DefaultFormats + BoxFormats
 
-    override def parse(in: String): Try[Layout] = Try(Serialization.read(in))
-
-    override def serialize(in: Layout): String = Serialization.write(in)
-
-    object BoxFormats extends CustomSerializer[Box](_ => (
-      {
-        // broken deserializer, normally we never need to deserialize it
-        case JString(title) => Box(title, Seq.empty, vs => vs.head)
-      },
-      {
-        case box: Box => JString(box.title)
-      }
-    ))
+  implicit object ToJson extends Jsonable[Layout] {
+    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[Box]].serializers
   }
 }
