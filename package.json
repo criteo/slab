@@ -41,6 +41,7 @@
     "inferno": "^1.2.2",
     "inferno-compat": "^1.2.2",
     "inferno-redux": "^1.2.2",
+    "marked": "^0.3.6",
     "react-modal": "^1.6.5",
     "redux": "^3.5.2",
     "redux-saga": "^0.14.3",

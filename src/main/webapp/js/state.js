@@ -11,6 +11,7 @@ export type Box = {
   title: string,
   status: Status,
   message: string,
+  description: ?string,
   checks: Array<Check>
 };
 

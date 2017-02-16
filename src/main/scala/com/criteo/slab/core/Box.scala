@@ -8,7 +8,8 @@ import org.json4s.JsonAST.JString
 case class Box(
                 title: String,
                 checks: Seq[Check[_]],
-                aggregate: (Seq[View]) => View
+                aggregate: (Seq[View]) => View,
+                description: Option[String] = None
               ) {
   def apply(context: Option[Context])(implicit valueStore: ValueStore): Future[ViewNode] = {
     Future
@@ -17,7 +18,8 @@ case class Box(
         ViewNode(
           title,
           aggregate(viewLeaves.map(_.view)),
-          viewLeaves
+          viewLeaves,
+          description
         )
       )
   }

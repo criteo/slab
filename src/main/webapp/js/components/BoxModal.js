@@ -1,6 +1,18 @@
 // @flow
 import Modal from 'react-modal';
 import type { Box, Check } from '../state';
+import marked from 'marked';
+
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: true,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+});
 
 type Props = {
   isOpen: boolean,
@@ -34,6 +46,7 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
         <button onClick={onCloseClick}>&times;</button>
       </header>
       <main>
+        <h3>Info</h3>
         <section className="info">
           <div className="status">
             <span className={`background circle ${box.status}`}></span>
@@ -43,6 +56,9 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
             { box.message }
           </div>
         </section>
+        <h3>Description</h3>
+        <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description || 'No description' ) } }>
+        </div>
         <h3>Checks</h3>
         <section className="checks">
           {

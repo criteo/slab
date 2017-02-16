@@ -10,7 +10,15 @@ object Boards {
       makeVersionCheck("web.version", "Version", 100, Status.Success),
       makeLatencyCheck("web.latency", "Latency", 300, Status.Success)
     ),
-    takeHighestLevel
+    takeHighestLevel,
+    Some(
+      """
+        |# Doc for web server (markdown)
+        |<br/>
+        |## URL
+        |- http://example.io
+        |- http://10.0.0.1
+      """.stripMargin)
   )
 
   lazy val gateway = Box(

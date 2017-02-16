@@ -300,6 +300,7 @@ body {
     padding: 1.5em
     .info {
       display: flex
+      flex-wrap: wrap
       > .status {
         flex-basis: 10%
         .circle {
@@ -314,11 +315,18 @@ body {
         color: #5C5C5C
       }
     }
+    > h3 {
+      font-weight: 500
+      margin-bottom: 1em
+      &:not(:first-child) {
+        margin-top: 2em
+      }
+      color: #2c3e50;
+    }
   }
-  h3 {
-    font-weight: 500
-    margin-top: 2em
-    margin-bottom: 1em
+  .description {
+    padding: 1em 1.5em
+    background: #FBFBFB
   }
   .checks {
     flex: 1
