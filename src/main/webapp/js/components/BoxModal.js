@@ -10,14 +10,15 @@ type Props = {
 
 const style = {
   content: {
-    top: '50%',
-    bottom: 'auto',
-    left: '50%',
-    right: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: '15%',
+    bottom: '15%',
+    left: '10%',
+    right: '10%',
     padding: '0',
-    boxShadow: '0 0 24px rgba(0,0,0,.5)'
+    overflow: 'hidden',
+    boxShadow: '0 0 24px rgba(0,0,0,.5)',
+    border: 'none',
+    borderRadius: '0'
   }
 };
 
@@ -25,24 +26,38 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
   <Modal
     isOpen={isOpen}
     style={style}
-    contentLabel="Box modal"
+    contentLabel="box-modal"
   >
-    <div className={`box-modal ${box.status}`}>
+    <div className="box-modal">
       <header>
+        <span>{box.title}</span>
         <button onClick={onCloseClick}>&times;</button>
       </header>
-      <h3>{box.title}</h3>
-      { box.message ? <strong>{ box.message }</strong> : null }
-      <div className="checks">
-        {
-          box.checks.map(({ title, status, message }: Check) => 
-            <div className={`check ${status}`}>
-              <h3>{title}</h3>
-              <strong>{message}</strong>
-            </div>
-          )
-        }
-      </div>
+      <main>
+        <section className="info">
+          <div className="status">
+            <span className={`background circle ${box.status}`}></span>
+            <span className={`color ${box.status}`}>{box.status}</span>
+          </div>
+          <div className="message">
+            { box.message }
+          </div>
+        </section>
+        <h3>Checks</h3>
+        <section className="checks">
+          {
+            box.checks.map(({ title, status, message }: Check) =>
+              <div className="check" key={ title }>
+                <span className={`status background ${status}`}></span>
+                <div className="content">
+                  <h4>{title}</h4>
+                  {message}
+                </div>
+              </div>
+            )
+          }
+        </section>
+      </main>
     </div>
   </Modal>
 );
