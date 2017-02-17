@@ -297,12 +297,12 @@ body {
     display: flex
     flex: 1
     flex-direction: column
-    padding: 1.5em
+    padding: 1em 2em
     .info {
       display: flex
       flex-wrap: wrap
-      > .status {
-        flex-basis: 10%
+      .status {
+        padding-top: 1em
         .circle {
           display: inline-block
           height: 10px
@@ -310,23 +310,24 @@ body {
           border-radius: 50%
           margin-right: 1em
         }
+        .message {
+          color: #5C5C5C
+          margin-top: 1em
+        }
       }
-      > .message {
-        color: #5C5C5C
+      .description {
+        padding: 1em 1.5em
+        background: #FBFBFB
+        flex-basis: 80%
+        margin-left: auto
       }
     }
     > h3 {
       font-weight: 500
       margin-bottom: 1em
-      &:not(:first-child) {
-        margin-top: 2em
-      }
-      color: #2c3e50;
+      color: #2c3e50
+      margin-top: 2em
     }
-  }
-  .description {
-    padding: 1em 1.5em
-    background: #FBFBFB
   }
   .checks {
     flex: 1
@@ -353,7 +354,6 @@ body {
     }
   }
 }
-
 
 .color {
   &.SUCCESS {

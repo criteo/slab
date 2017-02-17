@@ -38,7 +38,7 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
   <Modal
     isOpen={isOpen}
     style={style}
-    contentLabel="box-modal"
+    contentLabel="box modal"
   >
     <div className="box-modal">
       <header>
@@ -46,19 +46,16 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
         <button onClick={onCloseClick}>&times;</button>
       </header>
       <main>
-        <h3>Info</h3>
         <section className="info">
           <div className="status">
             <span className={`background circle ${box.status}`}></span>
             <span className={`color ${box.status}`}>{box.status}</span>
+            <div className="message">
+              { box.message }
+            </div>
           </div>
-          <div className="message">
-            { box.message }
-          </div>
+          <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description || 'No description' ) } } />
         </section>
-        <h3>Description</h3>
-        <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description || 'No description' ) } }>
-        </div>
         <h3>Checks</h3>
         <section className="checks">
           {

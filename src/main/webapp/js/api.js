@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { fetcher } from './utils';
 
 export const fetchBoard = (board: string): Promise<Object | string> =>

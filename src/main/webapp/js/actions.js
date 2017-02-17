@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import type { Board } from './state';
 
 export type Action = FETCH_BOARD | FETCH_BOARD_SUCCESS | FETCH_BOARD_FAILURE;

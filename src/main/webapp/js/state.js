@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import type { Action } from './actions';
 
 export type Check = {
