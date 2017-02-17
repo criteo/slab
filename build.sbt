@@ -15,7 +15,8 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "com.twitter.finatra" %% "finatra-http" % "2.1.6",
       "org.json4s" %% "json4s-native" % "3.4.2",
-      "org.scalatest" %% "scalatest" % "2.2.4",
+      "joda-time" % "joda-time" % "2.9.7",
+      "org.scalatest" %% "scalatest" % "2.2.4" % Test,
       "org.mockito" % "mockito-core" % "2.7.0" % Test
     )
   )

@@ -1,9 +1,12 @@
 package com.criteo.slab.app
 
-import com.criteo.slab.core.{Board, ValueStore}
+import com.criteo.slab.core.{Board, Context, ValueStore}
 import com.criteo.slab.utils.Jsonable._
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
+import org.joda.time.DateTime
+
+import scala.util.Try
 
 
 class SlabController(
@@ -25,6 +28,24 @@ class SlabController(
       board.apply(None)
         .map(view => BoardResponse(view, board.layout, board.links).toJSON)
         .map(response.ok.json)
+    }
+  }
+
+  get("/api/boards/:board/history/:timestamp") { req: Request =>
+    val board = for {
+      raw <- req.params.get("board")
+      boardTitle = java.net.URLDecoder.decode(raw, "UTF-8")
+      board <- boardsMap.get(boardTitle)
+    } yield board
+
+    board.fold(response.notFound(s"board requested does not exist").toFuture) { board =>
+      Try(req.params("timestamp").toInt).map(new DateTime(_)).toOption.fold(
+        response.badRequest("invalid timestamp").toFuture
+      ) { dateTime =>
+        board.apply(Some(Context(dateTime)))
+          .map(view => BoardResponse(view, board.layout, board.links).toJSON)
+          .map(response.ok.json)
+      }
     }
   }
 
