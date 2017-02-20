@@ -1,12 +1,13 @@
 package com.criteo.slab.core
 
-import com.criteo.slab.helper.TwitterFutures
-import com.twitter.util.Future
+import com.criteo.slab.helper.FutureTests
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, Matchers}
 import org.mockito.Mockito._
 
-class BoardSpec extends FlatSpec with Matchers with MockitoSugar with TwitterFutures {
+import scala.concurrent.Future
+
+class BoardSpec extends FlatSpec with Matchers with MockitoSugar with FutureTests {
   implicit val store = TestStore
 
   val box1 = mock[Box]
@@ -47,14 +48,14 @@ class BoardSpec extends FlatSpec with Matchers with MockitoSugar with TwitterFut
       View(Status.Error, "box1 down"),
       List.empty
     )
-    when(box1.apply(None)) thenReturn Future.value(box1Node)
+    when(box1.apply(None)) thenReturn Future(box1Node)
     val box2Node = ViewNode(
       "box2",
       View(Status.Success, "box1 up"),
       List.empty
     )
-    when(box2.apply(None)) thenReturn Future.value(box2Node)
-    whenReady(board.apply(None).toFutureConcept) { r =>
+    when(box2.apply(None)) thenReturn Future(box2Node)
+    whenReady(board.apply(None)) { r =>
       r shouldEqual ViewNode(
         "a test board",
         View(Status.Error, "box1 down"),

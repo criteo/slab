@@ -1,14 +1,14 @@
 package com.criteo.slab.app
 
 import com.criteo.slab.core.{Board, Context, ValueStore}
+import com.criteo.slab.utils.FutureUtils._
 import com.criteo.slab.utils.Jsonable._
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import org.joda.time.DateTime
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Try
-
-
 class SlabController(
                       val boards: Seq[Board]
                     )(implicit valueStore: ValueStore) extends Controller {
@@ -28,6 +28,7 @@ class SlabController(
       board.apply(None)
         .map(view => BoardResponse(view, board.layout, board.links).toJSON)
         .map(response.ok.json)
+        .toTwitterFuture
     }
   }
 
@@ -45,6 +46,7 @@ class SlabController(
         board.apply(Some(Context(dateTime)))
           .map(view => BoardResponse(view, board.layout, board.links).toJSON)
           .map(response.ok.json)
+          .toTwitterFuture
       }
     }
   }

@@ -1,12 +1,12 @@
 package com.criteo.slab.core
 
-import com.criteo.slab.helper.TwitterFutures
+import com.criteo.slab.helper.FutureTests
 import org.joda.time.DateTime
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, Matchers}
 import org.mockito.Mockito._
 
-class BoxSpec extends FlatSpec with Matchers with MockitoSugar with TwitterFutures {
+class BoxSpec extends FlatSpec with Matchers with MockitoSugar with FutureTests {
 
   implicit val store = TestStore
 
@@ -22,7 +22,7 @@ class BoxSpec extends FlatSpec with Matchers with MockitoSugar with TwitterFutur
   )
 
   "apply() with no context" should "check current values and aggregate" in {
-    whenReady(checkGroup.apply(None).toFutureConcept) { r =>
+    whenReady(checkGroup.apply(None)) { r =>
       verify(spiedVersionCheck).now
       verify(spiedLatencyCheck).now
       r shouldEqual ViewNode(
@@ -44,7 +44,7 @@ class BoxSpec extends FlatSpec with Matchers with MockitoSugar with TwitterFutur
 
   "apply() with context" should "check values with the given context" in {
     val context = Context(new DateTime(1000))
-    whenReady(checkGroup.apply(Some(context)).toFutureConcept) { r =>
+    whenReady(checkGroup.apply(Some(context))) { r =>
       verify(spiedVersionCheck).replay(context)
       verify(spiedLatencyCheck).replay(context)
       r shouldEqual ViewNode(

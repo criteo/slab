@@ -1,9 +1,10 @@
 package com.criteo.slab.core
 
-import com.criteo.slab.utils.Jsonable
-import com.twitter.util.Future
+import com.criteo.slab.utils.{FutureUtils, Jsonable}
 import org.json4s.CustomSerializer
 import org.json4s.JsonAST.JString
+
+import scala.concurrent.{ExecutionContext, Future}
 
 case class Box(
                 title: String,
@@ -11,8 +12,8 @@ case class Box(
                 aggregate: (Seq[View]) => View,
                 description: Option[String] = None
               ) {
-  def apply(context: Option[Context])(implicit valueStore: ValueStore): Future[ViewNode] = {
-    Future
+  def apply(context: Option[Context])(implicit valueStore: ValueStore, ec: ExecutionContext): Future[ViewNode] = {
+    FutureUtils
       .collect(checks.map(c => context.fold(c.now)(c.replay)))
       .map(viewLeaves =>
         ViewNode(

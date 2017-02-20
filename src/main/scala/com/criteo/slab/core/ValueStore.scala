@@ -1,6 +1,6 @@
 package com.criteo.slab.core
 
-import com.twitter.util.Future
+import scala.concurrent.Future
 
 trait ValueStore {
   def upload(id: String, values: Seq[(String, Long)]): Future[Unit]
@@ -8,7 +8,7 @@ trait ValueStore {
 }
 
 object NoopValueStore extends ValueStore {
-  override def upload(id: String, values: Seq[(String, Long)]): Future[Unit] = Future.value(())
+  override def upload(id: String, values: Seq[(String, Long)]): Future[Unit] = Future.successful(())
 
-  override def fetch(id: String, context: Context): Future[Seq[(String, Long)]] = Future.value(Seq.empty)
+  override def fetch(id: String, context: Context): Future[Seq[(String, Long)]] = Future.successful(Seq.empty)
 }

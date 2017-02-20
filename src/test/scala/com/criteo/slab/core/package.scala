@@ -1,6 +1,7 @@
 package com.criteo.slab
 
-import com.twitter.util.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 package object core {
 
@@ -9,15 +10,15 @@ package object core {
     override def fetch(id: String, context: Context) = {
       id match {
         case "app.version" =>
-          Future.value(Seq("version" -> context.when.getMillis))
+          Future.successful(Seq("version" -> context.when.getMillis))
         case "app.latency" =>
-          Future.value(Seq("latency" -> context.when.getMillis))
+          Future.successful(Seq("latency" -> context.when.getMillis))
         case _ =>
-          Future.exception(new Exception("network error"))
+          Future.failed(new Exception("network error"))
       }
     }
 
-    override def upload(id: String, values: Seq[(String, Long)]) = Future.value(())
+    override def upload(id: String, values: Seq[(String, Long)]) = Future.successful(())
   }
 
   // Version check
@@ -34,7 +35,7 @@ package object core {
   val versionCheck = Check(
     "app.version",
     "app version",
-    () => Future.value(Version(9000)),
+    () => Future.successful(Version(9000)),
     display = (v: Version, context: Context) => View(Status.Success, s"version ${v.underlying}")
   )
 
@@ -52,7 +53,7 @@ package object core {
   val latencyCheck = Check(
     "app.latency",
     "app latency",
-    () => Future.value(Latency(2000)),
+    () => Future.successful(Latency(2000)),
     display = (l: Latency, context: Context) => View(Status.Warning, s"latency ${l.underlying}")
   )
 }
