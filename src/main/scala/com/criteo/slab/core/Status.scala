@@ -1,7 +1,6 @@
 package com.criteo.slab.core
 
 sealed class Status(val name: String, val level: Int) extends Ordered[Status] {
-  @com.fasterxml.jackson.annotation.JsonValue override def toString = name
   override def compare(that: Status) = this.level.compare(that.level)
 }
 

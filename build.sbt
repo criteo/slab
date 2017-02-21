@@ -1,33 +1,31 @@
 lazy val commonSettings = Seq(
   organization := "com.criteo",
   version := "0.1.0-SNAPSHOT",
-  scalaVersion := "2.11.8"
+  scalaVersion := "2.11.8",
+  libraryDependencies ++= Seq(
+    "org.slf4j" % "slf4j-simple" % "1.7.21"
+  )
 )
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
     name := "slab",
-    resolvers ++= Seq(
-      "Twitter maven" at "http://maven.twttr.com",
-      "Finatra Repo" at "http://twitter.github.com/finatra"
-    ),
     libraryDependencies ++= Seq(
-      "com.twitter.finatra" %% "finatra-http" % "2.1.6",
       "org.json4s" %% "json4s-native" % "3.4.2",
       "joda-time" % "joda-time" % "2.9.7",
       "org.scalatest" %% "scalatest" % "2.2.4" % Test,
-      "org.mockito" % "mockito-core" % "2.7.0" % Test
+      "org.mockito" % "mockito-core" % "2.7.0" % Test,
+      // LOL HTTP
+      "co.fs2" %% "fs2-core" % "0.9.2",
+      "io.netty" % "netty-codec-http2" % "4.1.7.Final",
+      "org.bouncycastle" % "bcpkix-jdk15on" % "1.55",
+      "org.bouncycastle" % "bcprov-jdk15on" % "1.55"
     )
   )
 
 lazy val example = (project in file("example"))
   .settings(commonSettings: _*)
-    .settings(
-      libraryDependencies ++= Seq(
-        "org.slf4j" % "slf4j-simple" % "1.7.21"
-      )
-    )
   .dependsOn(root)
 
 lazy val buildWebapp = taskKey[Unit]("build webapp")
