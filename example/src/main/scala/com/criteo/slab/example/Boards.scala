@@ -7,10 +7,10 @@ object Boards {
   lazy val webserver = Box(
     "Webserver Alpha",
     Seq(
-      makeVersionCheck("web.version", "Version", 100, Status.Success),
+      makeVersionCheck("web.version", "Version", 100, Status.Success, Some("V100")),
       makeLatencyCheck("web.latency", "Latency", 300, Status.Success)
     ),
-    takeHighestLevel,
+    takeMostCritical,
     Some(
       """
         |# Doc for web server (markdown)
@@ -27,7 +27,7 @@ object Boards {
       makeLatencyCheck("EU", "EU Gateway latency", 200, Status.Success),
       makeLatencyCheck("US", "US Gateway latency", 300, Status.Success)
     ),
-    takeHighestLevel
+    takeMostCritical
   )
 
   lazy val pipelineZeta = Box(
@@ -37,7 +37,7 @@ object Boards {
       makeLatencyCheck("B", "Job B latency", 2000, Status.Warning),
       makeLatencyCheck("C", "Job C latency", 3000, Status.Error)
     ),
-    takeHighestLevel
+    takeMostCritical
   )
 
   lazy val pipelineOmega = Box(
@@ -47,7 +47,7 @@ object Boards {
       makeLatencyCheck("B", "Job B latency", 1000, Status.Success),
       makeLatencyCheck("C", "Job C latency", 1000, Status.Success)
     ),
-    takeHighestLevel
+    takeMostCritical
   )
 
   lazy val databaseKappa = Box(
@@ -56,7 +56,7 @@ object Boards {
       makeLatencyCheck("DC1", "DC1 Latency", 500, Status.Success),
       makeLatencyCheck("DC2", "DC2 Latency", 1000, Status.Warning)
     ),
-    takeHighestLevel
+    takeMostCritical
   )
 
   lazy val simpleBoardLayout = Layout(
@@ -80,7 +80,7 @@ object Boards {
   lazy val simpleBoard = Board(
     "Example board",
     Seq(webserver, gateway, pipelineZeta, pipelineOmega, databaseKappa),
-    takeHighestLevel,
+    takeMostCritical,
     simpleBoardLayout,
     Seq(webserver -> gateway, gateway -> pipelineZeta, pipelineZeta -> databaseKappa)
   )

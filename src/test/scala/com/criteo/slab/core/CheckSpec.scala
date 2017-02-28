@@ -16,6 +16,12 @@ class CheckSpec extends FlatSpec with Matchers with FutureTests {
     }
   }
 
+  "now" should "return unknown if check returns a failed future" in {
+    whenReady(failedVersionCheck.now) { res =>
+      res shouldEqual ViewLeaf("app version", View(Status.Unknown, "failed check", None))
+    }
+  }
+
   "replay" should "fetch value from store, return a view corresponding to the context" in {
     val context = Context(new DateTime(100))
     whenReady(versionCheck.replay(context)) { res =>

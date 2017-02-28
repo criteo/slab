@@ -3,7 +3,7 @@ import { Component } from 'react';
 
 import { findDOMNode, render } from 'react-dom';
 
-import type { Box } from '../state';
+import type { Box, Check } from '../state';
 import BoxModal from './BoxModal';
 
 type Props = {
@@ -32,8 +32,8 @@ class BoxView extends Component {
         { box.message ? <strong>{ box.message }</strong> : null }
         <div className="checks">
           {
-            box.checks.map(c => 
-              <span className={`check ${c.status}`} key={c.title}>{c.title}</span>
+            box.checks.map((c: Check) =>
+              <span className={`check ${c.status}`} key={c.title}>{c.label || c.title}</span>
             )
           }
         </div>

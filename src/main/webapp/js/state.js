@@ -4,7 +4,8 @@ import type { Action } from './actions';
 export type Check = {
   title: string,
   status: Status,
-  message: string
+  message: string,
+  label: ?string
 };
 
 export type Box = {

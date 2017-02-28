@@ -43,7 +43,8 @@ object ViewTree {
         case v: ViewLeaf =>
           ("title" -> v.title) ~
             ("status" -> v.view.status.name) ~
-            ("message" -> v.view.message)
+            ("message" -> v.view.message) ~
+            ("label" -> v.view.label.getOrElse(""))
       }
     ))
   }

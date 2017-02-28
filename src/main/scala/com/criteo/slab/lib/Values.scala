@@ -28,13 +28,10 @@ object Values {
     override def fromMetrics(ms: Seq[(String, Long)]): Version = Version(ms.head._2.toInt)
   }
 
-  case class Datetime(
-                       underlying: DateTime
-                     )
+  // Joda DateTime
+  implicit def jodaTimeMetric = new Metrical[DateTime] {
+    override def toMetrics(value: DateTime): Seq[(String, Long)] = Seq(("datetime", value.getMillis))
 
-  implicit def dateTimeMetric = new Metrical[Datetime] {
-    override def toMetrics(value: Datetime): Seq[(String, Long)] = Seq(("datetime", value.underlying.getMillis))
-
-    override def fromMetrics(ms: Seq[(String, Long)]): Datetime = Datetime(new DateTime(ms.head._2))
+    override def fromMetrics(ms: Seq[(String, Long)]): DateTime = new DateTime(ms.head._2)
   }
 }

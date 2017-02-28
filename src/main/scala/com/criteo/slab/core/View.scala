@@ -2,7 +2,8 @@ package com.criteo.slab.core
 
 case class View(
                  status: Status,
-                 message: String
+                 message: String,
+                 label: Option[String] = None
                )
 
 object View {

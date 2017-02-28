@@ -82,7 +82,7 @@ body {
           background-color: $red
         }
 
-        &.UNKOWN {
+        &.UNKNOWN {
           background-color: $darkgray
         }
 
@@ -231,6 +231,9 @@ body {
                   overflow: hidden
                   white-space: nowrap
                   text-overflow: ellipsis
+
+                  display: flex
+                  align-items: center
                 }
 
               }
@@ -346,6 +349,9 @@ body {
         border-top: 1px solid #EAEAEA
         border-right: 1px solid #EAEAEA
         color: #5C5C5C
+        > h4 {
+          margin-bottom: .5em
+        }
       }
       &:last-child {
         .content {

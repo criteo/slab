@@ -39,6 +39,13 @@ package object core {
     display = (v: Version, context: Context) => View(Status.Success, s"version ${v.underlying}")
   )
 
+  val failedVersionCheck = Check[Version](
+    "app.version",
+    "app version",
+    () => Future.failed(new Exception("failed check")),
+    display = (v: Version, context: Context) => View(Status.Success, s"version ${v.underlying}")
+  )
+
   // Latency check
   case class Latency(
                       underlying: Long
