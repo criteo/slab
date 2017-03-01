@@ -5,4 +5,3 @@
 [libs]
 
 [options]
-module.name_mapper='react-redux' -> 'inferno-redux'

@@ -11,9 +11,19 @@ class ViewTreeSpec extends FlatSpec with Matchers {
       "B",
       View(Status.Unknown, "unknown", Some("lbl"))
     )),
-    Some("desc")
+    Some("desc"),
+    Some(1)
   )
-  val json = """{"title":"A","status":"SUCCESS","message":"up","children":[{"title":"B","status":"UNKNOWN","message":"unknown","label":"lbl"}],"description":"desc"}"""
+  val json =
+    """
+      |{
+      |"title":"A",
+      |"status":"SUCCESS",
+      |"message":"up",
+      |"children":[{"title":"B","status":"UNKNOWN","message":"unknown","label":"lbl"}],
+      |"description":"desc",
+      |"labelLimit":1
+      |}""".stripMargin.replace("\n", "")
   "serialize to json" should "generate a json string" in {
     tree.toJSON shouldEqual json
   }

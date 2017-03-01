@@ -10,7 +10,8 @@ case class Box(
                 title: String,
                 checks: Seq[Check[_]],
                 aggregate: (Seq[View]) => View,
-                description: Option[String] = None
+                description: Option[String] = None,
+                labelLimit: Option[Int] = None
               ) {
   def apply(context: Option[Context])(implicit valueStore: ValueStore, ec: ExecutionContext): Future[ViewNode] = {
     FutureUtils
@@ -20,7 +21,8 @@ case class Box(
           title,
           aggregate(viewLeaves.map(_.view)),
           viewLeaves,
-          description
+          description,
+          labelLimit
         )
       )
   }

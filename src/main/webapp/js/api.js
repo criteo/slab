@@ -5,5 +5,5 @@ export const fetchBoard = (board: string): Promise<Object | string> =>
   fetcher(`/api/boards/${board}`)
     .then(
       ({ body }) => body,
-      ({ body }) => Promise.reject(body || 'network error')
+      ({ body, status }) => Promise.reject(body || `connection error ${status}`)
     );

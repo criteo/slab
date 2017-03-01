@@ -13,6 +13,7 @@ export type Box = {
   status: Status,
   message: string,
   description: ?string,
+  labelLimit: number,
   checks: Array<Check>
 };
 

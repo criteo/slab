@@ -35,7 +35,8 @@ export const combine = board => {
       status: box.status,
       message: box.message,
       checks: box.children,
-      description: box.description
+      description: box.description,
+      labelLimit: box.labelLimit
     };
   });
   return {

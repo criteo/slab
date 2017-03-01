@@ -2,7 +2,7 @@ package com.criteo.slab.example
 
 import com.criteo.slab.core._
 
-object Boards {
+object SimpleBoard {
 
   lazy val webserver = Box(
     "Webserver Alpha",
@@ -43,11 +43,14 @@ object Boards {
   lazy val pipelineOmega = Box(
     "Pipeline Omega",
     Seq(
-      makeLatencyCheck("A", "Job A latency", 1000, Status.Success),
+      makeLatencyCheck("A", "Job A latency", 1000, Status.Unknown),
       makeLatencyCheck("B", "Job B latency", 1000, Status.Success),
-      makeLatencyCheck("C", "Job C latency", 1000, Status.Success)
+      makeLatencyCheck("C", "Job C latency", 1000, Status.Success),
+      makeLatencyCheck("D", "Job D latency", 1000, Status.Success),
+      makeLatencyCheck("E", "Job E latency", 1000, Status.Success)
     ),
-    takeMostCritical
+    takeMostCritical,
+    labelLimit = Some(3)
   )
 
   lazy val databaseKappa = Box(
@@ -57,6 +60,15 @@ object Boards {
       makeLatencyCheck("DC2", "DC2 Latency", 1000, Status.Warning)
     ),
     takeMostCritical
+  )
+
+  lazy val ui = Box(
+    "User interface",
+    Seq(
+      makeVersionCheck("ui.version", "Version 1000", 1000, Status.Success)
+    ),
+    takeMostCritical,
+    labelLimit = Some(0)
   )
 
   lazy val simpleBoardLayout = Layout(
@@ -72,14 +84,14 @@ object Boards {
     ), Column(
       33.3,
       Seq(
-        Row("Database", 100, Seq(databaseKappa))
+        Row("Tier 3", 100, Seq(databaseKappa, ui))
       )
     ))
   )
 
-  lazy val simpleBoard = Board(
-    "Example board",
-    Seq(webserver, gateway, pipelineZeta, pipelineOmega, databaseKappa),
+  def apply() = Board(
+    "Simple board",
+    Seq(webserver, gateway, pipelineZeta, pipelineOmega, databaseKappa, ui),
     takeMostCritical,
     simpleBoardLayout,
     Seq(webserver -> gateway, gateway -> pipelineZeta, pipelineZeta -> databaseKappa)
