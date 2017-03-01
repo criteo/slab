@@ -1,6 +1,7 @@
 // @flow
 import Modal from 'react-modal';
 import type { Box, Check } from '../state';
+import createFragment from 'react-addons-create-fragment';
 import marked from 'marked';
 
 marked.setOptions({
@@ -52,16 +53,21 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
         <button onClick={onCloseClick}>&times;</button>
       </header>
       <main>
-        <section className="info">
-          <div className="message">
-            { box.message }
-          </div>
-          {
-            box.description &&
-            <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description) } } />
-          }
-        </section>
-        <h3>Checks</h3>
+        {
+          box.message &&
+          createFragment({
+            title: <h3><i className="fa fa-sticky-note-o"></i>Message</h3>,
+            content: <div className="message">{ box.message } </div>
+          })
+        }
+        {
+          box.description &&
+          createFragment({
+            title: <h3><i className="fa fa-file-text-o"></i>Description</h3>,
+            content: <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description) } } />
+          })
+        }
+        <h3><i className="fa fa-list-ol"></i>Checks</h3>
         <section className="checks">
           {
             box.checks.map(({ title, status, message }: Check) =>

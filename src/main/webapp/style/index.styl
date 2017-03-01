@@ -1,6 +1,7 @@
 @import 'reset'
 @import 'fonts'
 @import 'utils'
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
 
 $green = #6bd689
 $red = #e7624f
@@ -247,7 +248,7 @@ body {
                 float: left
                 font-size: 14px
                 display: block
-                margin-top: 5px
+                margin: .25em 0
                 font-weight: 400
                 color: $white
               }
@@ -302,23 +303,24 @@ body {
     flex: 1
     flex-direction: column
     padding: 1em 2em
-    .info {
-      .message {
-        color: #5C5C5C
-      }
-      .description {
-        margin-top: 1em
-        padding: 1em 1.5em
-        background: #FBFBFB
-        flex-basis: 80%
-        margin-left: auto
-      }
-    }
     > h3 {
       font-weight: 500
       margin-bottom: 1em
       color: #2c3e50
       margin-top: 1em
+      > .fa {
+        margin-right: .5em
+      }
+    }
+    .message {
+      color: #5C5C5C
+      margin-bottom: 1em
+    }
+    .description {
+      padding: 1em 1.5em
+      background: #FBFBFB
+      margin-bottom: 1em
+      border: 1px solid #EAEAEA
     }
   }
   .checks {
