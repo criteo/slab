@@ -38,11 +38,11 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.22.0",
-    "inferno": "^1.2.2",
-    "inferno-compat": "^1.2.2",
-    "inferno-redux": "^1.2.2",
     "marked": "^0.3.6",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "react-modal": "^1.6.5",
+    "react-redux": "^5.0.3",
     "redux": "^3.5.2",
     "redux-saga": "^0.14.3",
     "whatwg-fetch": "^1.0.0"

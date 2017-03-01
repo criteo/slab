@@ -41,7 +41,7 @@ class BoxView extends Component {
         <BoxModal
           isOpen={this.state.isModalOpen}
           box={box}
-          onCloseClick={() => this.setState({ isModalOpen: false })}
+          onCloseClick={ () => this.setState({ isModalOpen: false }) }
         />
       </div>
     );

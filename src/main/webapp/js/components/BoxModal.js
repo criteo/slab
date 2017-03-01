@@ -43,22 +43,23 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
     style={style}
     contentLabel="box modal"
     closeTimeoutMS={200}
+    shouldCloseOnOverlayClick={true}
+    onRequestClose={ onCloseClick }
   >
     <div className="box-modal">
-      <header>
+      <header className={`${box.status} background`}>
         <span>{box.title}</span>
         <button onClick={onCloseClick}>&times;</button>
       </header>
       <main>
         <section className="info">
-          <div className="status">
-            <span className={`background circle ${box.status}`}></span>
-            <span className={`color ${box.status}`}>{box.status}</span>
-            <div className="message">
-              { box.message }
-            </div>
+          <div className="message">
+            { box.message }
           </div>
-          <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description || 'No description' ) } } />
+          {
+            box.description &&
+            <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description) } } />
+          }
         </section>
         <h3>Checks</h3>
         <section className="checks">
