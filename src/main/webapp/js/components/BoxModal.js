@@ -31,6 +31,9 @@ const style = {
     boxShadow: '0 0 24px rgba(0,0,0,.5)',
     border: 'none',
     borderRadius: '0'
+  },
+  overlay: {
+    background: 'rgba(255,255,255,0.25)'
   }
 };
 
@@ -39,6 +42,7 @@ const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
     isOpen={isOpen}
     style={style}
     contentLabel="box modal"
+    closeTimeoutMS={200}
   >
     <div className="box-modal">
       <header>
