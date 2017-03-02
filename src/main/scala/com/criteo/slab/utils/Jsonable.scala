@@ -15,4 +15,8 @@ object Jsonable {
     def toJSON: String = Serialization.write(in)
   }
 
+  implicit val stringList = new Jsonable[Iterable[String]] {
+    override val serializers: Seq[Serializer[_]] = Seq.empty
+  }
+
 }

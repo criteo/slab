@@ -21,6 +21,10 @@ class WebServer(val boards: Seq[Board])(implicit valueStore: ValueStore = NoopVa
   def apply(port: Int): Unit = {
     logger.info(s"starting server at port: $port")
     Server.listen(port) {
+      case GET at url"/api/boards" => {
+        logger.info(s"GET /api/boards")
+        Ok(boardsMap.keys.toJSON).addHeaders(HttpString("content-type") -> HttpString("application/json"))
+      }
       case GET at url"/api/boards/$board" => {
         logger.info(s"GET /api/boards/$board")
         val boardName = URLDecoder.decode(board, "UTF-8")

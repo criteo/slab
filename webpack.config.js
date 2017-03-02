@@ -17,7 +17,8 @@ var config = {
   ],
   output: {
     path: outPath,
-    filename: 'index.js'
+    filename: 'index.js',
+    publicPath: '/'
   },
   module: {
     loaders: [

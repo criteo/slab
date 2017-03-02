@@ -36,6 +36,11 @@ export type Board = {
   links: Array<Link>
 };
 
+export type Route = {
+  path: string,
+  [k: ?string]: any
+};
+
 export type Link = [string, string];
 
 type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
@@ -43,35 +48,73 @@ type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
 export type State = {
   isLoading: boolean,
   board: ?Board,
-  error: ?string
+  error: ?string,
+  route: Route,
+  boards: []
 };
 
 const initState: State = {
   isLoading: false,
   board: null,
-  error: null
+  error: null,
+  route: {
+    path: 'NOT_FOUND'
+  },
+  boards: []
 };
 
-export default function reducers(currentState: State = initState, action: Action): State {
+export default function reducers(state: State = initState, action: Action): State {
   switch (action.type) {
     case 'FETCH_BOARD':
       return {
-        ...currentState,
+        ...state,
         isLoading: true
       };
     case 'FETCH_BOARD_SUCCESS':
       return {
-        ...currentState,
+        ...state,
         isLoading: false,
         board: action.payload
       };
     case 'FETCH_BOARD_FAILURE':
       return {
-        ...currentState,
+        ...state,
         isLoading: false,
         error: action.payload
       };
+    case 'FETCH_BOARDS_SUCCESS':
+      return {
+        ...state,
+        boards: action.payload
+      };
+    case 'FETCH_BOARDS_FAILURE':
+      return {
+        ...state,
+        error: action.payload
+      };
+    case 'GOTO_BOARDS':
+      return {
+        ...state,
+        route: {
+          path: 'BOARDS'
+        }
+      };
+    case 'GOTO_BOARD':
+      return {
+        ...state,
+        route: {
+          path: 'BOARD',
+          board: action.payload.params.board
+        }
+      };
+    case 'NOT_FOUND':
+      return {
+        ...state,
+        route: {
+          path: 'NOT_FOUND'
+        }
+      };
     default:
-      return currentState;
+      return state;
   }
 }

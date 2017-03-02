@@ -1,16 +1,17 @@
 // @flow
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import type { State, Board } from '../state';
+import type { State, Board, Route } from '../state';
 import { fetchBoard } from '../actions';
 import Graph from './Graph';
-import { getCurrentBoardName } from '../utils';
+import BoardList from './BoardList';
 
 type Props = {
   error: ?string,
   isLoading: boolean,
   fetchBoard: Function,
-  board: ?Board
+  board: ?Board,
+  route: Route
 };
 
 class App extends Component {
@@ -24,17 +25,18 @@ class App extends Component {
   }
 
   render() {
-    const { error, board } = this.props;
+    const { error, board, route } = this.props;
     if (error)
       return (
         <h1 style={ { color: '#C20', fontSize: '36px' } }>
           {error}
         </h1>
       );
-    const boardName = getCurrentBoardName();
-    if (boardName) {
+    if (route.path === 'BOARDS')
+      return <BoardList />;
+    if (route.path === 'BOARD') {
       if (board)
-        return <Graph board={board}/>;
+        return <Graph board={board} />;
       else
         return (
           <div>
@@ -43,26 +45,29 @@ class App extends Component {
             </header>
           </div>
         );
-    }
-    else
+    } else
       return (
         <h1 style={ { color: '#BABABA', fontSize: '36px' } }>
-          board is not defined, please check the URL
+          Not found
         </h1>
       );
   }
 
   componentDidMount() {
-    const board = getCurrentBoardName();
-    if (board) {
-      this.props.fetchBoard(board);
-      setInterval(() => this.props.fetchBoard(board), 300000);
-    }
+    this.reload();
   }
 
   componenWillUnmount() {
-    if (this.poller)
-      clearInterval(this.poller);
+    clearTimeout(this.poller);
+  }
+
+  reload() {
+    const { route } = this.props;
+    if (route.board) {
+      this.props.fetchBoard(route.board);
+      clearTimeout(this.poller);
+      this.poller = setTimeout(() => this.reload(), 30 * 1000);
+    }
   }
 }
 
@@ -70,7 +75,8 @@ const select = (state: State, ownProps: Props): Props => ({
   ...ownProps,
   error: state.error,
   isLoading: state.isLoading,
-  board: state.board
+  board: state.board,
+  route: state.route
 });
 
 const actions = (dispatch, ownProps): Props => ({

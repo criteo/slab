@@ -14,8 +14,22 @@ export function* watchFetchBoard() {
   yield takeLatest('FETCH_BOARD', fetchBoard);
 }
 
+export function* fetchBoards() {
+  try {
+    const boards = yield call(api.fetchBoards);
+    yield put({ type: 'FETCH_BOARDS_SUCCESS', payload: boards });
+  } catch (error) {
+    yield put({ type: 'FETCH_BOARDS_FAILURE', payload: error });
+  }
+}
+
+export function* watchFetchBoards() {
+  yield takeLatest('FETCH_BOARDS', fetchBoards);
+}
+
 export default function* rootSaga() {
   yield fork(watchFetchBoard);
+  yield fork(watchFetchBoards);
 }
 
 // transform board response, merge views with layout

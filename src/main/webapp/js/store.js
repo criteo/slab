@@ -1,7 +1,9 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createSagaMiddlware from 'redux-saga';
+import { navigate } from 'redux-url';
 import reducer from './state';
 import rootSaga from './sagas';
+import router from './router';
 
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddlware();
@@ -9,12 +11,15 @@ export default function configureStore() {
     reducer,
       compose(
       applyMiddleware(
-        sagaMiddleware
+        sagaMiddleware,
+        router
       ),
       window.devToolsExtension ? window.devToolsExtension() : _ => _
     )
   );
   sagaMiddleware.run(rootSaga);
+
+  store.dispatch(navigate(location.pathname, true));
 
   if (module.hot) {
     module.hot.accept(() => {
