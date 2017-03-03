@@ -308,6 +308,7 @@ body {
       margin-bottom: 1em
       color: #2c3e50
       margin-top: 1em
+      font-size: 18px
       > .fa {
         margin-right: .5em
       }
@@ -367,16 +368,6 @@ body {
   }
 }
 
-// Modal closed
-#app {
-  transform: scale(1)
-  transition: transform .5s
-}
-
-.ReactModal__Content {
-  animation: scaleDown .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards
-}
-
 .ReactModal__Overlay {
   background: rgba(255,255,255,0)
   transition: background .5s
@@ -387,9 +378,20 @@ body {
   #app {
     transform: scale(.9)
   }
-  .ReactModal__Content {
-    animation: scaleUp .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards
-  }
+}
+
+.ReactModal__Content--after-open {
+  animation: scaleUp .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards
+}
+
+// Modal closed
+#app {
+  transform: scale(1)
+  transition: transform .5s
+}
+
+.ReactModal__Content--before-close {
+  animation: scaleDown .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards
 }
 
 @keyframes scaleUp {

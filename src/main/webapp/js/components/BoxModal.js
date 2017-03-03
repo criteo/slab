@@ -1,4 +1,5 @@
 // @flow
+import { Component } from 'react';
 import Modal from 'react-modal';
 import type { Box, Check } from '../state';
 import createFragment from 'react-addons-create-fragment';
@@ -38,52 +39,62 @@ const style = {
   }
 };
 
-const BoxModal = ( { isOpen, box, onCloseClick }: Props) => (
-  <Modal
-    isOpen={isOpen}
-    style={style}
-    contentLabel="box modal"
-    closeTimeoutMS={200}
-    shouldCloseOnOverlayClick={true}
-    onRequestClose={ onCloseClick }
-  >
-    <div className="box-modal">
-      <header className={`${box.status} background`}>
-        <span>{box.title}</span>
-        <button onClick={onCloseClick}>&times;</button>
-      </header>
-      <main>
-        {
-          box.message &&
-          createFragment({
-            title: <h3><i className="fa fa-sticky-note-o"></i>Message</h3>,
-            content: <div className="message">{ box.message } </div>
-          })
-        }
-        {
-          box.description &&
-          createFragment({
-            title: <h3><i className="fa fa-file-text-o"></i>Description</h3>,
-            content: <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description) } } />
-          })
-        }
-        <h3><i className="fa fa-list-ol"></i>Checks</h3>
-        <section className="checks">
-          {
-            box.checks.map(({ title, status, message }: Check) =>
-              <div className="check" key={ title }>
-                <span className={`status background ${status}`}></span>
-                <div className="content">
-                  <h4>{title}</h4>
-                  {message}
-                </div>
-              </div>
-            )
-          }
-        </section>
-      </main>
-    </div>
-  </Modal>
-);
+class BoxModal extends Component {
+  render() {
+    const { isOpen, box, onCloseClick } = this.props;
+    return (
+      <Modal isOpen={isOpen} style={style}
+        contentLabel="box modal"
+        closeTimeoutMS={200}
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={ onCloseClick }
+      >
+        <div className="box-modal">
+          <header className={`${box.status} background`}>
+            <span>{box.title}</span>
+            <button onClick={onCloseClick}>&times;</button>
+          </header>
+          <main>
+            {
+              box.message &&
+              createFragment({
+                title: <h3><i className="fa fa-sticky-note-o"></i>Message</h3>,
+                content: <div className="message">{ box.message } </div>
+              })
+            }
+            {
+              box.description &&
+              createFragment({
+                title: <h3><i className="fa fa-file-text-o"></i>Description</h3>,
+                content: <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description) } } />
+              })
+            }
+            <h3><i className="fa fa-list-ol"></i>Checks</h3>
+            <section className="checks">
+              {
+                box.checks.map(({ title, status, message }: Check) =>
+                  <div className="check" key={ title }>
+                    <span className={`status background ${status}`}></span>
+                    <div className="content">
+                      <h4>{title}</h4>
+                      {message}
+                    </div>
+                  </div>
+                )
+              }
+            </section>
+          </main>
+        </div>
+      </Modal>
+    );
+  }
+
+  shouldComponentUpdate(nextProps: Props) {
+    // prevent #app from scaling back after each update, as such update will remove .ReactModal__Body--open class from body
+    if (this.props.isOpen === nextProps.isOpen)
+      return false;
+    return true;
+  }
+}
 
 export default BoxModal;
