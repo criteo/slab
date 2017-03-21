@@ -11,16 +11,15 @@ lazy val root = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
     name := "slab",
+    resolvers += "Nexus" at "http://nexus.criteo.prod/service/local/repositories/criteo.thirdparty/content",
     libraryDependencies ++= Seq(
       "org.json4s" %% "json4s-native" % "3.4.2",
       "joda-time" % "joda-time" % "2.9.7",
       "org.scalatest" %% "scalatest" % "2.2.4" % Test,
       "org.mockito" % "mockito-core" % "2.7.0" % Test,
       // LOL HTTP
-      "co.fs2" %% "fs2-core" % "0.9.2",
-      "io.netty" % "netty-codec-http2" % "4.1.7.Final",
-      "org.bouncycastle" % "bcpkix-jdk15on" % "1.55",
-      "org.bouncycastle" % "bcprov-jdk15on" % "1.55"
+      "com.criteo.lolhttp" %% "lolhttp" % "0.2.1",
+      "io.netty" % "netty-codec-http2" % "4.1.7.Final"
     )
   )
 

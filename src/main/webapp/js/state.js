@@ -36,6 +36,11 @@ export type Board = {
   links: Array<Link>
 };
 
+export type TimeSeries = {
+  title: string,
+  data: Array<[number, number]>
+}
+
 export type Route = {
   path: string,
   [k: ?string]: any
@@ -47,20 +52,26 @@ type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
 
 export type State = {
   isLoading: boolean,
+  isLoadingTimeSeries: boolean,
   board: ?Board,
   error: ?string,
   route: Route,
-  boards: []
+  boards: Array<string>,
+  timeSeries: Array<TimeSeries>,
+  timeSeriesError: ?string
 };
 
 const initState: State = {
   isLoading: false,
+  isLoadingTimeSeries: false,
   board: null,
   error: null,
   route: {
     path: 'NOT_FOUND'
   },
-  boards: []
+  boards: [],
+  timeSeries: [],
+  timeSeriesError: null
 };
 
 export default function reducers(state: State = initState, action: Action): State {
@@ -91,6 +102,23 @@ export default function reducers(state: State = initState, action: Action): Stat
       return {
         ...state,
         error: action.payload
+      };
+    case 'FETCH_TIME_SERIES':
+      return {
+        ...state,
+        isLoadingTimeSeries: true
+      };
+    case 'FETCH_TIME_SERIES_SUCCESS':
+      return {
+        ...state,
+        isLoadingTimeSeries: false,
+        timeSeries: action.payload
+      };
+    case 'FETCH_TIME_SERIES_FAILURE':
+      return {
+        ...state,
+        isLoadingTimeSeries: false,
+        timeSeriesError: action.payload
       };
     case 'GOTO_BOARDS':
       return {

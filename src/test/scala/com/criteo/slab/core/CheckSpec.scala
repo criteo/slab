@@ -11,7 +11,7 @@ class CheckSpec extends FlatSpec with Matchers with FutureTests {
 
   "now" should "call apply and upload, return the current view" in {
     whenReady(versionCheck.now) { res =>
-      verify(store).upload("app.version", Seq(("version" -> 9000)))
+      verify(store).upload("app.version", Map(("version" -> 9000.0)))
       res shouldEqual ViewLeaf("app version", View(Status.Success, "version 9000"))
     }
   }

@@ -28,4 +28,12 @@ case class Check[V: Metrical](
       .recover { case e => View(Status.Unknown, e.getMessage) }
       .map(ViewLeaf(title, _))
   }
+
+  def fetchTimeSeries(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[List[Point]] = {
+    val metrical = implicitly[Metrical[V]]
+    val transform = metrical.toChartable _ compose metrical.fromMetrics _
+    store
+      .fetchBetween(id, from, until)
+      .map(_.map { case (metrics, timestamp) => Point(transform(metrics), timestamp) })
+  }
 }

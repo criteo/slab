@@ -8,7 +8,7 @@ import scala.concurrent.Future
 class FutureUtilsSpec extends FlatSpec with Matchers with FutureTests {
   "collect" should "put all results in a list if all futures are resolved" in {
     whenReady(
-      FutureUtils.collect(1 to 10 map (Future.successful(_)))
+      FutureUtils.join(1 to 10 map (Future.successful(_)))
     ) { res =>
       res shouldEqual (1 to 10).toList
     }
@@ -16,7 +16,7 @@ class FutureUtilsSpec extends FlatSpec with Matchers with FutureTests {
 
   "collect" should "return the first exception if there is any" in {
     whenReady(
-      FutureUtils.collect(List(
+      FutureUtils.join(List(
         Future.successful(1),
         Future.failed(new Exception("exp")),
         Future.successful(2)

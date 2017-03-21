@@ -12,7 +12,7 @@ package object example {
     id,
     title,
     () => Future.successful(Latency(value)),
-    display = (l: Latency, _: Context) => View(status, s"latency $value", label)
+    display = (l: Latency, _: Context) => View(status, s"latency ${value}ms", label)
   )
 
   def makeVersionCheck(id: String, title: String, value: Int, status: Status, label: Option[String] = None) = Check(

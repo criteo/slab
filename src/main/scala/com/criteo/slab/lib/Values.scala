@@ -1,6 +1,7 @@
 package com.criteo.slab.lib
 
 import com.criteo.slab.core.Metrical
+import com.criteo.slab.core.Metrical.Type
 import org.joda.time.DateTime
 
 object Values {
@@ -11,11 +12,12 @@ object Values {
                     )
 
   implicit def latencyMetric = new Metrical[Latency] {
-    override def toMetrics(value: Latency): Seq[(String, Long)] = Seq(("latency", value.underlying))
+    override def toMetrics(value: Latency) = Map("latency" -> value.underlying)
 
-    override def fromMetrics(ms: Seq[(String, Long)]): Latency = Latency(ms.head._2)
+    override def fromMetrics(ms: Metrical.Type): Latency = Latency(ms("latency").toInt)
+
+    override def toChartable(value: Latency): Double = value.underlying.toDouble
   }
-
 
   // Version check
   case class Version(
@@ -23,15 +25,19 @@ object Values {
                     )
 
   implicit def versionMetric = new Metrical[Version] {
-    override def toMetrics(value: Version): Seq[(String, Long)] = Seq(("version", value.underlying))
+    override def toMetrics(value: Version): Type = Map("version" -> value.underlying)
 
-    override def fromMetrics(ms: Seq[(String, Long)]): Version = Version(ms.head._2.toInt)
+    override def fromMetrics(ms: Type): Version = Version(ms("version").toInt)
+
+    override def toChartable(value: Version): Double = value.underlying.toDouble
   }
 
   // Joda DateTime
   implicit def jodaTimeMetric = new Metrical[DateTime] {
-    override def toMetrics(value: DateTime): Seq[(String, Long)] = Seq(("datetime", value.getMillis))
+    override def toMetrics(value: DateTime): Type = Map(
+      "datetime" -> value.getMillis
+    )
 
-    override def fromMetrics(ms: Seq[(String, Long)]): DateTime = new DateTime(ms.head._2)
+    override def fromMetrics(ms: Type): DateTime = new DateTime(ms("datetime"))
   }
 }

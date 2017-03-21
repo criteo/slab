@@ -19,6 +19,8 @@ class App extends Component {
 
   poller: ?number;
 
+  static POLLING_INTERVAL_SECONDS = 30;
+
   constructor(props: Props) {
     super(props);
     this.poller = null;
@@ -66,7 +68,7 @@ class App extends Component {
     if (route.board) {
       this.props.fetchBoard(route.board);
       clearTimeout(this.poller);
-      this.poller = setTimeout(() => this.reload(), 30 * 1000);
+      this.poller = setTimeout(() => this.reload(), App.POLLING_INTERVAL_SECONDS * 1000);
     }
   }
 }

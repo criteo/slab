@@ -1,9 +1,10 @@
 // @flow
 import { Component } from 'react';
-import Modal from 'react-modal';
-import type { Box, Check } from '../state';
 import createFragment from 'react-addons-create-fragment';
 import marked from 'marked';
+import Modal from 'react-modal';
+import type { Box } from '../state';
+import CheckList from './CheckList';
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -18,8 +19,8 @@ marked.setOptions({
 
 type Props = {
   isOpen: boolean,
-  onCloseClick: Function,
-  box: Box
+  box: Box,
+  onCloseClick: Function
 };
 
 const style = {
@@ -43,7 +44,9 @@ class BoxModal extends Component {
   render() {
     const { isOpen, box, onCloseClick } = this.props;
     return (
-      <Modal isOpen={isOpen} style={style}
+      <Modal
+        isOpen={isOpen}
+        style={style}
         contentLabel="box modal"
         closeTimeoutMS={200}
         shouldCloseOnOverlayClick={true}
@@ -70,19 +73,14 @@ class BoxModal extends Component {
               })
             }
             <h3><i className="fa fa-list-ol"></i>Checks</h3>
-            <section className="checks">
-              {
-                box.checks.map(({ title, status, message }: Check) =>
-                  <div className="check" key={ title }>
-                    <span className={`status background ${status}`}></span>
-                    <div className="content">
-                      <h4>{title}</h4>
-                      {message}
-                    </div>
-                  </div>
-                )
-              }
-            </section>
+            {
+              isOpen ?
+              <CheckList
+                boxTitle={box.title}
+                checks={box.checks}
+                ref='checkList'
+              /> : null
+            }
           </main>
         </div>
       </Modal>

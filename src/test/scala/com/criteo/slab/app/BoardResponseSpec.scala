@@ -22,7 +22,7 @@ class BoardResponseSpec extends FlatSpec with MockitoSugar with Matchers {
   it should "serialize correctly" in {
     when(box1.title) thenReturn "box1"
     when(box2.title) thenReturn "box2"
-    response.toJSON shouldEqual """{"view":{"title":"root","status":"SUCCESS","message":"message","children":[],"description":"desc"},"layout":{"columns":[]},"links":[["box1","box2"]]}"""
+    response.toJSON shouldEqual """{"view":{"title":"root","status":"SUCCESS","message":"message","children":[],"description":"desc","labelLimit":-1},"layout":{"columns":[]},"links":[["box1","box2"]]}"""
   }
 
 }
