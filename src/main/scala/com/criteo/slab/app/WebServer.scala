@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
-class WebServer(val boards: Seq[Board])(implicit valueStore: ValueStore = NoopValueStore, ec: ExecutionContext) {
+class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
   lazy val logger = LoggerFactory.getLogger(this.getClass)
 
   private val boardsMap: Map[String, Board] = boards.foldLeft(Map.empty[String, Board]) {
@@ -62,11 +62,9 @@ class WebServer(val boards: Seq[Board])(implicit valueStore: ValueStore = NoopVa
               case None => NotFound(s"Box $boxName does not exist in $board")
             }
           }
+        }
       }
     }
+    logger.info(s"Listening to $port")
   }
-
-  logger.info(s"Listening to $port")
-}
-
 }
