@@ -60,8 +60,8 @@ class CheckList extends Component {
 const select = (state: State) => ({
   timeSeries: state.timeSeries,
   isLoading: state.isLoadingTimeSeries,
-  error: state.error,
-  boardTitle: state.board ? state.board.title : ''
+  error: state.selectedBoardView.error,
+  boardTitle: state.selectedBoardView.data ? state.selectedBoardView.data.title : ''
 });
 
 const actions = (dispatch, ownProps: Props) => ({

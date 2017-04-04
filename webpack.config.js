@@ -38,6 +38,10 @@ var config = {
       {
         test: /\.styl/,
         loaders: ['style-loader', 'css-loader', 'stylus-loader']
+      },
+      {
+        test: /\.png$/,
+        loaders: ['file-loader']
       }
     ]
   },
@@ -81,7 +85,7 @@ var config = {
     },
     hot: !isProdMode
   },
-  devtool: 'cheap-module-source-map'
+  devtool: isProdMode ? 'source-map' : 'cheap-eval-source-map'
 };
 
 if (!isProdMode) {

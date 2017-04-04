@@ -1,6 +1,5 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createSagaMiddlware from 'redux-saga';
-import { navigate } from 'redux-url';
 import reducer from './state';
 import rootSaga from './sagas';
 import router from './router';
@@ -18,8 +17,6 @@ export default function configureStore() {
     )
   );
   sagaMiddleware.run(rootSaga);
-
-  store.dispatch(navigate(location.pathname, true));
 
   if (module.hot) {
     module.hot.accept(() => {

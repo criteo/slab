@@ -1,18 +1,21 @@
 import { call, put } from 'redux-saga/effects';
 import * as api from 'src/api';
-import { fetchBoard } from 'src/sagas';
+import { fetchBoard, fetchBoards } from 'src/sagas';
 describe('saga spec', () => {
 
   describe('fetchBoard', () => {
     it('calls API', () => {
-      const iter = fetchBoard({ board: 'boardname' }, r => r);
+      const iter = fetchBoard({ board: 'boardname' }, view => view);
       expect(iter.next().value).to.deep.equal(
+        call(fetchBoards)
+      );
+      expect(iter.next([{ layout: {}, links: [] }]).value).to.deep.equal(
         call(api.fetchBoard, 'boardname'),
       );
-      const fetchResult = [1,2];
-      expect(iter.next(fetchResult).value).to.deep.equal(put({
+      const result = iter.next({ view: [1,2,3] }).value;
+      expect(result).to.deep.equal(put({
         type: 'FETCH_BOARD_SUCCESS',
-        payload: fetchResult
+        payload: [1,2,3]
       }));
     });
 

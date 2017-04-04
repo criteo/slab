@@ -36,4 +36,18 @@ case class Check[V: Metrical](
       .fetchBetween(id, from, until)
       .map(_.map { case (metrics, timestamp) => Point(transform(metrics), timestamp) })
   }
+
+  def fetchHistory(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, ViewLeaf]] = {
+    val metrical = implicitly[Metrical[V]]
+    store
+      .fetchHistory(id, from, until)
+      .map {
+        _.map { case (timestamp, metrics) =>
+          // TODO: handle errors
+          // TODO: return a list of (Long, ViewLeaf) ?
+          val view = display(metrical.fromMetrics(metrics), Context(new DateTime(timestamp)))
+          (timestamp, ViewLeaf(title, view))
+        }
+      }
+  }
 }

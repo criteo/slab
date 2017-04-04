@@ -1,11 +1,11 @@
 // @flow
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import type { State } from '../state';
+import type { State, BoardConfig } from '../state';
 import { fetchBoards } from '../actions';
 
 type Props = {
-  boards: Array<string>,
+  boards: Array<BoardConfig>,
   fetchBoards: () => void
 };
 
@@ -39,7 +39,7 @@ class BoardList extends Component {
       <div className="board-list" style={ style.boardList }>
         {
           boards.map(board =>
-            <a style={ style.boardLink } href={`/${board}`} key={board}>{board}</a>
+            <a style={ style.boardLink } href={`/${board.title}`} key={board.title}>{board.title}</a>
           )
         }
       </div>

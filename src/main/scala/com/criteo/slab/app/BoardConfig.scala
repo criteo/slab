@@ -1,23 +1,21 @@
 package com.criteo.slab.app
 
-import com.criteo.slab.core.{Box, Layout, ViewTree}
+import com.criteo.slab.core.{Box, Layout}
 import com.criteo.slab.utils.Jsonable
 import org.json4s.JsonAST.{JArray, JString}
 import org.json4s.{CustomSerializer, Serializer}
 
-case class BoardResponse(
-                          view: ViewTree,
-                          layout: Layout,
-                          links: Seq[(Box, Box)] = Seq.empty
-                        )
+case class BoardConfig(
+                    title: String,
+                    layout: Layout,
+                    links: Seq[(Box, Box)] = Seq.empty
+                   )
 
-object BoardResponse {
-
-  implicit object ToJSON extends Jsonable[BoardResponse] {
+object BoardConfig {
+  implicit object ToJSON extends Jsonable[BoardConfig] {
     override val serializers: Seq[Serializer[_]] =
       implicitly[Jsonable[Box]].serializers ++
-        implicitly[Jsonable[Layout]].serializers ++
-        implicitly[Jsonable[ViewTree]].serializers :+
+        implicitly[Jsonable[Layout]].serializers :+
         LinkSer
 
     object LinkSer extends CustomSerializer[Box Tuple2 Box](_ => ( {
@@ -28,5 +26,4 @@ object BoardResponse {
     ))
 
   }
-
 }

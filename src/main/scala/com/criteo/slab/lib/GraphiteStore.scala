@@ -79,6 +79,25 @@ class GraphiteStore(
         }
     }
   }
+
+  override def fetchHistory(id: String, from: DateTime, until: DateTime): Future[Map[Long, Metrical.Type]] = {
+    val query = HttpClient.makeQuery(Map(
+      "target" -> s"$GroupPrefix$id.*",
+      "from" -> s"${from.toString(DateFormat)}",
+      "until" -> s"${until.toString(DateFormat)}",
+      "format" -> "json",
+      "noNullPoints" -> "true"
+    ))
+    val url = new URL(s"$webHost/render$query")
+    HttpClient.get[String](url, Map.empty) flatMap { content =>
+      Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) map { metrics =>
+        groupMetrics(s"$GroupPrefix$id", metrics)
+      } match {
+        case Success(metrics) => Future.successful(metrics)
+        case Failure(e) => Future.failed(e)
+      }
+    }
+  }
 }
 
 case class MissingValueException(message: String) extends Exception(message)
@@ -125,4 +144,22 @@ object GraphiteStore {
       pairs
   }
 
+  // group metrics by timestamp
+  def groupMetrics(prefix: String, metrics: List[GraphiteMetric]): Map[Long, Metrical.Type] = {
+    metrics
+      .view
+      .flatMap { metric =>
+        val name = metric.target.stripPrefix(s"${prefix}.")
+        metric
+          .datapoints
+          .view
+          .filter(_.value.isDefined)
+          .map { dp =>
+            (name, dp.value.get, dp.timestamp * 1000)
+          }
+          .force
+      }
+      .groupBy(_._3)
+      .mapValues(_.map { case (name, value, _) => (name, value) }.toMap)
+  }
 }

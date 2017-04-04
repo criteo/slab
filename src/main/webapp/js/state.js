@@ -1,5 +1,6 @@
 // @flow
 import type { Action } from './actions';
+import { combineViewAndLayout } from './utils';
 
 export type Check = {
   title: string,
@@ -28,7 +29,7 @@ export type Column = {
   rows: Array<Row>
 };
 
-export type Board = {
+export type BoardView = {
   title: string,
   status: Status,
   message: string,
@@ -36,10 +37,20 @@ export type Board = {
   links: Array<Link>
 };
 
+export type Layout = {
+  columns: Array<Column>
+};
+
+export type BoardConfig = {
+  title: string,
+  layout: Layout,
+  links: Array<Link>
+};
+
 export type TimeSeries = {
   title: string,
   data: Array<[number, number]>
-}
+};
 
 export type Route = {
   path: string,
@@ -51,48 +62,95 @@ export type Link = [string, string];
 type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
 
 export type State = {
-  isLoading: boolean,
   isLoadingTimeSeries: boolean,
-  board: ?Board,
-  error: ?string,
   route: Route,
-  boards: Array<string>,
+  boards: Array<BoardConfig>,
   timeSeries: Array<TimeSeries>,
-  timeSeriesError: ?string
+  timeSeriesError: ?string,
+  isLoadingHistory: boolean,
+  history: any,
+  historyError: ?string,
+  isLiveMode: boolean, // in live mode, polling the server
+  liveBoardView: {
+    isLoading: boolean,
+    data: ?BoardView,
+    error: ?string
+  },
+  selectedBoardView: { // board view to be displayed
+    isLoading: boolean,
+    data: ?BoardView,
+    error: ?string
+  },
+  selectedTimestamp: ?number,
+  pollingIntervalSeconds: number
 };
 
 const initState: State = {
-  isLoading: false,
   isLoadingTimeSeries: false,
-  board: null,
-  error: null,
+  isLoadingHistory: false,
+  history: {},
+  historyError: null,
   route: {
     path: 'NOT_FOUND'
   },
   boards: [],
   timeSeries: [],
-  timeSeriesError: null
+  timeSeriesError: null,
+  isLiveMode: true,
+  liveBoardView: {
+    isLoading: false,
+    data: null,
+    error: null
+  },
+  selectedBoardView: {
+    isLoading: false,
+    data: null,
+    error: null,
+  },
+  selectedTimestamp: null,
+  pollingIntervalSeconds: 0
 };
 
 export default function reducers(state: State = initState, action: Action): State {
   switch (action.type) {
-    case 'FETCH_BOARD':
-      return {
-        ...state,
+    // Current board view
+    case 'FETCH_BOARD': {
+      const liveBoardView = {
+        ...state.liveBoardView,
         isLoading: true
       };
-    case 'FETCH_BOARD_SUCCESS':
       return {
         ...state,
-        isLoading: false,
-        board: action.payload
+        liveBoardView,
+        selectedBoardView: state.isLiveMode ? liveBoardView : state.selectedBoardView
       };
-    case 'FETCH_BOARD_FAILURE':
+    }
+    case 'FETCH_BOARD_SUCCESS': {
+      const liveBoardView = {
+        ...state.liveBoardView,
+        isLoading: false,
+        data: action.payload,
+        error: null
+      };
       return {
         ...state,
+        liveBoardView,
+        selectedBoardView: state.isLiveMode ? liveBoardView : state.selectedBoardView
+      };
+    }
+    case 'FETCH_BOARD_FAILURE': {
+      const liveBoardView = {
+        ...state.liveBoardView,
         isLoading: false,
         error: action.payload
       };
+      return {
+        ...state,
+        liveBoardView,
+        selectedBoardView: state.isLiveMode ? liveBoardView : state.selectedBoardView
+      };
+    }
+    // Boards
     case 'FETCH_BOARDS_SUCCESS':
       return {
         ...state,
@@ -120,6 +178,56 @@ export default function reducers(state: State = initState, action: Action): Stat
         isLoadingTimeSeries: false,
         timeSeriesError: action.payload
       };
+    // History
+    case 'FETCH_HISTORY':
+      return {
+        ...state,
+        isLoadingHistory: true
+      };
+    case 'FETCH_HISTORY_SUCCESS':
+      return {
+        ...state,
+        isLoadingHistory: false,
+        history: action.payload,
+        historyError: null
+      };
+    case 'FETCH_HISTORY_FAILURE':
+      return {
+        ...state,
+        isLoadingHistory: false,
+        historyError: action.payload
+      };
+    // Time travel
+    case 'SWITCH_BOARD_VIEW':
+      if (action.isLiveMode === true)
+        return {
+          ...state,
+          selectedBoardView: state.liveBoardView,
+          isLiveMode: action.isLiveMode
+        };
+      else {
+        const view = state.history[action.timestamp];
+        const config = state.boards.find(_ => _.title === view.title);
+        if (config)
+          return {
+            ...state,
+            selectedBoardView: {
+              isLoading: false,
+              error: null,
+              data: combineViewAndLayout(view, config.layout, config.links),
+            },
+            isLiveMode: action.isLiveMode,
+            selectedTimestamp: action.timestamp
+          };
+        return state;
+      }
+    // Polling service
+    case 'SET_POLLING_INTERVAL':
+      return {
+        ...state,
+        pollingIntervalSeconds: action.interval
+      };
+    // Routes
     case 'GOTO_BOARDS':
       return {
         ...state,

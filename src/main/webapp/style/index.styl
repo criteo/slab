@@ -1,7 +1,9 @@
 @import 'reset'
 @import 'fonts'
 @import 'utils'
+@import 'Timeline'
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+@import '~vis/dist/vis.css'
 
 $green = #2ebd59
 $red = #e7624f
@@ -10,6 +12,7 @@ $black = #2b3238
 $white = #ffffff
 $gray = #e0e0e0
 $darkgray = #bababa
+$blue = #2196f3
 
 $checkHeight = 25px
 $checkMarginTop = 5px
@@ -31,7 +34,40 @@ body {
   #app {
     height: 100%
     background: $black
+    .time-indicator {
+      background: rgba(255, 255, 255, 0.37)
+      color: $white
+      position: absolute
+      right: 0
+      font-size: 18px
+      padding: .25em .5em
+      z-index: 100
+      > span {
+        display: flex
+        align-items: center
+      }
+      button {
+        background: $blue
+        margin-left: .5em
+        padding: .25em .5em
+        border: 0
+        color: white
+        cursor: pointer
+        outline: 0
+        &:hover {
+          color: #DFDFDF
+          background: lighten($blue, 10%)
+        }
+        &:active {
+          color: white
+          background: $blue
+        }
+      }
+    }
     & > div {
+      height: 100%;
+    }
+    & .graph {
       height: 100%
       display: flex
       flex-direction: column
@@ -43,23 +79,15 @@ body {
 
       header {
         background: $white
-        height: 100px
-        cursor: pointer
-        transition: transform 250ms ease-in-out
+        height: 75px
         z-index: 10
-
-        &:hover {
-          transform: scale(1.1)
-          box-shadow: 0 0 24px rgba(0,0,0,.5)
-        }
-
         h1 {
           flex: 1
           color: $white
-          font-size: 36px
+          font-size: 30px
           text-align: center
           font-weight: 400
-          line-height: 65px
+          line-height: 50px
         }
 
         p {

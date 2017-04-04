@@ -37,4 +37,22 @@ case class Board(
       _.fetchTimeSeries(from, until).map(Some(_))
     }.getOrElse(Future.successful(None))
   }
+
+  def fetchHistory(from: DateTime, until: DateTime)(implicit ec: ExecutionContext): Future[Map[Long, ViewTree]] = {
+    boxes.map(_.fetchHistory(from, until))
+    FutureUtils.join(
+      boxes.map(_.fetchHistory(from, until))
+    ).map { maps =>
+      maps.flatMap(_.toList)
+        .groupBy(_._1)
+        .mapValues { in =>
+          val viewNodes = in.map(_._2)
+          ViewNode(
+            title,
+            aggregate(viewNodes.map(_.view)),
+            viewNodes
+          )
+        }
+    }
+  }
 }

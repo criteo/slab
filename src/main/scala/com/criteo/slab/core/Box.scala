@@ -36,6 +36,25 @@ case class Box(
       }
     )
   }
+
+  def fetchHistory(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, ViewNode]] = {
+    FutureUtils.join(
+      checks.map(_.fetchHistory(from, until))
+    ).map { maps =>
+      maps.flatMap(_.toList)
+        .groupBy(_._1)
+        .mapValues { in =>
+          val viewLeafs = in.map(_._2)
+          ViewNode(
+            title,
+            aggregate(viewLeafs.map(_.view)),
+            viewLeafs,
+            description,
+            labelLimit
+          )
+        }
+    }
+  }
 }
 
 object Box {

@@ -87,6 +87,23 @@ class GraphiteStoreSpec extends FlatSpec with Matchers with FutureTests {
     )
   }
 
+  "group metrics" should "group metrics" in {
+    val metrics = List(
+      GraphiteMetric(
+        "metric.one",
+        List(DataPoint(Some(1), 1000), DataPoint(Some(2), 2000))
+      ),
+      GraphiteMetric(
+        "metric.two",
+        List(DataPoint(Some(3), 1000), DataPoint(Some(4), 2000))
+      )
+    )
+    GraphiteStore.groupMetrics("metric", metrics) shouldEqual Map(
+      1000000 -> Map("one" -> 1, "two" -> 3),
+      2000000 -> Map("one" -> 2, "two" -> 4)
+    )
+  }
+
   class Echo(server: ServerSocket) extends Callable[String] {
     def call() = {
       val s = server.accept

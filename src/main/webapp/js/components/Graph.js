@@ -1,12 +1,13 @@
 // @flow
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-
 import Box from './Box';
-import type { Board } from '../state';
+import Timeline from './Timeline';
+
+import type { BoardView } from '../state';
 
 type Props = {
-  board: Board
+  board: BoardView
 };
 
 class Graph extends Component {
@@ -41,6 +42,11 @@ class Graph extends Component {
             ))
           }
         </main>
+        <footer>
+          <Timeline
+            boardTitle={board.title}
+          />
+        </footer>
       </div>
     );
   }
