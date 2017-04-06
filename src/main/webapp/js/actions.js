@@ -1,5 +1,5 @@
 // @flow
-import type { Board, TimeSeries, BoardConfig } from './state';
+import type { BoardView, TimeSeries, BoardConfig } from './state';
 
 export type Action =
   FETCH_BOARD | FETCH_BOARD_SUCCESS | FETCH_BOARD_FAILURE | FETCH_BOARDS | FETCH_BOARDS_SUCCESS | FETCH_BOARDS_FAILURE
@@ -9,7 +9,7 @@ export type Action =
   | SET_POLLING_INTERVAL;
 
 export type FETCH_BOARD = { type: 'FETCH_BOARD', board: string };
-export type FETCH_BOARD_SUCCESS = { type: 'FETCH_BOARD_SUCCESS', payload: Board };
+export type FETCH_BOARD_SUCCESS = { type: 'FETCH_BOARD_SUCCESS', payload: BoardView };
 export type FETCH_BOARD_FAILURE = { type: 'FETCH_BOARD_FAILURE', payload: string };
 
 export function fetchBoard(board: string): FETCH_BOARD {
@@ -43,14 +43,15 @@ export function fetchTimeSeries(board: string, box: string, from: number, until:
   };
 }
 
-export type FETCH_HISTORY = { type: 'FETCH_HISTORY' };
+export type FETCH_HISTORY = { type: 'FETCH_HISTORY', board: string, date: ?string };
 export type FETCH_HISTORY_SUCCESS = { type: 'FETCH_HISTORY_SUCCESS', board: string, payload: Array<any> };
 export type FETCH_HISTORY_FAILURE = { type: 'FETCH_HISTORY_FAILURE', payload: string };
 
-export function fetchHistory(board: string): FETCH_HISTORY {
+export function fetchHistory(board: string, date: ?string): FETCH_HISTORY {
   return {
     type: 'FETCH_HISTORY',
-    board
+    board,
+    date
   };
 }
 
@@ -61,6 +62,15 @@ export function switchBoardView(isLiveMode: boolean, timestamp: number = 0): SWI
     type: 'SWITCH_BOARD_VIEW',
     isLiveMode,
     timestamp
+  };
+}
+
+export type SWITCH_TIMELINE_DATE = { type: 'SWITCH_TIMELINE_DATE', date: ?string };
+
+export function switchTimelineDate(date: ?string): SWITCH_TIMELINE_DATE {
+  return {
+    type: 'SWITCH_TIMELINE_DATE',
+    date
   };
 }
 

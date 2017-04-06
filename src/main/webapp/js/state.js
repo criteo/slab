@@ -67,10 +67,13 @@ export type State = {
   boards: Array<BoardConfig>,
   timeSeries: Array<TimeSeries>,
   timeSeriesError: ?string,
-  isLoadingHistory: boolean,
-  history: any,
-  historyError: ?string,
   isLiveMode: boolean, // in live mode, polling the server
+  history: {
+    isLoading: boolean,
+    data: any,
+    error: ?string,
+    date: ?string
+  },
   liveBoardView: {
     isLoading: boolean,
     data: ?BoardView,
@@ -86,17 +89,20 @@ export type State = {
 };
 
 const initState: State = {
-  isLoadingTimeSeries: false,
-  isLoadingHistory: false,
-  history: {},
-  historyError: null,
   route: {
     path: 'NOT_FOUND'
   },
   boards: [],
   timeSeries: [],
+  isLoadingTimeSeries: false,
   timeSeriesError: null,
   isLiveMode: true,
+  history: {
+    isLoading: false,
+    data: null,
+    error: null,
+    date: null
+  },
   liveBoardView: {
     isLoading: false,
     data: null,
@@ -161,6 +167,7 @@ export default function reducers(state: State = initState, action: Action): Stat
         ...state,
         error: action.payload
       };
+    // Time series
     case 'FETCH_TIME_SERIES':
       return {
         ...state,
@@ -182,20 +189,30 @@ export default function reducers(state: State = initState, action: Action): Stat
     case 'FETCH_HISTORY':
       return {
         ...state,
-        isLoadingHistory: true
+        history: {
+          ...state.history,
+          isLoading: true,
+          date: action.date
+        }
       };
     case 'FETCH_HISTORY_SUCCESS':
       return {
         ...state,
-        isLoadingHistory: false,
-        history: action.payload,
-        historyError: null
+        history: {
+          ...state.history,
+          isLoading: false,
+          error: null,
+          data: action.payload
+        }
       };
     case 'FETCH_HISTORY_FAILURE':
       return {
         ...state,
-        isLoadingHistory: false,
-        historyError: action.payload
+        history: {
+          ...state.history,
+          isLoading: false,
+          error: action.payload
+        }
       };
     // Time travel
     case 'SWITCH_BOARD_VIEW':
@@ -206,7 +223,7 @@ export default function reducers(state: State = initState, action: Action): Stat
           isLiveMode: action.isLiveMode
         };
       else {
-        const view = state.history[action.timestamp];
+        const view = state.history.data[action.timestamp];
         const config = state.boards.find(_ => _.title === view.title);
         if (config)
           return {

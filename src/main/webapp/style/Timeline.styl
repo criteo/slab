@@ -1,5 +1,28 @@
 .timeline {
-  height: 60px
+  > #controller {
+    padding: .25em .5em
+    position: relative
+    color: rgba(255,255,255,.8)
+    background: rgba(128,128,128,.25)
+    display: flex
+    font-size: 18px
+    > .DayPicker {
+      color: black
+      position: absolute
+      bottom: 2em
+      background: white
+    }
+    > .board {
+      margin-left: auto
+    }
+    > span {
+      display: flex
+      align-items: center
+    }
+  }
+  > #container {
+    height: 60px
+  }
   .vis-panel.vis-center {
     overflow: visible
   }

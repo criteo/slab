@@ -2,15 +2,16 @@
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
-import type { State } from '../state';
-import { fetchHistory, switchBoardView } from '../actions';
 import vis from 'vis';
 import moment from 'moment';
+import type { State } from '../state';
+import { fetchHistory, switchBoardView } from '../actions';
+import Controller from './TimelineController';
 
 type Props = {
   boardTitle: string,
   history: any,
-  historyError: ?string,
+  error: ?string,
   isLoading: boolean,
   fetchHistory: () => void,
   switchBoardView: (isLiveMode: boolean, timestamp?: number) => void,
@@ -33,11 +34,12 @@ class Timeline extends Component {
   }
 
   render() {
-    const { history, isLoading, historyError } = this.props;
+    const { history, isLoading, error, boardTitle } = this.props;
     return (
       <div className="timeline">
+        <Controller boardTitle={boardTitle}/>
         {isLoading && <div>Loading...</div>}
-        {historyError && <div>{historyError}</div>}
+        {error && <div>{error}</div>}
         {history && <div id="container" />}
       </div>
     );
@@ -62,27 +64,34 @@ class Timeline extends Component {
     }
     if (container) {
       container.innerHTML = '';
-      const dataset =
-        Object
-          .entries(history)
-          .filter(([_, view]: [string, any]) => view.status === 'ERROR' || view.status === 'WARNING')
-          .map(([ts, view]: [string, any], i) => {
-            const date = moment(parseInt(ts));
-            return {
-              date,
-              id: i,
-              content: '',
-              start: date.format(Timeline.DATE_FORMAT),
-              title: date.format(Timeline.DATE_FORMAT),
-              className: `${view.status} background`
-            };
-          })
-          .sort((a, b) => a.start.localeCompare(b.start));
+      const dataset = Object.entries(history)
+        .filter(
+          ([_, view]: [string, any]) =>
+            view.status === 'ERROR' || view.status === 'WARNING'
+        )
+        .map(([ts, view]: [string, any], i) => {
+          const date = moment(parseInt(ts));
+          return {
+            date,
+            id: i,
+            content: '',
+            start: date.format(Timeline.DATE_FORMAT),
+            title: date.format(Timeline.DATE_FORMAT),
+            className: `${view.status} background`
+          };
+        })
+        .sort((a, b) => a.start.localeCompare(b.start));
       if (dataset.length > 0) {
         const timeline = new vis.Timeline(container, dataset, {
           height: 60,
-          min: dataset[0].date.clone().subtract(1, 'hour').format(Timeline.DATE_FORMAT),
-          max: dataset[dataset.length - 1].date.clone().add(1, 'hour').format(Timeline.DATE_FORMAT),
+          min: dataset[0].date
+            .clone()
+            .subtract(1, 'hour')
+            .format(Timeline.DATE_FORMAT),
+          max: dataset[dataset.length - 1].date
+            .clone()
+            .add(1, 'hour')
+            .format(Timeline.DATE_FORMAT),
           type: 'point',
           stack: false,
           zoomMin: 60 * 1000
@@ -103,15 +112,16 @@ class Timeline extends Component {
 }
 
 const select = (state: State) => ({
-  history: state.history,
-  historyError: state.historyError,
-  isLoading: state.isLoadingHistory,
+  history: state.history.data,
+  error: state.history.error,
+  isLoading: state.history.error,
   isLiveMode: state.isLiveMode
 });
 
 const actions = (dispatch, ownProps: Props) => ({
   fetchHistory: () => dispatch(fetchHistory(ownProps.boardTitle)),
-  switchBoardView: (isLiveMode, timestamp = 0) => dispatch(switchBoardView(isLiveMode, timestamp))
+  switchBoardView: (isLiveMode, timestamp = 0) =>
+    dispatch(switchBoardView(isLiveMode, timestamp))
 });
 
 export default connect(select, actions)(Timeline);

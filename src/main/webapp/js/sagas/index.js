@@ -55,7 +55,11 @@ export function* watchFetchTimeSeries() {
 // fetch last history
 export function* fetchHistory(action) {
   try {
-    const history = yield call(api.fetchHistory, action.board);
+    const history = yield call(
+      action.date ? api.fetchHistoryOfDay : api.fetchHistory,
+      action.board,
+      action.date
+    );
     yield put({ type: 'FETCH_HISTORY_SUCCESS', payload: history });
   } catch (error) {
     yield put({ type: 'FETCH_HISTORY_FAILURE', paylod: error });
@@ -84,6 +88,7 @@ export function* watchPollingIntervalChange() {
 
 // root
 export default function* rootSaga() {
+  // watchers
   yield fork(watchFetchBoard);
   yield fork(watchFetchBoards);
   yield fork(watchFetchTimeSeries);
