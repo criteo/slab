@@ -40,7 +40,7 @@ object ViewTree {
             ("message" -> v.view.message) ~
             ("children" -> v.children.map(Extraction.decompose)) ~
             ("description" -> v.description.getOrElse("")) ~
-            ("labelLimit" -> v.labelLimit.getOrElse(-1))
+            ("labelLimit" -> v.labelLimit.getOrElse(v.children.size))
         case v: ViewLeaf =>
           ("title" -> v.title) ~
             ("status" -> v.view.status.name) ~

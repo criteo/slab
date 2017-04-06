@@ -24,20 +24,19 @@ class BoxView extends Component {
 
   render() {
     const { box } = this.props;
-    const labelLimit = box.labelLimit > -1 ? box.labelLimit : box.checks.length;
     return (
       <div className={`box ${box.status}`} onClick={this.handleBoxClick}>
         <h3>{ box.title }</h3>
         { box.message ? <strong>{ box.message }</strong> : null }
         <div className="checks">
           {
-            box.checks.slice(0, labelLimit).map((c: Check) =>
+            box.checks.slice(0, box.labelLimit).map((c: Check) =>
               <span className={`check ${c.status}`} key={c.title}>{c.label || c.title}</span>
             )
           }
         </div>
         {
-          labelLimit !== 0 && labelLimit < box.checks.length &&
+          box.labelLimit !== 0 && box.labelLimit < box.checks.length &&
           <div id="more">...</div>
         }
         <BoxModal

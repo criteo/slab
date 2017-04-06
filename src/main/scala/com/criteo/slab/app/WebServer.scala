@@ -29,6 +29,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
     stateService.start()
     Server.listen(port) {
       case GET at url"/api/boards" => {
+        // Configs of boards
         logger.info(s"GET /api/boards")
         Ok(
           boards.map { board =>
@@ -37,6 +38,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
         ).addHeaders(HttpString("content-type") -> HttpString("application/json"))
       }
       case GET at url"/api/boards/$board" => {
+        // Current board view
         logger.info(s"GET /api/boards/$board")
         val boardName = URLDecoder.decode(board, "UTF-8")
         boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
