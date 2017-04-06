@@ -35,7 +35,7 @@ class Timeline extends Component {
   render() {
     const { history, isLoading, historyError } = this.props;
     return (
-      <div className="timeline" style={ { 'height': '100px' } }>
+      <div className="timeline">
         {isLoading && <div>Loading...</div>}
         {historyError && <div>{historyError}</div>}
         {history && <div id="container" />}
@@ -69,19 +69,23 @@ class Timeline extends Component {
           .map(([ts, view]: [string, any], i) => {
             const date = moment(parseInt(ts));
             return {
+              date,
               id: i,
-              content: view.status,
+              content: '',
               start: date.format(Timeline.DATE_FORMAT),
-              className: `${view.status} background`,
-              date
+              title: date.format(Timeline.DATE_FORMAT),
+              className: `${view.status} background`
             };
           })
           .sort((a, b) => a.start.localeCompare(b.start));
       if (dataset.length > 0) {
         const timeline = new vis.Timeline(container, dataset, {
-          height: 100,
+          height: 60,
           min: dataset[0].date.clone().subtract(1, 'hour').format(Timeline.DATE_FORMAT),
-          max: dataset[dataset.length - 1].date.clone().add(1, 'hour').format(Timeline.DATE_FORMAT)
+          max: dataset[dataset.length - 1].date.clone().add(1, 'hour').format(Timeline.DATE_FORMAT),
+          type: 'point',
+          stack: false,
+          zoomMin: 60 * 1000
         });
         timeline.on('select', ({ items }) => {
           if (items.length > 0) {

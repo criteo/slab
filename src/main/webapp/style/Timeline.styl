@@ -1,15 +1,31 @@
 .timeline {
+  height: 60px
+  .vis-panel.vis-center {
+    overflow: visible
+  }
   .vis-item {
     border-color: transparent
     color: white
-    transition: transform .5s
+    margin-top: 9px
     &:hover {
       cursor: pointer
     }
+    &.vis-dot {
+      top: 0px !important
+      left: 6px !important
+      border-radius: 6px
+      border-width: 6px
+      transition: transform .5s
+      &.vis-selected {
+        transform: scale(1.5)
+      }
+    }
     &.vis-selected {
-      transform: scale(1.5)
       background: #2196F3
       border-color: transparent
+      &.vis-point {
+        background: transparent
+      }
     }
   }
 }
