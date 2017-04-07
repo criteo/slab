@@ -68,25 +68,6 @@ class GraphiteStoreSpec extends FlatSpec with Matchers with FutureTests {
     GraphiteStore.transformMetrics("metric", metrics) shouldEqual Map.empty
   }
 
-  "collect metrics" should "return non empty metrics with timestamp" in {
-    val metrics = List(
-      GraphiteMetric(
-        "metric.one",
-        List(DataPoint(Some(1), 1000), DataPoint(None, 2000))
-      ),
-      GraphiteMetric(
-        "metric.two",
-        List(DataPoint(Some(2), 1000), DataPoint(None, 2000))
-      )
-    )
-    GraphiteStore.collectMetrics("metric", metrics) shouldEqual List(
-      (Map(
-        "one" -> 1.0,
-        "two" -> 2.0
-      ), 1000000)
-    )
-  }
-
   "group metrics" should "group metrics" in {
     val metrics = List(
       GraphiteMetric(

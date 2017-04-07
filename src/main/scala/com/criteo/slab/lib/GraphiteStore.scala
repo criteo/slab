@@ -59,27 +59,6 @@ class GraphiteStore(
     }
   }
 
-  override def fetchBetween(id: String, from: DateTime, until: DateTime): Future[List[(Metrical.Type, Long)]] = {
-    val query = HttpClient.makeQuery(Map(
-      "target" -> s"$GroupPrefix$id.*",
-      "from" -> s"${from.toString(DateFormat)}",
-      "until" -> s"${until.toString(DateFormat)}",
-      "format" -> "json",
-      "noNullPoints" -> "true",
-      "maxDataPoints" -> "100"
-    ))
-    val url = new URL(s"$webHost/render$query")
-    HttpClient.get[String](url, Map.empty).flatMap {
-      content =>
-        Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) match {
-          case Success(metrics) =>
-            val pairs = collectMetrics(s"$GroupPrefix$id", metrics)
-            Future.successful(pairs)
-          case Failure(e) => Future.failed(e)
-        }
-    }
-  }
-
   override def fetchHistory(id: String, from: DateTime, until: DateTime): Future[Map[Long, Metrical.Type]] = {
     val query = HttpClient.makeQuery(Map(
       "target" -> s"$GroupPrefix$id.*",
@@ -111,20 +90,6 @@ object GraphiteStore {
       ps.flush
       socket.close
     }
-  }
-
-  // collect non empty metrics with timestamp
-  def collectMetrics(prefix: String, metrics: List[GraphiteMetric]): List[(Metrical.Type, Long)] = {
-    metrics
-      .map(metric => metric.datapoints.map(metric.target.stripPrefix(s"${prefix}.") -> _))
-      .transpose
-      .map { xs =>
-        val metrics = xs.collect { case (name, DataPoint(Some(value), _)) =>
-          name -> value
-        }.toMap
-        (metrics, xs.head._2.timestamp * 1000) // Graphite uses timestamps in seconds
-      }
-      .filter(_._1.nonEmpty)
   }
 
   // take first defined DataPoint of each metric

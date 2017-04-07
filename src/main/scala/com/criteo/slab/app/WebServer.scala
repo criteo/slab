@@ -69,23 +69,6 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
           }
         }
       }
-      case GET at url"/api/boards/$board/$box/timeseries?from=$from&until=$until" => {
-        logger.info(s"GET /api/boards/$board/$box/timeseries")
-        val boardName = URLDecoder.decode(board, "UTF-8")
-        boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
-          val boxName = URLDecoder.decode(box, "UTF-8")
-          val range = for {
-            f <- Try(from.toLong).map(new DateTime(_)).toOption
-            u <- Try(until.toLong).map(new DateTime(_)).toOption
-          } yield (f, u)
-          range.fold(Future.successful(BadRequest("Invalid timestamp"))) { case (from, until) =>
-            board.fetchTimeSeries(boxName, from, until).map {
-              case Some(ts) => Ok(ts.toJSON).addHeaders(HttpString("content-type") -> HttpString("application/json"))
-              case None => NotFound(s"Box $boxName does not exist in $board")
-            }
-          }
-        }
-      }
       case GET at url"/api/boards/$board/history?last" => {
         logger.info(s"GET /api/boards/$board/history?last")
         val boardName = URLDecoder.decode(board, "UTF-8")

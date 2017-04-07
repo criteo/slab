@@ -28,15 +28,6 @@ case class Box(
       )
   }
 
-  def fetchTimeSeries(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Seq[TimeSeries]] = {
-    FutureUtils.join(
-      checks.map { c =>
-        c.fetchTimeSeries(from, until)
-          .map(TimeSeries(c.title, _))
-      }
-    )
-  }
-
   def fetchHistory(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, ViewNode]] = {
     FutureUtils.join(
       checks.map(_.fetchHistory(from, until))

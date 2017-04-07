@@ -32,12 +32,6 @@ case class Board(
       )
     )
 
-  def fetchTimeSeries(boxName: String, from: DateTime, until: DateTime)(implicit ec: ExecutionContext): Future[Option[Seq[TimeSeries]]] = {
-    boxes.find(_.title == boxName).map {
-      _.fetchTimeSeries(from, until).map(Some(_))
-    }.getOrElse(Future.successful(None))
-  }
-
   def fetchHistory(from: DateTime, until: DateTime)(implicit ec: ExecutionContext): Future[Map[Long, ViewTree]] = {
     boxes.map(_.fetchHistory(from, until))
     FutureUtils.join(

@@ -15,8 +15,6 @@ object Values {
     override def toMetrics(value: Latency) = Map("latency" -> value.underlying)
 
     override def fromMetrics(ms: Metrical.Type): Latency = Latency(ms("latency").toInt)
-
-    override def toChartable(value: Latency): Double = value.underlying.toDouble
   }
 
   // Version check
@@ -28,8 +26,6 @@ object Values {
     override def toMetrics(value: Version): Type = Map("version" -> value.underlying)
 
     override def fromMetrics(ms: Type): Version = Version(ms("version").toInt)
-
-    override def toChartable(value: Version): Double = value.underlying.toDouble
   }
 
   // Joda DateTime

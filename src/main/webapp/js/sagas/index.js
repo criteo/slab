@@ -38,20 +38,6 @@ export function* watchFetchBoards() {
   yield takeLatest('FETCH_BOARDS', fetchBoards);
 }
 
-// time series
-export function* fetchTimeSeries(action) {
-  try {
-    const timeSeries = yield call(api.fetchTimeSeries, action.board, action.box, action.from, action.until);
-    yield put({ type: 'FETCH_TIME_SERIES_SUCCESS', payload: timeSeries });
-  } catch (error) {
-    yield put({ type: 'FETCH_TIME_SERIES_FAILURE', payload: error });
-  }
-}
-
-export function* watchFetchTimeSeries() {
-  yield takeLatest('FETCH_TIME_SERIES', fetchTimeSeries);
-}
-
 // fetch last history
 export function* fetchHistory(action) {
   try {
@@ -98,11 +84,10 @@ export default function* rootSaga() {
   // watchers
   yield fork(watchFetchBoard);
   yield fork(watchFetchBoards);
-  yield fork(watchFetchTimeSeries);
   yield fork(watchFetchHistory);
   yield fork(watchPollingIntervalChange);
 
   // initial setup
   yield put(navigate(location.pathname, true));
-  yield put(setPollingInterval(5));
+  yield put(setPollingInterval(60));
 }

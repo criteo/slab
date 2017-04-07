@@ -47,11 +47,6 @@ export type BoardConfig = {
   links: Array<Link>
 };
 
-export type TimeSeries = {
-  title: string,
-  data: Array<[number, number]>
-};
-
 export type Route = {
   path: string,
   [k: ?string]: any
@@ -63,11 +58,8 @@ type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
 
 export type State = {
   currentBoard: ?string,
-  isLoadingTimeSeries: boolean,
   route: Route,
   boards: Array<BoardConfig>,
-  timeSeries: Array<TimeSeries>,
-  timeSeriesError: ?string,
   isLiveMode: boolean, // in live mode, polling the server
   history: {
     isLoading: boolean,
@@ -95,9 +87,6 @@ const initState: State = {
   },
   currentBoard: null,
   boards: [],
-  timeSeries: [],
-  isLoadingTimeSeries: false,
-  timeSeriesError: null,
   isLiveMode: true,
   history: {
     isLoading: false,
@@ -168,24 +157,6 @@ export default function reducers(state: State = initState, action: Action): Stat
       return {
         ...state,
         error: action.payload
-      };
-    // Time series
-    case 'FETCH_TIME_SERIES':
-      return {
-        ...state,
-        isLoadingTimeSeries: true
-      };
-    case 'FETCH_TIME_SERIES_SUCCESS':
-      return {
-        ...state,
-        isLoadingTimeSeries: false,
-        timeSeries: action.payload
-      };
-    case 'FETCH_TIME_SERIES_FAILURE':
-      return {
-        ...state,
-        isLoadingTimeSeries: false,
-        timeSeriesError: action.payload
       };
     // History
     case 'FETCH_HISTORY':
