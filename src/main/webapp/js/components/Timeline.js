@@ -5,15 +5,13 @@ import { connect } from 'react-redux';
 import vis from 'vis';
 import moment from 'moment';
 import type { State } from '../state';
-import { fetchHistory, switchBoardView } from '../actions';
+import { switchBoardView } from '../actions';
 import Controller from './TimelineController';
 
 type Props = {
-  boardTitle: string,
   history: any,
   error: ?string,
   isLoading: boolean,
-  fetchHistory: () => void,
   switchBoardView: (isLiveMode: boolean, timestamp?: number) => void,
   isLiveMode: boolean
 };
@@ -35,19 +33,15 @@ class Timeline extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.fetchHistory();
-  }
-
   render() {
-    const { history, boardTitle } = this.props;
+    const { history } = this.props;
     return (
       <div
         className="timeline"
         onMouseEnter={() => this.setState({ hasFocus: true })}
         onMouseLeave={() => this.setState({ hasFocus: false })}
       >
-        <Controller boardTitle={boardTitle} />
+        <Controller />
         {history && <div id="container" />}
       </div>
     );
@@ -134,8 +128,7 @@ const select = (state: State) => ({
   isLiveMode: state.isLiveMode
 });
 
-const actions = (dispatch, ownProps: Props) => ({
-  fetchHistory: () => dispatch(fetchHistory(ownProps.boardTitle)),
+const actions = (dispatch) => ({
   switchBoardView: (isLiveMode, timestamp = 0) =>
     dispatch(switchBoardView(isLiveMode, timestamp))
 });

@@ -22,7 +22,8 @@ const style = {
     textAlign: 'center',
     padding: '.5em',
     background: '#2980b9',
-    marginBottom: '.5em'
+    marginBottom: '.5em',
+    display: 'block'
   }
 };
 

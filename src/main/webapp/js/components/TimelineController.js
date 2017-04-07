@@ -10,7 +10,7 @@ import { switchBoardView, fetchHistory } from '../actions';
 import { Button } from '../lib';
 
 type Props = {
-  boardTitle: string,
+  boardName: string,
   date: ?string,
   isLiveMode: boolean,
   isLoading: boolean,
@@ -84,17 +84,14 @@ class TimelineController extends PureComponent {
     const { selectedDay: prevDay } = this.state;
     this.setState({ selectedDay, isDayPickerOn: false }, () => {
       if (prevDay - selectedDay !== 0)
-        this.props.fetchHistory(
-          moment(this.state.selectedDay).format('YYYY-MM-DD')
-        );
+        this.props.fetchHistory(moment(this.state.selectedDay).format('YYYY-MM-DD'));
     });
   };
 
   handleTimelineResetClick = () => {
-    const { fetchHistory } = this.props;
-    fetchHistory();
+    this.props.fetchHistory();
     this.setState({ selectedDay: new Date(), isDayPickerOn: false });
-  }
+  };
 }
 
 const select = (state: State) => ({
@@ -102,12 +99,16 @@ const select = (state: State) => ({
   isLiveMode: state.isLiveMode,
   selectedTimestamp: state.selectedTimestamp,
   isLoading: state.history.isLoading,
-  error: state.history.error
+  error: state.history.error,
+  boardName: state.currentBoard
 });
 
-const actions = (dispatch, ownProps: Props) => ({
+const actions = dispatch => ({
   switchToLiveMode: () => dispatch(switchBoardView(true)),
-  fetchHistory: date => dispatch(fetchHistory(ownProps.boardTitle, date))
+  fetchHistory: function(date) {
+    const props = this;
+    return dispatch(fetchHistory(props.boardName, date));
+  }
 });
 
 export default connect(select, actions)(TimelineController);

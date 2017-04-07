@@ -43,7 +43,7 @@ export function fetchTimeSeries(board: string, box: string, from: number, until:
   };
 }
 
-export type FETCH_HISTORY = { type: 'FETCH_HISTORY', board: string, date: ?string };
+export type FETCH_HISTORY = { type: 'FETCH_HISTORY', date: ?string };
 export type FETCH_HISTORY_SUCCESS = { type: 'FETCH_HISTORY_SUCCESS', board: string, payload: Array<any> };
 export type FETCH_HISTORY_FAILURE = { type: 'FETCH_HISTORY_FAILURE', payload: string };
 

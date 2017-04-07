@@ -10,7 +10,7 @@ type Props = {
   isLoading: boolean,
   checks: Array<Check>,
   error: ?string,
-  boardTitle: string,
+  boardName: string,
   boxTitle: string,
   fetchTimeSeries: Function
 };
@@ -61,7 +61,7 @@ const select = (state: State) => ({
   timeSeries: state.timeSeries,
   isLoading: state.isLoadingTimeSeries,
   error: state.selectedBoardView.error,
-  boardTitle: state.selectedBoardView.data ? state.selectedBoardView.data.title : ''
+  boardName: state.currentBoard
 });
 
 const actions = (dispatch, ownProps: Props) => ({
@@ -69,7 +69,7 @@ const actions = (dispatch, ownProps: Props) => ({
     const props = this;
     const until: number = new Date().valueOf();
     const from: number = until - 24 * 60 * 60 * 1000;
-    return dispatch(fetchTimeSeries(props.boardTitle, ownProps.boxTitle, from, until));
+    return dispatch(fetchTimeSeries(props.boardName, ownProps.boxTitle, from, until));
   }
 });
 

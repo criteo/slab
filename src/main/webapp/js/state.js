@@ -62,6 +62,7 @@ export type Link = [string, string];
 type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
 
 export type State = {
+  currentBoard: ?string,
   isLoadingTimeSeries: boolean,
   route: Route,
   boards: Array<BoardConfig>,
@@ -92,6 +93,7 @@ const initState: State = {
   route: {
     path: 'NOT_FOUND'
   },
+  currentBoard: null,
   boards: [],
   timeSeries: [],
   isLoadingTimeSeries: false,
@@ -248,6 +250,7 @@ export default function reducers(state: State = initState, action: Action): Stat
     case 'GOTO_BOARDS':
       return {
         ...state,
+        currentBoard: null,
         route: {
           path: 'BOARDS'
         }
@@ -255,6 +258,7 @@ export default function reducers(state: State = initState, action: Action): Stat
     case 'GOTO_BOARD':
       return {
         ...state,
+        currentBoard: action.payload.params.board,
         route: {
           path: 'BOARD',
           board: action.payload.params.board
@@ -263,6 +267,7 @@ export default function reducers(state: State = initState, action: Action): Stat
     case 'NOT_FOUND':
       return {
         ...state,
+        currentBoard: null,
         route: {
           path: 'NOT_FOUND'
         }
