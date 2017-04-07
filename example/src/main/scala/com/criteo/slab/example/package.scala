@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import scala.util.Random
 
 package object example {
-  // take the most critical except those have unknown status
+  // take the most critical except unknown ones
   def takeMostCritical(views: Seq[View]): View = views.filter(_.status != Status.Unknown).sorted.reverse.head
 
   def makeRandomLatencyCheck(id: String, title: String, label: Option[String] = None) = Check(
@@ -17,9 +17,9 @@ package object example {
       Latency(Random.nextInt(1000))
     ),
     display = (l: Latency, _: Context) => {
-      val status = if (l.underlying >= 950) {
+      val status = if (l.underlying >= 990) {
         Status.Error
-      } else if (l.underlying >= 900) {
+      } else if (l.underlying >= 980) {
         Status.Warning
       } else {
         Status.Success

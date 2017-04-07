@@ -72,11 +72,18 @@ export function* watchFetchHistory() {
 
 // polling service
 export function* poll() {
-  const interval = yield select(state => state.pollingIntervalSeconds);
+  const { interval, isLiveMode, date } = yield select(state => ({
+    interval: state.pollingIntervalSeconds,
+    isLiveMode: state.isLiveMode,
+    date: state.history.date
+  }));
   if (interval > 0) {
     const route = yield select(state => state.route);
-    if (route.path === 'BOARD' && route.board)
+    if (route.path === 'BOARD' && route.board && isLiveMode) {
       yield fork(fetchBoard, { type: 'FETCH_BOARD', board: route.board });
+      if (!date)
+        yield fork(fetchHistory, { type: 'FETCH_HISTORY', board: route.board });
+    }
     yield delay(interval * 1000);
     yield call(poll);
   }
@@ -97,5 +104,5 @@ export default function* rootSaga() {
 
   // initial setup
   yield put(navigate(location.pathname, true));
-  yield put(setPollingInterval(60));
+  yield put(setPollingInterval(5));
 }

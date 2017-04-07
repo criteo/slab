@@ -65,15 +65,6 @@ export function switchBoardView(isLiveMode: boolean, timestamp: number = 0): SWI
   };
 }
 
-export type SWITCH_TIMELINE_DATE = { type: 'SWITCH_TIMELINE_DATE', date: ?string };
-
-export function switchTimelineDate(date: ?string): SWITCH_TIMELINE_DATE {
-  return {
-    type: 'SWITCH_TIMELINE_DATE',
-    date
-  };
-}
-
 export type SET_POLLING_INTERVAL = { type: 'SET_POLLING_INTERVAL', interval: number };
 
 export function setPollingInterval(interval: number): SET_POLLING_INTERVAL {

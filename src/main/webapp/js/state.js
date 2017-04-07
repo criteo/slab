@@ -72,9 +72,9 @@ export type State = {
     isLoading: boolean,
     data: any,
     error: ?string,
-    date: ?string
+    date: ?string // if date is not specified, history comes from last 24 hours
   },
-  liveBoardView: {
+  liveBoardView: { // board view to be updated in live mode
     isLoading: boolean,
     data: ?BoardView,
     error: ?string
@@ -84,7 +84,7 @@ export type State = {
     data: ?BoardView,
     error: ?string
   },
-  selectedTimestamp: ?number,
+  selectedTimestamp: ?number, // timestamp of the snapshot board to be displayed
   pollingIntervalSeconds: number
 };
 

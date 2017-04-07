@@ -20,6 +20,9 @@ type Props = {
 
 class Timeline extends Component {
   props: Props;
+  state: {
+    hasFocus: boolean
+  };
 
   timeline: any;
   static DATE_FORMAT = 'YYYY-MM-DD HH:mm';
@@ -27,6 +30,9 @@ class Timeline extends Component {
   constructor(props: Props) {
     super(props);
     this.timeline = null;
+    this.state = {
+      hasFocus: false
+    };
   }
 
   componentWillMount() {
@@ -34,34 +40,44 @@ class Timeline extends Component {
   }
 
   render() {
-    const { history, isLoading, error, boardTitle } = this.props;
+    const { history, boardTitle } = this.props;
     return (
-      <div className="timeline">
-        <Controller boardTitle={boardTitle}/>
-        {isLoading && <div>Loading...</div>}
-        {error && <div>{error}</div>}
+      <div
+        className="timeline"
+        onMouseEnter={() => this.setState({ hasFocus: true })}
+        onMouseLeave={() => this.setState({ hasFocus: false })}
+      >
+        <Controller boardTitle={boardTitle} />
         {history && <div id="container" />}
       </div>
     );
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
+    // No update: go back to a past timepoint
     if (this.props.isLiveMode === true && nextProps.isLiveMode === false) {
-      // go back to a past timepoint
       return false;
     }
+    // No update: focus state changes
+    if (this.state.hasFocus !== nextState.hasFocus)
+      return false;
     return true;
   }
 
   componentDidUpdate(prevProps) {
-    const node = findDOMNode(this);
-    const container = node.querySelector('#container');
-    const { history, isLiveMode } = this.props;
+    const { history, isLiveMode, isLoading } = this.props;
+    const { hasFocus } = this.state;
+    // Switch from past to live mode
     if (prevProps.isLiveMode === false && isLiveMode === true) {
-      // switch from past to live mode
-      this.timeline.setSelection([]);
+      this.timeline && this.timeline.setSelection([]);
       return;
     }
+    // Do nothing if the user is focusing on the timeline
+    if (hasFocus && (prevProps.isLoading === isLoading))
+      return;
+
+    const node = findDOMNode(this);
+    const container = node.querySelector('#container');
     if (container) {
       container.innerHTML = '';
       const dataset = Object.entries(history)
@@ -114,7 +130,7 @@ class Timeline extends Component {
 const select = (state: State) => ({
   history: state.history.data,
   error: state.history.error,
-  isLoading: state.history.error,
+  isLoading: state.history.isLoading,
   isLiveMode: state.isLiveMode
 });
 
