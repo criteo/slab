@@ -8,18 +8,15 @@ export const combineViewAndLayout = (view, layout, links = []) => {
       row.boxes.forEach((box, k) => map.set(box, [i,j,k]))
     )
   );
-
   const result = JSON.parse(JSON.stringify(layout));
-  view.children.map(box => {
+  view.boxes.map(box => {
     const [i, j, k] = map.get(box.title);
     // mutate result
     result.columns[i].rows[j].boxes[k] = {
       title: box.title,
       status: box.status,
       message: box.message,
-      checks: box.children,
-      description: box.description,
-      labelLimit: box.labelLimit
+      checks: box.checks
     };
   });
   return {

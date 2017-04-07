@@ -21,7 +21,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
 
   private val stateService = new StateService(boards, 60)
 
-  private implicit val historyEntryJSON = Jsonable.constructMap[Long, ViewTree, Map]()
+  private implicit val historyEntryJSON = Jsonable.constructMap[Long, ReadableView, Map]()
   private implicit val boardDefsJSON = Jsonable.constructCol[List, BoardConfig]()
 
   def apply(port: Int): Unit = {
@@ -46,12 +46,10 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
             .getCurrent(boardName)
             .fold(
               Future.successful(Response(412)) // Not yet ready
-            ) { viewTree =>
+            ) { view: ReadableView =>
               Future.successful(
-                Ok(
-                  BoardResponse(viewTree, board.layout, board.links).toJSON)
-                  .addHeaders(HttpString("content-type") -> HttpString("application/json")
-                  )
+                Ok(view.toJSON).addHeaders(HttpString("content-type") -> HttpString("application/json")
+                )
               )
             }
         }
@@ -64,7 +62,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
             Future.successful(BadRequest("invalid timestamp"))
           ) { dateTime =>
             board.apply(Some(Context(dateTime)))
-              .map(view => BoardResponse(view, board.layout, board.links).toJSON)
+              .map((_: ReadableView).toJSON)
               .map(Ok(_).addHeaders(HttpString("content-type") -> HttpString("application/json")))
           }
         }
@@ -75,7 +73,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
         boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
           stateService.getHistory(boardName).fold(
             Future.successful(Response(412)) // Not yet ready
-          ) { history =>
+          ) { history: Map[Long, ReadableView] =>
             Ok(history.toJSON).addHeaders(HttpString("content-type") -> HttpString("application/json"))
           }
         }
@@ -90,7 +88,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
           } yield (from, until)
           range.fold(Future.successful(BadRequest("Invalid timestamp"))) { case (from, until) =>
             board.fetchHistory(from, until)
-              .map(_.toJSON)
+              .map((_: Map[Long, ReadableView]).toJSON)
               .map(Ok(_).addHeaders(
                 HttpString("content-type") -> HttpString("application/json")
               ))

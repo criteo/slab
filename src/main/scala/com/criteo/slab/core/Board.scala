@@ -21,18 +21,20 @@ case class Board(
     intersect.size == boxesInBoard.size && intersect.size == boxesInLayout.size
   }, "Board definition error, please make sure all boxes are present both in board and layout")
 
-  def apply(context: Option[Context])(implicit ec: ExecutionContext): Future[ViewTree] =
+  def apply(context: Option[Context])(implicit ec: ExecutionContext): Future[BoardView] =
     FutureUtils.join(
       boxes.map(_.apply(context))
-    ).map(viewNodes =>
-      ViewNode(
+    ).map{boxViews =>
+      val view = aggregate(boxViews.map(_.asView))
+      BoardView(
         title,
-        aggregate(viewNodes.map(_.view)),
-        viewNodes
+        view.status,
+        view.message,
+        boxViews
       )
-    )
+    }
 
-  def fetchHistory(from: DateTime, until: DateTime)(implicit ec: ExecutionContext): Future[Map[Long, ViewTree]] = {
+  def fetchHistory(from: DateTime, until: DateTime)(implicit ec: ExecutionContext): Future[Map[Long, BoardView]] = {
     boxes.map(_.fetchHistory(from, until))
     FutureUtils.join(
       boxes.map(_.fetchHistory(from, until))
@@ -40,11 +42,13 @@ case class Board(
       maps.flatMap(_.toList)
         .groupBy(_._1)
         .mapValues { in =>
-          val viewNodes = in.map(_._2)
-          ViewNode(
+          val boxViews = in.map(_._2)
+          val view = aggregate(boxViews.map(_.asView))
+          BoardView(
             title,
-            aggregate(viewNodes.map(_.view)),
-            viewNodes
+            view.status,
+            view.message,
+            boxViews
           )
         }
     }

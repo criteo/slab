@@ -12,13 +12,13 @@ class CheckSpec extends FlatSpec with Matchers with FutureTests {
   "now" should "call apply and upload, return the current view" in {
     whenReady(versionCheck.now) { res =>
       verify(store).upload("app.version", Map(("version" -> 9000.0)))
-      res shouldEqual ViewLeaf("app version", View(Status.Success, "version 9000"))
+      res shouldEqual CheckView("app version", Status.Success, "version 9000")
     }
   }
 
   "now" should "return unknown if check returns a failed future" in {
     whenReady(failedVersionCheck.now) { res =>
-      res shouldEqual ViewLeaf("app version", View(Status.Unknown, "failed check", None))
+      res shouldEqual CheckView("app version", Status.Unknown, "failed check", None)
     }
   }
 
@@ -26,7 +26,7 @@ class CheckSpec extends FlatSpec with Matchers with FutureTests {
     val context = Context(new DateTime(100))
     whenReady(versionCheck.replay(context)) { res =>
       verify(store).fetch("app.version", context)
-      res shouldEqual ViewLeaf("app version", View(Status.Success, "version 100"))
+      res shouldEqual CheckView("app version", Status.Success, "version 100")
     }
   }
 

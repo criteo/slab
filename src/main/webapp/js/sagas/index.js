@@ -9,10 +9,10 @@ import { setPollingInterval } from '../actions';
 export function* fetchBoard(action, transformer = combineViewAndLayout) {
   try {
     const boards = yield call(fetchBoards);
-    const board = yield call(api.fetchBoard, action.board);
-    const config = boards.find(_ => _.title === board.view.title);
+    const boardView = yield call(api.fetchBoard, action.board);
+    const config = boards.find(_ => _.title === boardView.title);
     const { layout, links } = config;
-    yield put({ type: 'FETCH_BOARD_SUCCESS', payload: transformer(board.view, layout, links) });
+    yield put({ type: 'FETCH_BOARD_SUCCESS', payload: transformer(boardView, layout, links) });
   } catch (error) {
     yield put({ type: 'FETCH_BOARD_FAILURE', payload: error });
   }
@@ -67,7 +67,7 @@ export function* poll() {
     const route = yield select(state => state.route);
     if (route.path === 'BOARD' && route.board && isLiveMode) {
       yield fork(fetchBoard, { type: 'FETCH_BOARD', board: route.board });
-      if (!date)
+      if (!date) // polling history only in last 24 hours mode
         yield fork(fetchHistory, { type: 'FETCH_HISTORY', board: route.board });
     }
     yield delay(interval * 1000);

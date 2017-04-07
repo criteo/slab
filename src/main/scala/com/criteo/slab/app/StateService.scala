@@ -2,12 +2,12 @@ package com.criteo.slab.app
 
 import java.util.concurrent.{Executors, TimeUnit}
 
-import com.criteo.slab.core.{Board, ViewTree}
+import com.criteo.slab.core.{Board, BoardView}
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 
+import scala.collection.concurrent.TrieMap
 import scala.concurrent.ExecutionContext
-import collection.concurrent.TrieMap
 
 class StateService(
                     val boards: Seq[Board],
@@ -16,9 +16,9 @@ class StateService(
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   // history in (board name -> (timestamp -> view tree))
-  private val history = TrieMap.empty[String, TrieMap[Long, ViewTree]]
+  private val history = TrieMap.empty[String, TrieMap[Long, BoardView]]
   // current state in (board name -> view tree)
-  private val current = TrieMap.empty[String, ViewTree]
+  private val current = TrieMap.empty[String, BoardView]
 
   private lazy val scheduler = Executors.newSingleThreadScheduledExecutor()
 
@@ -42,11 +42,11 @@ class StateService(
     }
   }
 
-  def getCurrent(name: String): Option[ViewTree] = {
+  def getCurrent(name: String): Option[BoardView] = {
     current.get(name)
   }
 
-  def getHistory(name: String): Option[Map[Long, ViewTree]] = {
+  def getHistory(name: String): Option[Map[Long, BoardView]] = {
     history.get(name).map(_.toMap)
   }
 
@@ -69,7 +69,8 @@ class StateService(
                 records += checkTime.getMillis -> viewTree
                 // evict old entries
                 // TODO: define retention time
-                records --= records.keys.filter(_ < checkTime.minusDays(1).getMillis)
+                val obsoleted = records.keys.filter(_ < checkTime.minusDays(1).getMillis)
+                if (obsoleted.size > 0) records --= obsoleted
                 logger.info(s"updating history cache, size: ${records.size}")
               case None => history += board.title -> TrieMap(checkTime.getMillis -> viewTree)
             }

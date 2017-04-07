@@ -14,34 +14,34 @@ case class Box(
                 description: Option[String] = None,
                 labelLimit: Option[Int] = None
               ) {
-  def apply(context: Option[Context])(implicit valueStore: ValueStore, ec: ExecutionContext): Future[ViewNode] = {
+  def apply(context: Option[Context])(implicit valueStore: ValueStore, ec: ExecutionContext): Future[BoxView] = {
     FutureUtils
       .join(checks.map(c => context.fold(c.now)(c.replay)))
-      .map(viewLeaves =>
-        ViewNode(
+      .map { checkViews =>
+        val view = aggregate(checkViews.map(_.asView))
+        BoxView(
           title,
-          aggregate(viewLeaves.map(_.view)),
-          viewLeaves,
-          description,
-          labelLimit
+          view.status,
+          view.message,
+          checkViews
         )
-      )
+      }
   }
 
-  def fetchHistory(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, ViewNode]] = {
+  def fetchHistory(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, BoxView]] = {
     FutureUtils.join(
       checks.map(_.fetchHistory(from, until))
     ).map { maps =>
       maps.flatMap(_.toList)
         .groupBy(_._1)
         .mapValues { in =>
-          val viewLeafs = in.map(_._2)
-          ViewNode(
+          val checkViews = in.map(_._2)
+          val view = aggregate(checkViews.map(_.asView))
+          BoxView(
             title,
-            aggregate(viewLeafs.map(_.view)),
-            viewLeafs,
-            description,
-            labelLimit
+            view.status,
+            view.message,
+            checkViews
           )
         }
     }

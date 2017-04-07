@@ -78,7 +78,6 @@ class BoxModal extends Component {
               <CheckList
                 boxTitle={box.title}
                 checks={box.checks}
-                ref='checkList'
               /> : null
             }
           </main>

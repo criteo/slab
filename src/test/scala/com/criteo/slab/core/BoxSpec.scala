@@ -25,17 +25,20 @@ class BoxSpec extends FlatSpec with Matchers with MockitoSugar with FutureTests 
     whenReady(checkGroup.apply(None)) { r =>
       verify(spiedVersionCheck).now
       verify(spiedLatencyCheck).now
-      r shouldEqual ViewNode(
+      r shouldEqual BoxView(
         "test box",
-        View(Status.Warning, "latency 2000"),
+        Status.Warning,
+        "latency 2000",
         List(
-          ViewLeaf(
+          CheckView(
             "app version",
-            View(Status.Success, "version 9000")
+            Status.Success,
+            "version 9000"
           ),
-          ViewLeaf(
+          CheckView(
             "app latency",
-            View(Status.Warning, "latency 2000")
+            Status.Warning,
+            "latency 2000"
           )
         )
       )
@@ -47,17 +50,20 @@ class BoxSpec extends FlatSpec with Matchers with MockitoSugar with FutureTests 
     whenReady(checkGroup.apply(Some(context))) { r =>
       verify(spiedVersionCheck).replay(context)
       verify(spiedLatencyCheck).replay(context)
-      r shouldEqual ViewNode(
+      r shouldEqual BoxView(
         "test box",
-        View(Status.Warning, "latency 1000"),
+        Status.Warning,
+        "latency 1000",
         List(
-          ViewLeaf(
+          CheckView(
             "app version",
-            View(Status.Success, "version 1000")
+            Status.Success,
+            "version 1000"
           ),
-          ViewLeaf(
+          CheckView(
             "app latency",
-            View(Status.Warning, "latency 1000")
+            Status.Warning,
+            "latency 1000"
           )
         )
       )
