@@ -12,8 +12,8 @@ type Props = {
   history: any,
   error: ?string,
   isLoading: boolean,
-  switchBoardView: (isLiveMode: boolean, timestamp?: number) => void,
-  isLiveMode: boolean
+  isLiveMode: boolean,
+  switchBoardView: (isLiveMode: boolean, timestamp?: number) => void
 };
 
 class Timeline extends Component {
@@ -47,6 +47,10 @@ class Timeline extends Component {
     );
   }
 
+  componentDidMount() {
+    this.renderTimeline();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     // No update: go back to a past timepoint
     if (this.props.isLiveMode === true && nextProps.isLiveMode === false) {
@@ -59,7 +63,7 @@ class Timeline extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { history, isLiveMode, isLoading } = this.props;
+    const { isLiveMode, isLoading } = this.props;
     const { hasFocus } = this.state;
     // Switch from past to live mode
     if (prevProps.isLiveMode === false && isLiveMode === true) {
@@ -70,10 +74,15 @@ class Timeline extends Component {
     if (hasFocus && (prevProps.isLoading === isLoading))
       return;
 
+    this.renderTimeline();
+  }
+
+  renderTimeline() {
     const node = findDOMNode(this);
     const container = node.querySelector('#container');
     if (container) {
       container.innerHTML = '';
+      const { history } = this.props;
       const dataset = Object.entries(history)
         .filter(
           ([_, view]: [string, any]) =>
