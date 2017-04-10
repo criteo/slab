@@ -47,6 +47,13 @@ export type BoardConfig = {
   links: Array<Link>
 };
 
+export type Stats = {
+  successes: number,
+  warnings: number,
+  errors: number,
+  total: number
+};
+
 export type Route = {
   path: string,
   [k: ?string]: any
@@ -78,6 +85,11 @@ export type State = {
     error: ?string
   },
   selectedTimestamp: ?number, // timestamp of the snapshot board to be displayed
+  stats: {
+    isLoading: boolean,
+    data: ?Object,
+    error: ?string
+  },
   pollingIntervalSeconds: number
 };
 
@@ -103,6 +115,11 @@ const initState: State = {
     isLoading: false,
     data: null,
     error: null,
+  },
+  stats: {
+    isLoading: false,
+    data: null,
+    error: null
   },
   selectedTimestamp: null,
   pollingIntervalSeconds: 0
@@ -211,6 +228,35 @@ export default function reducers(state: State = initState, action: Action): Stat
           };
         return state;
       }
+    // Stats
+    case 'FETCH_STATS':
+      return {
+        ...state,
+        stats: {
+          ...state.stats,
+          isLoading: true
+        }
+      };
+    case 'FETCH_STATS_SUCCESS':
+      return {
+        ...state,
+        stats: {
+          ...state.stats,
+          isLoading: false,
+          data: action.payload,
+          error: null
+        }
+      };
+    case 'FETCH_STATS_FAILURE':
+      return {
+        ...state,
+        stats: {
+          ...state.stats,
+          isLoading: true,
+          data: null,
+          error: action.payload
+        }
+      };
     // Polling service
     case 'SET_POLLING_INTERVAL':
       return {

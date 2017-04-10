@@ -34,3 +34,10 @@ export const fetchHistoryOfDay = (board: string, date: ?string): Promise<Object 
       ({ body, status = 0 }) => Promise.reject(body || `connection error ${status}`)
     );
 };
+
+export const fetchStats = (board: string): Promise<Object | string> =>
+  fetcher(`/api/boards/${board}/stats`)
+    .then(
+      ({ body }) => body,
+      ({ body, status = 0 }) => Promise.reject(body || `connection error ${status}`)
+    );

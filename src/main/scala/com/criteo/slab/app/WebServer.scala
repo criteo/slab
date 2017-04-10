@@ -91,7 +91,20 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
           }
         }
       }
-
+      case GET at url"/api/boards/$board/stats" => {
+        logger.info(s"GET /api/boards/$board/stats")
+        val boardName = URLDecoder.decode(board, "UTF-8")
+        boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
+          Future.successful {
+            stateService.getStats(boardName)
+              .map(_.toJSON)
+              .map(Ok(_).addHeaders(
+                HttpString("content-type") -> HttpString("application/json")
+              ))
+              .getOrElse(Response(412))
+          }
+        }
+      }
     }
     logger.info(s"Listening to $port")
 

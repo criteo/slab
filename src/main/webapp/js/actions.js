@@ -41,6 +41,17 @@ export function fetchHistory(board: string, date: ?string): FETCH_HISTORY {
   };
 }
 
+export type FETCH_STATS = { type: 'FETCH_STATS', board: string };
+export type FETCH_STATS_SUCCESS = { type: 'FETCH_STATS_SUCCESS', payload: Object };
+export type FETCH_STATS_FAILURE = { type: 'FETCH_STATS_FAILURE', payload: string };
+
+export function fetchStats(board: string): FETCH_STATS {
+  return {
+    type: 'FETCH_STATS',
+    board
+  };
+}
+
 export type SWITCH_BOARD_VIEW = { type: 'SWITCH_BOARD_VIEW', isLiveMode: boolean, timestamp: number };
 
 export function switchBoardView(isLiveMode: boolean, timestamp: number = 0): SWITCH_BOARD_VIEW {

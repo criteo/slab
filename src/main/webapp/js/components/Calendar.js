@@ -1,0 +1,82 @@
+// @flow
+import { PureComponent } from 'react';
+import DayPicker from 'react-day-picker';
+import { connect } from 'react-redux';
+
+import type { Stats, State } from '../state';
+import { fetchStats } from '../actions';
+
+type Props = {
+  boardName: string,
+  isOpen: boolean,
+  selectedDay: Date,
+  onDayClick: Function,
+  stats: {
+    [k: ?number]: Stats
+  },
+  fetchStats: Function
+};
+
+class Calendar extends PureComponent {
+  props: Props;
+
+  constructor(props: Props) {
+    super(props);
+  }
+
+  render() {
+    const { isOpen, selectedDay, onDayClick } = this.props;
+    return (
+      <DayPicker
+        className={isOpen ? '' : 'hidden'}
+        selectedDays={selectedDay}
+        disabledDays={{
+          after: new Date().setDate(new Date().getDate() - 1)
+        }}
+        onDayClick={ onDayClick }
+        renderDay={ this.renderDay }
+      />
+    );
+  }
+
+  componentWillMount() {
+    // this.props.fetchStats();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isOpen === false && nextProps.isOpen) {
+      this.props.fetchStats();
+    }
+  }
+
+  renderDay = (day: Date) => {
+    const normalized = day.valueOf() - day.valueOf() % 86400000;
+    const stats = this.props.stats && this.props.stats[normalized];
+    return (
+      <div>
+        <div>{day.getDate()}</div>
+        { stats &&
+          <div style={ { 'fontSize': '10px'} } >
+            { (stats.successes * 100 / stats.total).toFixed(2) + '%' }
+          </div>
+        }
+      </div>
+    );
+  };
+}
+
+const select = (state: State) => ({
+  stats: state.stats.data,
+  isLoading: state.stats.isLoading,
+  error: state.stats.error,
+  boardName: state.currentBoard
+});
+
+const actions = (dispatch) => ({
+  fetchStats: function() {
+    const props = this;
+    return dispatch(fetchStats(props.boardName));
+  }
+});
+
+export default connect(select, actions)(Calendar);

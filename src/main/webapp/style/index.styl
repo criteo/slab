@@ -49,7 +49,6 @@ body {
       }
 
       header {
-        background: $white
         height: 75px
         z-index: 10
         h1 {
@@ -68,23 +67,6 @@ body {
           font-weight: 400
           font-size: 16px
         }
-
-        &.SUCCESS {
-          background-color: $green
-        }
-
-        &.WARNING {
-          background-color: $orange
-        }
-
-        &.ERROR {
-          background-color: $red
-        }
-
-        &.UNKNOWN {
-          background-color: $darkgray
-        }
-
       }
 
       main {
@@ -164,7 +146,6 @@ body {
               flex-direction: column
               justify-content: center
 
-              background: $white
               width: 70%
               margin-left: 10%
               margin-right: 10%
@@ -184,38 +165,10 @@ body {
                 box-shadow: 0 0 36px rgba(0,0,0,.75)
               }
 
-              &.SUCCESS {
-                background: $green
-              }
-
-              &.ERROR {
-                background: $red
-              }
-
-              &.WARNING {
-                background: $orange
-              }
-
-              &.UNKNOWN {
-                background: $darkgray
-              }
               div.checks {
                 display: flex
                 flex-wrap: wrap
                 .check {
-                  &.SUCCESS {
-                    background: $green      
-                  }
-                  &.ERROR {
-                    background: $red
-                  }
-                  &.WARNING {
-                    background: $orange
-                  }
-                  &.UNKNOWN {
-                    background: $darkgray
-                  }
-
                   border: 1px solid rgba(255,255,255,.5)
                   margin: 0px 3px 0 0
                   padding: .25em .5em
@@ -353,6 +306,7 @@ body {
 }
 
 .background {
+  background: $darkgray
   &.SUCCESS {
     background: $green
   }
@@ -364,6 +318,21 @@ body {
   }
   &.UNKNOWN {
     background: $darkgray
+  }
+}
+
+.color {
+  &.SUCCESS {
+    color: $green
+  }
+  &.ERROR {
+    color: $red
+  }
+  &.WARNING {
+    color: $orange
+  }
+  &.UNKNOWN {
+    color: $darkgray
   }
 }
 

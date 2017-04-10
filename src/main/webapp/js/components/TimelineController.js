@@ -1,12 +1,12 @@
 // @flow
 import { PureComponent } from 'react';
-import DayPicker from 'react-day-picker';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
 import type { State } from '../state';
 
 import { switchBoardView, fetchHistory } from '../actions';
+import Calendar from './Calendar';
 import { Button } from '../lib';
 
 type Props = {
@@ -23,14 +23,14 @@ type Props = {
 class TimelineController extends PureComponent {
   props: Props;
   state: {
-    isDayPickerOn: boolean,
+    isCalendarOpen: boolean,
     selectedDay: Date
   };
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      isDayPickerOn: false,
+      isCalendarOpen: false,
       selectedDay: new Date()
     };
   }
@@ -44,16 +44,16 @@ class TimelineController extends PureComponent {
       isLoading,
       error
     } = this.props;
-    const { isDayPickerOn, selectedDay } = this.state;
+    const { isCalendarOpen, selectedDay } = this.state;
     return (
       <div id="controller">
         <span className="timeline">
           {date ? date : 'Last 24 hours'}
           <Button
             onClick={() =>
-              this.setState({ isDayPickerOn: !this.state.isDayPickerOn })}
+              this.setState({ isCalendarOpen: !this.state.isCalendarOpen })}
           >
-            {isDayPickerOn ? 'CLOSE' : 'CHANGE'}
+            {isCalendarOpen ? 'CLOSE' : 'CALENDAR'}
           </Button>
           {date &&
             <Button onClick={this.handleTimelineResetClick}>
@@ -68,12 +68,9 @@ class TimelineController extends PureComponent {
             : `SNAPSHOT ${moment(selectedTimestamp).format('YYYY-MM-DD HH:mm')}`}
           {!isLiveMode && <Button onClick={switchToLiveMode}>RESET</Button>}
         </span>
-        <DayPicker
-          className={isDayPickerOn ? '' : 'hidden'}
-          selectedDays={selectedDay}
-          disabledDays={{
-            after: new Date().setDate(new Date().getDate() - 1)
-          }}
+        <Calendar
+          isOpen={isCalendarOpen}
+          selectedDay={selectedDay}
           onDayClick={this.handleDayClick}
         />
       </div>
@@ -82,7 +79,7 @@ class TimelineController extends PureComponent {
 
   handleDayClick = selectedDay => {
     const { selectedDay: prevDay } = this.state;
-    this.setState({ selectedDay, isDayPickerOn: false }, () => {
+    this.setState({ selectedDay, isCalendarOpen: false }, () => {
       if (prevDay - selectedDay !== 0)
         this.props.fetchHistory(moment(this.state.selectedDay).format('YYYY-MM-DD'));
     });
@@ -90,7 +87,7 @@ class TimelineController extends PureComponent {
 
   handleTimelineResetClick = () => {
     this.props.fetchHistory();
-    this.setState({ selectedDay: new Date(), isDayPickerOn: false });
+    this.setState({ selectedDay: new Date(), isCalendarOpen: false });
   };
 }
 

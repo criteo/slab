@@ -18,7 +18,7 @@ export const combineViewAndLayout = (view, layout, links = []) => {
       status: box.status,
       message: box.message,
       checks: box.checks
-    }
+    };
   });
   return {
     ...result,

@@ -38,7 +38,7 @@ export function* watchFetchBoards() {
   yield takeLatest('FETCH_BOARDS', fetchBoards);
 }
 
-// fetch last history
+// fetch history
 export function* fetchHistory(action) {
   try {
     const history = yield call(
@@ -48,12 +48,26 @@ export function* fetchHistory(action) {
     );
     yield put({ type: 'FETCH_HISTORY_SUCCESS', payload: history });
   } catch (error) {
-    yield put({ type: 'FETCH_HISTORY_FAILURE', paylod: error });
+    yield put({ type: 'FETCH_HISTORY_FAILURE', payload: error });
   }
 }
 
 export function* watchFetchHistory() {
   yield takeLatest('FETCH_HISTORY', fetchHistory);
+}
+
+// fetch stats
+export function* fetchStats(action) {
+  try {
+    const stats = yield call(api.fetchStats, action.board);
+    yield put({ type: 'FETCH_STATS_SUCCESS', payload: stats });
+  } catch (error) {
+    yield put({ type: 'FETCH_HISTORY_FAILURE', payload: error });
+  }
+}
+
+export function* watchFetchStats() {
+  yield takeLatest('FETCH_STATS', fetchStats);
 }
 
 // polling service
@@ -85,6 +99,7 @@ export default function* rootSaga() {
   yield fork(watchFetchBoard);
   yield fork(watchFetchBoards);
   yield fork(watchFetchHistory);
+  yield fork(watchFetchStats);
   yield fork(watchPollingIntervalChange);
 
   // initial setup

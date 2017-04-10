@@ -17,7 +17,7 @@ class Graph extends Component {
     const { board } = this.props;
     return (
       <div className='graph'>
-        <header className={board.status}>
+        <header className={`${board.status} background`}>
           <h1>{board.title}</h1>
           <p>{board.message}</p>
         </header>

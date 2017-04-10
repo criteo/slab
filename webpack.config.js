@@ -85,7 +85,7 @@ var config = {
     },
     hot: !isProdMode
   },
-  devtool: isProdMode ? 'source-map' : 'cheap-eval-source-map'
+  devtool: isProdMode ? 'source-map' : 'eval-source-map'
 };
 
 if (!isProdMode) {
