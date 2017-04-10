@@ -3,7 +3,6 @@ package com.criteo.slab.app
 import java.net.URLDecoder
 
 import com.criteo.slab.core._
-import com.criteo.slab.utils.Jsonable
 import com.criteo.slab.utils.Jsonable._
 import lol.http._
 import org.joda.time.DateTime
@@ -20,9 +19,6 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
   }
 
   private val stateService = new StateService(boards, 60)
-
-  private implicit val historyEntryJSON = Jsonable.constructMap[Long, ReadableView, Map]()
-  private implicit val boardDefsJSON = Jsonable.constructCol[List, BoardConfig]()
 
   def apply(port: Int): Unit = {
     logger.info(s"starting server at port: $port")
@@ -95,6 +91,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
           }
         }
       }
+
     }
     logger.info(s"Listening to $port")
 

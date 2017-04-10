@@ -19,16 +19,16 @@ object Jsonable {
     def toJSON: String = Serialization.write(in)
   }
 
-  implicit val stringList = new Jsonable[Iterable[String]] {
-    override val serializers: Seq[Serializer[_]] = Seq.empty
+  implicit class ToJsonCol[Col[_] <: AnyRef, T <: AnyRef : Jsonable](in: Col[T]) {
+    implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
+
+    def toJSON: String = Serialization.write(in)
   }
 
-  def constructCol[Col[_], T: Jsonable]() = new Jsonable[Col[T]] {
-    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[T]].serializers
-  }
+  implicit class ToJsonMap[M[_, _] <: AnyRef, K, T <: AnyRef : Jsonable](in: M[K, T]) {
+    implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
 
-  def constructMap[K, V: Jsonable, MapLike[_, _]]() = new Jsonable[MapLike[K, V]] {
-    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[V]].serializers
+    def toJSON: String = Serialization.write(in)
   }
 
   def parse[T: Manifest](in: String, formats: Formats = DefaultFormats): Try[T] = {
