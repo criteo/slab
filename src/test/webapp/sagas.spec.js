@@ -2,7 +2,6 @@ import { call, put } from 'redux-saga/effects';
 import * as api from 'src/api';
 import { fetchBoard, fetchBoards } from 'src/sagas';
 describe('saga spec', () => {
-
   describe('fetchBoard', () => {
     it('calls API', () => {
       const iter = fetchBoard({ board: 'boardname' }, view => view);
@@ -12,10 +11,11 @@ describe('saga spec', () => {
       expect(iter.next([{ layout: {}, links: [] }]).value).to.deep.equal(
         call(api.fetchBoard, 'boardname'),
       );
-      const result = iter.next({ view: [1,2,3] }).value;
+      const payload = [1,2,3];
+      const result = iter.next(payload).value;
       expect(result).to.deep.equal(put({
         type: 'FETCH_BOARD_SUCCESS',
-        payload: [1,2,3]
+        payload
       }));
     });
 

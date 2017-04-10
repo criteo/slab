@@ -9,6 +9,6 @@ class LayoutSpec extends FlatSpec with Matchers {
     val layout = Layout(List(
       Column(50, List(Row("A", 25, List(Box("box1", Seq.empty, vs => vs.head)))))
     ))
-    layout.toJSON shouldEqual """{"columns":[{"percentage":50.0,"rows":[{"title":"A","percentage":25.0,"boxes":["box1"]}]}]}"""
+    layout.toJSON shouldEqual """{"columns":[{"percentage":50.0,"rows":[{"title":"A","percentage":25.0,"boxes":[{"title":"box1","labelLimit":0}]}]}]}"""
   }
 }

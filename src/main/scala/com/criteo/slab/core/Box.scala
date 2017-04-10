@@ -3,7 +3,7 @@ package com.criteo.slab.core
 import com.criteo.slab.utils.{FutureUtils, Jsonable}
 import org.joda.time.DateTime
 import org.json4s.CustomSerializer
-import org.json4s.JsonAST.JString
+import org.json4s.JsonDSL._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -56,7 +56,8 @@ object Box {
     object Ser extends CustomSerializer[Box](_ => ( {
       case _ => throw new NotImplementedError("Not deserializable")
     }, {
-      case box: Box => JString(box.title)
+      case box: Box =>
+        ("title" -> box.title) ~ ("description" -> box.description) ~ ("labelLimit" -> box.labelLimit.getOrElse(box.checks.size))
     }
     ))
 

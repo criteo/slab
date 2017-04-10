@@ -6,13 +6,11 @@ describe('utils specs', () => {
       title: 'Board1',
       status: 'SUCCESS',
       message: 'msg',
-      children: [{
+      boxes: [{
         title: 'Box1',
         status: 'SUCCESS',
         message: 'msg1',
-        description: 'desc1',
-        labelLimit: 10,
-        children: [{
+        checks: [{
           title: 'Check1',
           status: 'SUCCESS',
           message: 'msg11',
@@ -22,9 +20,7 @@ describe('utils specs', () => {
         title: 'Box2',
         status: 'WARNING',
         message: 'msg2',
-        description: 'desc2',
-        labelLimit: 1,
-        children: [{
+        checks: [{
           title: 'Check2',
           status: 'WARNING',
           message: 'msg22',
@@ -44,7 +40,11 @@ describe('utils specs', () => {
           rows: [{
             title: 'Zone 1',
             percentage: 100,
-            boxes: ['Box1']
+            boxes: [{
+              title: 'Box1',
+              description: 'desc1',
+              labelLimit: 2
+            }]
           }]
         },
         {
@@ -52,7 +52,11 @@ describe('utils specs', () => {
           rows: [{
             title: 'Zone 2',
             percentage: 100,
-            boxes: ['Box2']
+            boxes: [{
+              title: 'Box2',
+              description: 'desc2',
+              labelLimit: 0
+            }]
           }]
         }
       ]
@@ -75,7 +79,7 @@ describe('utils specs', () => {
                 description: 'desc1',
                 status: 'SUCCESS',
                 message: 'msg1',
-                labelLimit: 10,
+                labelLimit: 2,
                 checks: [{
                   title: 'Check1',
                   status: 'SUCCESS',
@@ -95,7 +99,7 @@ describe('utils specs', () => {
                 status: 'WARNING',
                 description: 'desc2',
                 message: 'msg2',
-                labelLimit: 1,
+                labelLimit: 0,
                 checks: [{
                   title: 'Check2',
                   status: 'WARNING',
