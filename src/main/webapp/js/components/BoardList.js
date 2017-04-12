@@ -9,24 +9,6 @@ type Props = {
   fetchBoards: () => void
 };
 
-const style = {
-  boardList: {
-    padding: '2em',
-    overflow: 'auto'
-  },
-  boardLink: {
-    textDecoration: 'none',
-    fontSize: '3em',
-    color: 'white',
-    boxShadow: '0 0 24px rgba(0,0,0,0.5)',
-    textAlign: 'center',
-    padding: '.5em',
-    background: '#2980b9',
-    marginBottom: '.5em',
-    display: 'block'
-  }
-};
-
 class BoardList extends Component {
   props: Props;
 
@@ -37,10 +19,10 @@ class BoardList extends Component {
   render() {
     const { boards } = this.props;
     return (
-      <div className="board-list" style={ style.boardList }>
+      <div className="board-list">
         {
           boards.map(board =>
-            <a style={ style.boardLink } href={`/${board.title}`} key={board.title}>{board.title}</a>
+            <a href={`/${board.title}`} key={board.title} className="link">{board.title}</a>
           )
         }
       </div>

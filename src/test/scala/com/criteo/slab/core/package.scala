@@ -1,6 +1,8 @@
 package com.criteo.slab
 
+import com.criteo.slab.core.Metrical.Out
 import com.criteo.slab.lib.Values.{Latency, Version}
+import org.joda.time.DateTime
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -20,7 +22,9 @@ package object core {
       }
     }
 
-    override def upload(id: String, values: Metrical.Type) = Future.successful(())
+    override def upload(id: String, values: Metrical.Out) = Future.successful(())
+
+    override def fetchHistory(id: String, from: DateTime, until: DateTime): Future[Map[Long, Out]] = Future.successful(Map.empty)
   }
 
   val versionCheck = Check(

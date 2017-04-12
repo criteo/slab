@@ -102,7 +102,7 @@ class Timeline extends Component {
         .sort((a, b) => a.start.localeCompare(b.start));
       if (dataset.length > 0) {
         const timeline = new vis.Timeline(container, dataset, {
-          height: 60,
+          height: 75,
           min: dataset[0].date
             .clone()
             .subtract(1, 'hour')

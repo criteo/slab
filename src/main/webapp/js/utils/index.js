@@ -9,10 +9,18 @@ export const combineViewAndLayout = (view, layout, links = []) => {
     )
   );
   const result = JSON.parse(JSON.stringify(layout));
+  result.columns.forEach(col =>
+    col.rows.forEach(row =>
+      row.boxes.forEach(box => {
+        box.status = 'Unknown';
+        box.message = 'Unknown';
+      })
+    )
+  );
   view.boxes.map(box => {
     const [i, j, k] = map.get(box.title);
-    // mutate result
     const _box = result.columns[i].rows[j].boxes[k];
+    // mutate result
     result.columns[i].rows[j].boxes[k] = {
       ..._box,
       status: box.status,

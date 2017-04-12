@@ -28,7 +28,7 @@ class GraphiteStore(
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
-  override def upload(id: String, values: Metrical.Type): Future[Unit] = {
+  override def upload(id: String, values: Metrical.Out): Future[Unit] = {
     utils.collectTries(values.toList.map { case (name, value) =>
       send(host, port, s"$GroupPrefix$id.$name", value)
     }) match {
@@ -37,7 +37,7 @@ class GraphiteStore(
     }
   }
 
-  override def fetch(id: String, context: Context): Future[Metrical.Type] = {
+  override def fetch(id: String, context: Context): Future[Metrical.Out] = {
     val query = HttpClient.makeQuery(Map(
       "target" -> s"$GroupPrefix$id.*",
       "from" -> s"${context.when.toString(DateFormat)}",
@@ -59,7 +59,7 @@ class GraphiteStore(
     }
   }
 
-  override def fetchHistory(id: String, from: DateTime, until: DateTime): Future[Map[Long, Metrical.Type]] = {
+  override def fetchHistory(id: String, from: DateTime, until: DateTime): Future[Map[Long, Metrical.Out]] = {
     val query = HttpClient.makeQuery(Map(
       "target" -> s"$GroupPrefix$id.*",
       "from" -> s"${from.toString(DateFormat)}",
@@ -93,7 +93,7 @@ object GraphiteStore {
   }
 
   // take first defined DataPoint of each metric
-  def transformMetrics(prefix: String, metrics: List[GraphiteMetric]): Metrical.Type = {
+  def transformMetrics(prefix: String, metrics: List[GraphiteMetric]): Metrical.Out = {
     val pairs = metrics
       .map { metric =>
         metric.datapoints
@@ -110,7 +110,7 @@ object GraphiteStore {
   }
 
   // group metrics by timestamp
-  def groupMetrics(prefix: String, metrics: List[GraphiteMetric]): Map[Long, Metrical.Type] = {
+  def groupMetrics(prefix: String, metrics: List[GraphiteMetric]): Map[Long, Metrical.Out] = {
     metrics
       .view
       .flatMap { metric =>

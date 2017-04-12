@@ -35,8 +35,6 @@ case class Check[V: Metrical](
       .fetchHistory(id, from, until)
       .map {
         _.map { case (timestamp, metrics) =>
-          // TODO: handle errors
-          // TODO: return a list of (Long, ViewLeaf) ?
           val view = display(metrical.fromMetrics(metrics), Context(new DateTime(timestamp)))
           (timestamp, CheckView(title, view.status, view.message, view.label))
         }

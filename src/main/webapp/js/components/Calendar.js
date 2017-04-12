@@ -39,10 +39,6 @@ class Calendar extends PureComponent {
     );
   }
 
-  componentWillMount() {
-    // this.props.fetchStats();
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.isOpen === false && nextProps.isOpen) {
       this.props.fetchStats();

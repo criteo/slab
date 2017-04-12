@@ -1,11 +1,11 @@
 package com.criteo.slab.core
 
 trait Metrical[T] {
-  def toMetrics(value: T): Metrical.Type
+  def toMetrics(value: T): Metrical.Out
 
-  def fromMetrics(ms: Metrical.Type): T
+  def fromMetrics(ms: Metrical.Out): T
 }
 
 object Metrical {
-  type Type = Map[String, Double]
+  type Out = Map[String, Double]
 }
