@@ -15,7 +15,7 @@ object Launcher {
       if (useGraphite == "true")
         for {
           host <- sys.env.get("GRAPHITE_HOST")
-          port <- sys.env.get("GRAPHITE_PORT").flatMap(p => Some(p.toInt))
+          port <- sys.env.get("GRAPHITE_PORT").map(_.toInt)
           webHost <- sys.env.get("GRAPHITE_WEB_HOST")
         } yield {
           logger.info("[Slab Example] using Graphite store")
