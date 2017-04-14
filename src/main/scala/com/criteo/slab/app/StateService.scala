@@ -29,7 +29,7 @@ class StateService(
 
   def start(): Unit = {
     logger.info(s"started, checking interval: $intervalSeconds seconds")
-    scheduler.scheduleAtFixedRate(poller, 0, intervalSeconds, TimeUnit.SECONDS)
+    scheduler.scheduleAtFixedRate(Poller, 0, intervalSeconds, TimeUnit.SECONDS)
     loadHistory()
     loadStats()
   }
@@ -78,30 +78,32 @@ class StateService(
     stats.get(name).map(_.toMap)
   }
 
-  val poller: Runnable = () => {
-    val checkTime = DateTime.now().withMillisOfSecond(0).withSecondOfMinute(0)
-    logger.info(s"updating ${checkTime.toString()} (${checkTime.getMillis})")
-    boards foreach { board =>
-      board
-        .apply(None)
-        .foreach { viewTree =>
-          // Update the current view tree of the board
-          current += board.title -> viewTree
-          // Update history cache
-          val records = history.getOrElseUpdate(board.title, TrieMap(checkTime.getMillis -> viewTree)) += checkTime.getMillis -> viewTree
-          // evict old entries
-          val obsoleted = records.keys.filter(_ < checkTime.minusDays(1).getMillis)
-          if (obsoleted.size > 0) {
-            logger.info(s"evicted ${obsoleted.size} history entries")
-            records --= obsoleted
+  object Poller extends Runnable {
+    override def run(): Unit = {
+      val checkTime = DateTime.now().withMillisOfSecond(0).withSecondOfMinute(0)
+      logger.info(s"updating ${checkTime.toString()} (${checkTime.getMillis})")
+      boards foreach { board =>
+        board
+          .apply(None)
+          .foreach { viewTree =>
+            // Update the current view tree of the board
+            current += board.title -> viewTree
+            // Update history cache
+            val records = history.getOrElseUpdate(board.title, TrieMap(checkTime.getMillis -> viewTree)) += checkTime.getMillis -> viewTree
+            // evict old entries
+            val obsoleted = records.keys.filter(_ < checkTime.minusDays(1).getMillis)
+            if (obsoleted.size > 0) {
+              logger.info(s"evicted ${obsoleted.size} history entries")
+              records --= obsoleted
+            }
+            logger.info(s"history cache updated, new size: ${records.size}")
+            // Update stats
+            stats
+              .getOrElseUpdate(board.title, TrieMap(checkTime.getMillis -> Stats(0, 0, 0, 0)))
+              .get(checkTime.getMillis)
+              .map(updateStatsWithStatus(_, viewTree.status))
           }
-          logger.info(s"history cache updated, new size: ${records.size}")
-          // Update stats
-          stats
-            .getOrElseUpdate(board.title, TrieMap(checkTime.getMillis -> Stats(0, 0, 0, 0)))
-            .get(checkTime.getMillis)
-            .map(updateStatsWithStatus(_, viewTree.status))
-        }
+      }
     }
   }
 
