@@ -19,13 +19,13 @@ object Jsonable {
     def toJSON: String = Serialization.write(in)
   }
 
-  implicit class ToJsonCol[Col[_] <: AnyRef, T <: AnyRef : Jsonable](in: Col[T]) {
+  implicit class ToJsonSeq[S[_] <: Seq[_], T <: AnyRef : Jsonable](in: S[T]) {
     implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
 
     def toJSON: String = Serialization.write(in)
   }
 
-  implicit class ToJsonMap[M[_, _] <: AnyRef, K, T <: AnyRef : Jsonable](in: M[K, T]) {
+  implicit class ToJsonMap[M[_, _] <: Map[_, _], K, T <: AnyRef : Jsonable](in: M[K, T]) {
     implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
 
     def toJSON: String = Serialization.write(in)
