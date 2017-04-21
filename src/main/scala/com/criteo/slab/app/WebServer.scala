@@ -102,6 +102,17 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
         }
       }
     }
+    case GET at url"/$file[.]$ext" => {
+      logger.info(s"GET /$file.$ext")
+      ClasspathResource(s"/$file.$ext").fold(NotFound())(r => Ok(r))
+    }
+    case req if req.method == GET => {
+      logger.info(s"GET ${req.url}")
+      if (req.url.startsWith("/api"))
+        NotFound
+      else
+        ClasspathResource("/index.html").fold(NotFound())(r => Ok(r))
+    }
   }
 
   private val notFound: PartialFunction[Request, Future[Response]] = {
