@@ -3,10 +3,12 @@ package com.criteo.slab.example
 import com.criteo.slab.app.WebServer
 import com.criteo.slab.core.{NoopValueStore, ValueStore}
 import com.criteo.slab.lib.GraphiteStore
+import lol.http._
 import org.joda.time.Duration
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object Launcher {
   val logger = LoggerFactory.getLogger(this.getClass)
@@ -23,6 +25,8 @@ object Launcher {
         }
       else None
     }.getOrElse(NoopValueStore)
-    new WebServer(List(SimpleBoard())).apply(8082)
+    new WebServer(List(SimpleBoard())).apply(8082, {
+      case GET at "/api/heartbeat" => Future.successful(Response(200))
+    })
   }
 }
