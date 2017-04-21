@@ -12,6 +12,7 @@ import scala.concurrent.Future
 
 object Launcher {
   val logger = LoggerFactory.getLogger(this.getClass)
+
   def main(args: Array[String]): Unit = {
     implicit val store: ValueStore = sys.env.get("USE_GRAPHITE").flatMap { useGraphite =>
       if (useGraphite == "true")
@@ -21,7 +22,7 @@ object Launcher {
           webHost <- sys.env.get("GRAPHITE_WEB_HOST")
         } yield {
           logger.info("[Slab Example] using Graphite store")
-          new GraphiteStore(host, port, webHost, new Duration(60 * 1000), Some("slab"))
+          new GraphiteStore(host, port, webHost, new Duration(60 * 1000), Some("slab.example"))
         }
       else None
     }.getOrElse(NoopValueStore)
