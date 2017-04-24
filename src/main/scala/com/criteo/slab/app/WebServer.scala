@@ -11,14 +11,20 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
-class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
+/**
+  * Slab Web server
+  * @param boards list of boards
+  * @param pollingInterval polling interval in seconds
+  * @param ec Execution context for the web server
+  */
+class WebServer(val boards: Seq[Board], pollingInterval: Int = 60)(implicit ec: ExecutionContext) {
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   private val boardsMap: Map[String, Board] = boards.foldLeft(Map.empty[String, Board]) {
     case (acc, board) => acc + (board.title -> board)
   }
 
-  private val stateService = new StateService(boards, 60)
+  private val stateService = new StateService(boards, pollingInterval)
 
   private val routes: PartialFunction[Request, Future[Response]] = {
     case GET at url"/api/boards" => {
