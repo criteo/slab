@@ -4,6 +4,11 @@ import com.criteo.slab.utils.Jsonable
 import org.json4s.JsonAST.JString
 import org.json4s.{CustomSerializer, Serializer}
 
+/** The status of a check
+  *
+  * @param name The name of the status
+  * @param level The level of the status, used for ordering
+  */
 sealed class Status(val name: String, val level: Int) extends Ordered[Status] {
   override def compare(that: Status) = this.level.compare(that.level)
 }

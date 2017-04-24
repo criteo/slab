@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
-/**
-  * Slab Web server
+/** Slab Web server
+  *
   * @param boards list of boards
   * @param pollingInterval polling interval in seconds
   * @param ec Execution context for the web server

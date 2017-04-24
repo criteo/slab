@@ -6,6 +6,15 @@ import com.criteo.slab.utils.FutureUtils
 
 import scala.concurrent.{ExecutionContext, Future}
 
+/** Top level component
+  *
+  * @param title The board title
+  * @param boxes The children boxes
+  * @param aggregate Aggregates its children boxes views
+  * @param layout The layout of the board
+  * @param links Defines links between boxes, will draw lines in the UI
+  * @param valueStore The store used for
+  */
 case class Board(
                   title: String,
                   boxes: Seq[Box],

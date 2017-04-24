@@ -2,6 +2,10 @@
 
 A framework for creating monitoring dashboards.
 
+## Documentation
+
+- [API doc](http://s.ran.gitlab.preprod.crto.in/Slab/api/)
+
 ## Getting started
 
 To create a Slab dashboard, you need to define the following components

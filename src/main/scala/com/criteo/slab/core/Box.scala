@@ -8,6 +8,14 @@ import org.json4s.JsonDSL._
 
 import scala.concurrent.{ExecutionContext, Future}
 
+/** A box that groups checks
+  *
+  * @param title The title
+  * @param checks The checks
+  * @param aggregate Aggregates the views of its checks, return a view
+  * @param description The description of the box in markdown syntax
+  * @param labelLimit The limit of visible check labels shown on the box
+  */
 case class Box(
                 title: String,
                 checks: Seq[Check[_]],

@@ -3,6 +3,9 @@ package com.criteo.slab.core
 import com.criteo.slab.utils.Jsonable
 import org.json4s.Serializer
 
+/** Serializable view to be used by the web app
+  *
+  */
 trait ReadableView {
   val title: String
   val message: String

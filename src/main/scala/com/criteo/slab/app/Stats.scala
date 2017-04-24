@@ -2,6 +2,13 @@ package com.criteo.slab.app
 
 import com.criteo.slab.utils.Jsonable
 
+/** Statistics of history
+  *
+  * @param successes Number of checks that are successful
+  * @param warnings  Number of checks that are in the warning state
+  * @param errors    Number of checks that are errors
+  * @param total     Total number of checks
+  */
 case class Stats(
                   successes: Int,
                   warnings: Int,
@@ -10,6 +17,8 @@ case class Stats(
                 )
 
 object Stats {
+
   implicit object ToJSON extends Jsonable[Stats]
+
 }
 

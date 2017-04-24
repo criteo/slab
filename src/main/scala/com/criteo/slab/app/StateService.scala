@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import scala.collection.concurrent.TrieMap
 import scala.concurrent.ExecutionContext
 
+/** A service for the app state */
 class StateService(
                     val boards: Seq[Board],
                     intervalSeconds: Int
