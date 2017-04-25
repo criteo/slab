@@ -1,0 +1,10 @@
+pages:
+  stage: deploy
+  script:
+  - mkdir public
+  - cp -r api/ public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - gh-pages
