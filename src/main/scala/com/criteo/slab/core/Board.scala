@@ -1,7 +1,8 @@
 package com.criteo.slab.core
 
+import java.time.Instant
+
 import com.criteo.slab.utils.FutureUtils
-import org.joda.time.DateTime
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -24,7 +25,7 @@ case class Board(
   def apply(context: Option[Context])(implicit ec: ExecutionContext): Future[BoardView] =
     FutureUtils.join(
       boxes.map(_.apply(context))
-    ).map{boxViews =>
+    ).map { boxViews =>
       val view = aggregate(boxViews.map(_.asView))
       BoardView(
         title,
@@ -34,7 +35,7 @@ case class Board(
       )
     }
 
-  def fetchHistory(from: DateTime, until: DateTime)(implicit ec: ExecutionContext): Future[Map[Long, BoardView]] = {
+  def fetchHistory(from: Instant, until: Instant)(implicit ec: ExecutionContext): Future[Map[Long, BoardView]] = {
     boxes.map(_.fetchHistory(from, until))
     FutureUtils.join(
       boxes.map(_.fetchHistory(from, until))

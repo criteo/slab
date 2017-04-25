@@ -1,11 +1,11 @@
 package com.criteo.slab.app
 
 import java.net.URLDecoder
+import java.time.Instant
 
 import com.criteo.slab.core._
 import com.criteo.slab.utils.Jsonable._
 import lol.http._
-import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -51,7 +51,7 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
       logger.info(s"GET /api/boards/$board/history/$timestamp")
       val boardName = URLDecoder.decode(board, "UTF-8")
       boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
-        Try(timestamp.toLong).map(new DateTime(_)).toOption.fold(
+        Try(timestamp.toLong).map(Instant.ofEpochMilli).toOption.fold(
           Future.successful(BadRequest("invalid timestamp"))
         ) { dateTime =>
           board.apply(Some(Context(dateTime)))
@@ -76,8 +76,8 @@ class WebServer(val boards: Seq[Board])(implicit ec: ExecutionContext) {
       val boardName = URLDecoder.decode(board, "UTF-8")
       boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
         val range = for {
-          from <- Try(fromTS.toLong).map(new DateTime(_)).toOption
-          until <- Try(untilTS.toLong).map(new DateTime(_)).toOption
+          from <- Try(fromTS.toLong).map(Instant.ofEpochMilli).toOption
+          until <- Try(untilTS.toLong).map(Instant.ofEpochMilli).toOption
         } yield (from, until)
         range.fold(Future.successful(BadRequest("Invalid timestamp"))) { case (from, until) =>
           board.fetchHistory(from, until)

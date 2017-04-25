@@ -2,11 +2,12 @@ package com.criteo.slab.lib
 
 import java.io._
 import java.net._
+import java.time._
+import java.time.format.DateTimeFormatter
 
 import com.criteo.slab.core._
 import com.criteo.slab.utils
 import com.criteo.slab.utils.{HttpClient, Jsonable}
-import org.joda.time.{DateTime, Duration}
 import org.json4s.DefaultFormats
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -24,7 +25,7 @@ class GraphiteStore(
 
   private val jsonFormat = DefaultFormats ++ Jsonable[GraphiteMetric].serializers
 
-  private val DateFormat = "HH:mm_YYYYMMdd"
+  private val DateFormatter = DateTimeFormatter.ofPattern("HH:mm_YYYYMMdd")
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
@@ -40,8 +41,8 @@ class GraphiteStore(
   override def fetch(id: String, context: Context): Future[Metrical.Out] = {
     val query = HttpClient.makeQuery(Map(
       "target" -> s"$GroupPrefix$id.*",
-      "from" -> s"${context.when.toString(DateFormat)}",
-      "until" -> s"${context.when.plus(checkInterval).toString(DateFormat)}",
+      "from" -> s"${DateFormatter.format(context.when)}",
+      "until" -> s"${DateFormatter.format(context.when.plus(checkInterval))}",
       "format" -> "json"
     ))
     val url = new URL(s"$webHost/render$query")
@@ -59,11 +60,11 @@ class GraphiteStore(
     }
   }
 
-  override def fetchHistory(id: String, from: DateTime, until: DateTime): Future[Map[Long, Metrical.Out]] = {
+  override def fetchHistory(id: String, from: Instant, until: Instant): Future[Map[Long, Metrical.Out]] = {
     val query = HttpClient.makeQuery(Map(
       "target" -> s"$GroupPrefix$id.*",
-      "from" -> s"${from.toString(DateFormat)}",
-      "until" -> s"${until.toString(DateFormat)}",
+      "from" -> s"${DateFormatter.format(from)}",
+      "until" -> s"${DateFormatter.format(until)}",
       "format" -> "json",
       "noNullPoints" -> "true"
     ))
@@ -86,7 +87,7 @@ object GraphiteStore {
     Try {
       val socket = new Socket(InetAddress.getByName(host), port)
       val ps = new PrintStream(socket.getOutputStream)
-      ps.println(s"$target $value ${DateTime.now.getMillis / 1000}")
+      ps.println(s"$target $value ${Instant.now.toEpochMilli / 1000}")
       ps.flush
       socket.close
     }

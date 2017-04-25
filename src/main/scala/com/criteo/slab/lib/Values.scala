@@ -1,8 +1,9 @@
 package com.criteo.slab.lib
 
+import java.time.Instant
+
 import com.criteo.slab.core.Metrical
 import com.criteo.slab.core.Metrical.Out
-import org.joda.time.DateTime
 
 object Values {
 
@@ -28,12 +29,12 @@ object Values {
     override def fromMetrics(ms: Out): Version = Version(ms("version").toInt)
   }
 
-  // Joda DateTime
-  implicit def jodaTimeMetric = new Metrical[DateTime] {
-    override def toMetrics(value: DateTime): Out = Map(
-      "datetime" -> value.getMillis
+  // Instant
+  implicit def instantMetric = new Metrical[Instant] {
+    override def toMetrics(value: Instant): Out = Map(
+      "datetime" -> value.toEpochMilli
     )
 
-    override def fromMetrics(ms: Out): DateTime = new DateTime(ms("datetime"))
+    override def fromMetrics(ms: Out): Instant = Instant.ofEpochMilli(ms("datetime").toLong)
   }
 }

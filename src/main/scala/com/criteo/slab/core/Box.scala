@@ -1,7 +1,8 @@
 package com.criteo.slab.core
 
+import java.time.Instant
+
 import com.criteo.slab.utils.{FutureUtils, Jsonable}
-import org.joda.time.DateTime
 import org.json4s.CustomSerializer
 import org.json4s.JsonDSL._
 
@@ -28,7 +29,7 @@ case class Box(
       }
   }
 
-  def fetchHistory(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, BoxView]] = {
+  def fetchHistory(from: Instant, until: Instant)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, BoxView]] = {
     FutureUtils.join(
       checks.map(_.fetchHistory(from, until))
     ).map { maps =>

@@ -1,7 +1,7 @@
 package com.criteo.slab.core
 
-import org.joda.time.DateTime
+import java.time.Instant
 
 case class Context(
-                    when: DateTime
+                    when: Instant
                   )

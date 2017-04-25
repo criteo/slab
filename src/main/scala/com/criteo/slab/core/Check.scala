@@ -1,7 +1,8 @@
 package com.criteo.slab.core
 
+import java.time.Instant
+
 import scala.concurrent.{ExecutionContext, Future}
-import org.joda.time.DateTime
 
 case class Check[V: Metrical](
                                id: String,
@@ -10,7 +11,7 @@ case class Check[V: Metrical](
                                display: (V, Context) => View
                              ) {
   def now(implicit store: ValueStore, ec: ExecutionContext): Future[CheckView] = {
-    val currCtx = Context(DateTime.now())
+    val currCtx = Context(Instant.now())
     apply()
       .flatMap { value =>
         store.upload(id, implicitly[Metrical[V]].toMetrics(value))
@@ -29,13 +30,13 @@ case class Check[V: Metrical](
       .map(view => CheckView(title, view.status, view.message, view.label))
   }
 
-  def fetchHistory(from: DateTime, until: DateTime)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, CheckView]] = {
+  def fetchHistory(from: Instant, until: Instant)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, CheckView]] = {
     val metrical = implicitly[Metrical[V]]
     store
       .fetchHistory(id, from, until)
       .map {
         _.map { case (timestamp, metrics) =>
-          val view = display(metrical.fromMetrics(metrics), Context(new DateTime(timestamp)))
+          val view = display(metrical.fromMetrics(metrics), Context(Instant.ofEpochMilli(timestamp)))
           (timestamp, CheckView(title, view.status, view.message, view.label))
         }
       }

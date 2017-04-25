@@ -1,9 +1,9 @@
 package com.criteo.slab.utils
 
 import java.net.{URL, URLEncoder}
+import java.time.Instant
 
 import lol.http._
-import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -19,10 +19,10 @@ object HttpClient {
     val port = if (url.getPort > 0) url.getPort else url.getDefaultPort
     val request = Get(path).addHeaders(defaultHeaders ++ headers)
     log.info(s"Requesting $url")
-    val start = DateTime.now
+    val start = Instant.now
     Client(url.getHost, port, url.getProtocol) runAndStop { client =>
       client.run(request) { res =>
-        log.info(s"Response from ${url}, status: ${res.status}, ${DateTime.now.getMillis - start.getMillis}ms")
+        log.info(s"Response from $url, status: ${res.status}, ${Instant.now.toEpochMilli - start.toEpochMilli}ms")
         if (res.status < 400)
           res.readAs[A]
         else

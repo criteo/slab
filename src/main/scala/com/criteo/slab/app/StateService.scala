@@ -1,9 +1,10 @@
 package com.criteo.slab.app
 
+import java.time.Instant
+import java.time.temporal.ChronoUnit.{DAYS, MINUTES}
 import java.util.concurrent.{Executors, TimeUnit}
 
 import com.criteo.slab.core.{Board, BoardView, Status}
-import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 
 import scala.collection.concurrent.TrieMap
@@ -36,9 +37,10 @@ class StateService(
 
   // Load the history of last 24 hours
   private def loadHistory(): Unit = {
+    val now = Instant.now
     boards foreach { board =>
       board
-        .fetchHistory(DateTime.now.minusDays(1), DateTime.now)
+        .fetchHistory(now.minus(1, DAYS), now)
         .foreach { entries =>
           history.get(board.title) match {
             case Some(value) => value ++= entries
@@ -51,10 +53,11 @@ class StateService(
 
   // Load the stats of last 7 days
   private def loadStats(): Unit = {
+    val now = Instant.now
     boards foreach { board =>
       logger.info(s"loading stats for ${board.title}")
       board
-        .fetchHistory(DateTime.now.minusDays(7), DateTime.now)
+        .fetchHistory(now.minus(7, DAYS), now)
         .map(getStatsByDay)
         .foreach { newStats =>
           stats.get(board.title) match {
@@ -80,8 +83,8 @@ class StateService(
 
   object Poller extends Runnable {
     override def run(): Unit = {
-      val checkTime = DateTime.now().withMillisOfSecond(0).withSecondOfMinute(0)
-      logger.info(s"updating ${checkTime.toString()} (${checkTime.getMillis})")
+      val checkTime = Instant.now().truncatedTo(MINUTES)
+      logger.info(s"updating ${checkTime.toString()} (${checkTime.toEpochMilli})")
       boards foreach { board =>
         board
           .apply(None)
@@ -89,9 +92,9 @@ class StateService(
             // Update the current view tree of the board
             current += board.title -> viewTree
             // Update history cache
-            val records = history.getOrElseUpdate(board.title, TrieMap(checkTime.getMillis -> viewTree)) += checkTime.getMillis -> viewTree
+            val records = history.getOrElseUpdate(board.title, TrieMap(checkTime.toEpochMilli -> viewTree)) += checkTime.toEpochMilli -> viewTree
             // evict old entries
-            val obsoleted = records.keys.filter(_ < checkTime.minusDays(1).getMillis)
+            val obsoleted = records.keys.filter(_ < checkTime.minus(1, DAYS).toEpochMilli)
             if (obsoleted.size > 0) {
               logger.info(s"evicted ${obsoleted.size} history entries")
               records --= obsoleted
@@ -99,8 +102,8 @@ class StateService(
             logger.info(s"history cache updated, new size: ${records.size}")
             // Update stats
             stats
-              .getOrElseUpdate(board.title, TrieMap(checkTime.getMillis -> Stats(0, 0, 0, 0)))
-              .get(checkTime.getMillis)
+              .getOrElseUpdate(board.title, TrieMap(checkTime.toEpochMilli -> Stats(0, 0, 0, 0)))
+              .get(checkTime.toEpochMilli)
               .map(updateStatsWithStatus(_, viewTree.status))
           }
       }
