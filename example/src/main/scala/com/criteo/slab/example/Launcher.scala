@@ -1,10 +1,11 @@
 package com.criteo.slab.example
 
+import java.time.Duration
+
 import com.criteo.slab.app.WebServer
 import com.criteo.slab.core.{NoopValueStore, ValueStore}
 import com.criteo.slab.lib.GraphiteStore
 import lol.http._
-import org.joda.time.Duration
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -22,7 +23,7 @@ object Launcher {
           webHost <- sys.env.get("GRAPHITE_WEB_HOST")
         } yield {
           logger.info("[Slab Example] using Graphite store")
-          new GraphiteStore(host, port, webHost, new Duration(60 * 1000), Some("slab.example"))
+          new GraphiteStore(host, port, webHost, Duration.ofSeconds(60), Some("slab.example"))
         }
       else None
     }.getOrElse(NoopValueStore)

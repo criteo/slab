@@ -1,25 +1,27 @@
 package com.criteo.slab.app
 
+import java.time.Instant
+
 import com.criteo.slab.core.{BoardView, Status}
-import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.{FlatSpec, Matchers}
 
 class StateServiceSpec extends FlatSpec with Matchers {
-  "getStatsByDay" should "work" in {
+  "getStatsByDay" should "aggregate stats by day" in {
     val res = StateService.getStatsByDay(
       Map(
-        new DateTime(3000, 1, 1, 12, 30, DateTimeZone.UTC).getMillis -> BoardView("board1", Status.Success, "", Seq.empty),
-        new DateTime(3000, 1, 2, 0, 30, DateTimeZone.UTC).getMillis -> BoardView("board2", Status.Error, "", Seq.empty)
+        0L -> BoardView("board0", Status.Warning, "", Seq.empty),
+        100L -> BoardView("board1", Status.Success, "", Seq.empty),
+        86400001L -> BoardView("board2", Status.Error, "", Seq.empty)
       )
     )
     res shouldEqual Map(
-      new DateTime(3000, 1, 1, 0, 0, DateTimeZone.UTC).getMillis -> Stats(
+      0L -> Stats(
+        1,
         1,
         0,
-        0,
-        1
+        2
       ),
-      new DateTime(3000, 1, 2, 0, 0, DateTimeZone.UTC).getMillis -> Stats(
+      86400000L -> Stats(
         0,
         0,
         1,

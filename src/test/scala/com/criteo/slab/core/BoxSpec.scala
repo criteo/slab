@@ -1,10 +1,11 @@
 package com.criteo.slab.core
 
+import java.time.Instant
+
 import com.criteo.slab.helper.FutureTests
-import org.joda.time.DateTime
-import org.scalatest.mock.MockitoSugar
-import org.scalatest.{FlatSpec, Matchers}
 import org.mockito.Mockito._
+import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{FlatSpec, Matchers}
 
 class BoxSpec extends FlatSpec with Matchers with MockitoSugar with FutureTests {
 
@@ -46,7 +47,7 @@ class BoxSpec extends FlatSpec with Matchers with MockitoSugar with FutureTests 
   }
 
   "apply() with context" should "check values with the given context" in {
-    val context = Context(new DateTime(1000))
+    val context = Context(Instant.ofEpochMilli(1000))
     whenReady(checkGroup.apply(Some(context))) { r =>
       verify(spiedVersionCheck).replay(context)
       verify(spiedLatencyCheck).replay(context)

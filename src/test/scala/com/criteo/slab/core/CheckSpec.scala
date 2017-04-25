@@ -1,7 +1,8 @@
 package com.criteo.slab.core
 
+import java.time.Instant
+
 import com.criteo.slab.helper.FutureTests
-import org.joda.time.DateTime
 import org.mockito.Mockito._
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -23,7 +24,7 @@ class CheckSpec extends FlatSpec with Matchers with FutureTests {
   }
 
   "replay" should "fetch value from store, return a view corresponding to the context" in {
-    val context = Context(new DateTime(100))
+    val context = Context(Instant.ofEpochMilli(100))
     whenReady(versionCheck.replay(context)) { res =>
       verify(store).fetch("app.version", context)
       res shouldEqual CheckView("app version", Status.Success, "version 100")

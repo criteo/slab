@@ -1,10 +1,10 @@
 package com.criteo.slab.lib
 
 import java.net._
+import java.time.Duration
 import java.util.concurrent._
 
 import com.criteo.slab.helper.FutureTests
-import org.joda.time.Duration
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.io._
@@ -12,7 +12,7 @@ import scala.io._
 class GraphiteStoreSpec extends FlatSpec with Matchers with FutureTests {
   val port = 5000
   val server = new ServerSocket(port)
-  val store = new GraphiteStore("localhost", port, "http://localhost", new Duration(60 * 1000))
+  val store = new GraphiteStore("localhost", port, "http://localhost", Duration.ofSeconds(60))
 
   val pool = Executors.newFixedThreadPool(1)
 
