@@ -2,6 +2,8 @@ package com.criteo.slab.core
 
 import java.time.Instant
 
+import org.slf4j.LoggerFactory
+
 import scala.concurrent.{ExecutionContext, Future}
 
 /** A class for declaring a metric to check
@@ -18,6 +20,8 @@ case class Check[V: Metrical](
                                apply: () => Future[V],
                                display: (V, Context) => View
                              ) {
+  private val logger = LoggerFactory.getLogger(this.getClass)
+
   /** Execute a check
     *
     * @param store The store for uploading the checked value
@@ -31,7 +35,10 @@ case class Check[V: Metrical](
         store.upload(id, implicitly[Metrical[V]].toMetrics(value))
           .map(_ => display(value, currCtx))
       }
-      .recover { case e => View(Status.Unknown, e.getMessage) }
+      .recover { case e =>
+        logger.error(e.getMessage, e)
+        View(Status.Unknown, e.getMessage)
+      }
       .map(view => CheckView(title, view.status, view.message, view.label))
   }
 
@@ -47,7 +54,10 @@ case class Check[V: Metrical](
       .fetch(id, context)
       .map(implicitly[Metrical[V]].fromMetrics)
       .map(display(_, context))
-      .recover { case e => View(Status.Unknown, e.getMessage) }
+      .recover { case e =>
+        logger.error(e.getMessage, e)
+        View(Status.Unknown, e.getMessage)
+      }
       .map(view => CheckView(title, view.status, view.message, view.label))
   }
 
