@@ -9,6 +9,7 @@ import com.criteo.slab.core._
 import com.criteo.slab.utils
 import com.criteo.slab.utils.{HttpClient, Jsonable}
 import org.json4s.DefaultFormats
+import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
@@ -24,24 +25,33 @@ class GraphiteStore(
 
   import GraphiteStore._
 
+  private val logger = LoggerFactory.getLogger(this.getClass)
+
   private val jsonFormat = DefaultFormats ++ Jsonable[GraphiteMetric].serializers
 
   private val DateFormatter = DateTimeFormatter.ofPattern("HH:mm_YYYYMMdd").withZone(serverTimeZone)
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
+  // Returns a prefix of Graphite metrics in "groupId.id"
+  private def getPrefix(id: String) = GroupPrefix + id
+
   override def upload(id: String, values: Metrical.Out): Future[Unit] = {
     utils.collectTries(values.toList.map { case (name, value) =>
-      send(host, port, s"$GroupPrefix$id.$name", value)
+      send(host, port, s"${getPrefix(id)}.$name", value)
     }) match {
-      case Success(_) => Future.successful()
-      case Failure(e) => Future.failed(e)
+      case Success(_) =>
+        logger.debug(s"succeeded in uploading $GroupPrefix$id")
+        Future.successful()
+      case Failure(e) =>
+        logger.debug(s"failed to upload $GroupPrefix$id", e)
+        Future.failed(e)
     }
   }
 
   override def fetch(id: String, context: Context): Future[Metrical.Out] = {
     val query = HttpClient.makeQuery(Map(
-      "target" -> s"$GroupPrefix$id.*",
+      "target" -> s"${getPrefix(id)}.*",
       "from" -> s"${DateFormatter.format(context.when)}",
       "until" -> s"${DateFormatter.format(context.when.plus(checkInterval))}",
       "format" -> "json"
@@ -51,9 +61,9 @@ class GraphiteStore(
       content =>
         Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) match {
           case Success(metrics) =>
-            val pairs = transformMetrics(s"$GroupPrefix$id", metrics)
+            val pairs = transformMetrics(s"${getPrefix(id)}", metrics)
             if (pairs.isEmpty)
-              Future.failed(MissingValueException(s"cannot fetch metric for $GroupPrefix$id"))
+              Future.failed(MissingValueException(s"cannot fetch metric for ${getPrefix(id)}"))
             else
               Future.successful(pairs)
           case Failure(e) => Future.failed(e)
@@ -63,7 +73,7 @@ class GraphiteStore(
 
   override def fetchHistory(id: String, from: Instant, until: Instant): Future[Map[Long, Metrical.Out]] = {
     val query = HttpClient.makeQuery(Map(
-      "target" -> s"$GroupPrefix$id.*",
+      "target" -> s"${getPrefix(id)}.*",
       "from" -> s"${DateFormatter.format(from)}",
       "until" -> s"${DateFormatter.format(until)}",
       "format" -> "json",
@@ -72,10 +82,14 @@ class GraphiteStore(
     val url = new URL(s"$webHost/render$query")
     HttpClient.get[String](url, Map.empty) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) map { metrics =>
-        groupMetrics(s"$GroupPrefix$id", metrics)
+        groupMetrics(s"${getPrefix(id)}", metrics)
       } match {
-        case Success(metrics) => Future.successful(metrics)
-        case Failure(e) => Future.failed(e)
+        case Success(metrics) =>
+          logger.debug(s"${getPrefix(id)}: fetched ${metrics.size} values")
+          Future.successful(metrics)
+        case Failure(e) =>
+          logger.debug(s"${getPrefix(id)}: Invalid graphite metric, got $content")
+          Future.failed(e)
       }
     }
   }

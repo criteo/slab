@@ -96,10 +96,10 @@ class StateService(
             // evict old entries
             val obsoleted = records.keys.filter(_ < checkTime.minus(1, DAYS).toEpochMilli)
             if (obsoleted.size > 0) {
-              logger.info(s"evicted ${obsoleted.size} history entries")
+              logger.debug(s"evicted ${obsoleted.size} history entries")
               records --= obsoleted
             }
-            logger.info(s"history cache updated, new size: ${records.size}")
+            logger.debug(s"history cache updated, new size: ${records.size}")
             // Update stats
             stats
               .getOrElseUpdate(board.title, TrieMap(checkTime.toEpochMilli -> Stats(0, 0, 0, 0)))
