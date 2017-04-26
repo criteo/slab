@@ -18,14 +18,15 @@ class GraphiteStore(
                      port: Int,
                      webHost: String,
                      checkInterval: Duration,
-                     group: Option[String] = None
+                     group: Option[String] = None,
+                     serverTimeZone: ZoneId = ZoneId.systemDefault()
                    )(implicit ec: ExecutionContext) extends ValueStore {
 
   import GraphiteStore._
 
   private val jsonFormat = DefaultFormats ++ Jsonable[GraphiteMetric].serializers
 
-  private val DateFormatter = DateTimeFormatter.ofPattern("HH:mm_YYYYMMdd")
+  private val DateFormatter = DateTimeFormatter.ofPattern("HH:mm_YYYYMMdd").withZone(serverTimeZone)
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
