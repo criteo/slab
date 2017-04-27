@@ -20,13 +20,13 @@ object Values {
 
   // Version check
   case class Version(
-                      underlying: Int
+                      underlying: Double
                     )
 
   implicit def versionMetric = new Metrical[Version] {
     override def toMetrics(value: Version): Out = Map("version" -> value.underlying)
 
-    override def fromMetrics(ms: Out): Version = Version(ms("version").toInt)
+    override def fromMetrics(ms: Out): Version = Version(ms("version"))
   }
 
   // Instant

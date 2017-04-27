@@ -1,5 +1,7 @@
 package com.criteo.slab
 
+import java.text.DecimalFormat
+
 import com.criteo.slab.core._
 import com.criteo.slab.lib.Values.{Latency, Version}
 
@@ -28,10 +30,11 @@ package object example {
     }
   )
 
-  def makeVersionCheck(id: String, title: String, value: Int, status: Status, label: Option[String] = None) = Check(
+  val versionFormatter = new DecimalFormat("##.###")
+  def makeVersionCheck(id: String, title: String, value: Double, status: Status, label: Option[String] = None) = Check(
     id,
     title,
     () => Future.successful(Version(value)),
-    display = (_: Version, _: Context) => View(status, s"version $value", label)
+    display = (_: Version, _: Context) => View(status, s"version ${versionFormatter format value}", label)
   )
 }

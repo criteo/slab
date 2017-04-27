@@ -1,5 +1,6 @@
 package com.criteo.slab
 
+import java.text.DecimalFormat
 import java.time.Instant
 
 import com.criteo.slab.core.Metrical.Out
@@ -28,18 +29,19 @@ package object core {
     override def fetchHistory(id: String, from: Instant, until: Instant): Future[Map[Long, Out]] = Future.successful(Map.empty)
   }
 
+  val versionFormatter = new DecimalFormat("##.###")
   val versionCheck = Check(
     "app.version",
     "app version",
     () => Future.successful(Version(9000)),
-    display = (v: Version, context: Context) => View(Status.Success, s"version ${v.underlying}")
+    display = (v: Version, context: Context) => View(Status.Success, s"version ${versionFormatter format v.underlying}")
   )
 
   val failedVersionCheck = Check[Version](
     "app.version",
     "app version",
     () => Future.failed(new Exception("failed check")),
-    display = (v: Version, context: Context) => View(Status.Success, s"version ${v.underlying}")
+    display = (v: Version, context: Context) => View(Status.Success, s"version ${versionFormatter format v.underlying}")
   )
 
   val latencyCheck = Check(

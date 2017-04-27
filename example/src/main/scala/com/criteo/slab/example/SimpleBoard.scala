@@ -7,7 +7,7 @@ object SimpleBoard {
   lazy val webserver = Box(
     "Webserver Alpha",
     Seq(
-      makeVersionCheck("web.version", "Version", 100, Status.Success, Some("V100")),
+      makeVersionCheck("web.version", "Version", 1.2, Status.Success, Some("V1.2")),
       makeRandomLatencyCheck("web.latency", "Latency")
     ),
     takeMostCritical,
