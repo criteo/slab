@@ -2,6 +2,7 @@
 import { PureComponent } from 'react';
 import DayPicker from 'react-day-picker';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import type { Stats, State } from '../state';
 import { fetchStats } from '../actions';
@@ -31,7 +32,7 @@ class Calendar extends PureComponent {
         className={isOpen ? '' : 'hidden'}
         selectedDays={selectedDay}
         disabledDays={{
-          after: new Date().setDate(new Date().getDate() - 1)
+          after: moment().startOf('day').toDate()
         }}
         onDayClick={ onDayClick }
         renderDay={ this.renderDay }
