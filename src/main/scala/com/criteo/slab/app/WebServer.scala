@@ -16,9 +16,14 @@ import scala.util.Try
   * @param boards The list of boards
   * @param pollingInterval The polling interval in seconds
   * @param statsDays Specifies how many days of history to be counted into statistics
+  * @param customRoutes Defines custom routes (should starts with "/api")
   * @param ec The execution context for the web server
   */
-class WebServer(val boards: Seq[Board], pollingInterval: Int = 60, statsDays: Int = 7)(implicit ec: ExecutionContext) {
+class WebServer(
+                 val boards: Seq[Board],
+                 val pollingInterval: Int = 60,
+                 val statsDays: Int = 7,
+                 val customRoutes: PartialFunction[Request, Future[Response]] = PartialFunction.empty)(implicit ec: ExecutionContext) {
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   private val boardsMap: Map[String, Board] = boards.foldLeft(Map.empty[String, Board]) {
@@ -113,12 +118,9 @@ class WebServer(val boards: Seq[Board], pollingInterval: Int = 60, statsDays: In
       logger.info(s"GET /$file.$ext")
       ClasspathResource(s"/$file.$ext").fold(NotFound())(r => Ok(r))
     }
-    case req if req.method == GET => {
+    case req if req.method == GET && !req.url.startsWith("/api") => {
       logger.info(s"GET ${req.url}")
-      if (req.url.startsWith("/api"))
-        NotFound
-      else
-        ClasspathResource("/index.html").fold(NotFound())(r => Ok(r))
+      ClasspathResource("/index.html").fold(NotFound())(r => Ok(r))
     }
   }
 
@@ -129,7 +131,7 @@ class WebServer(val boards: Seq[Board], pollingInterval: Int = 60, statsDays: In
     }
   }
 
-  def apply(port: Int, customRoutes: PartialFunction[Request, Future[Response]] = PartialFunction.empty): Unit = {
+  def apply(port: Int): Unit = {
     logger.info(s"Starting server at port: $port")
     stateService.start()
 
