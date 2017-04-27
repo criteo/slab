@@ -2,9 +2,6 @@ package com.criteo.slab.example
 
 import com.criteo.slab.core._
 
-import com.criteo.slab.lib.GraphiteStore
-import scala.concurrent.ExecutionContext.Implicits.global
-
 object SimpleBoard {
 
   lazy val webserver = Box(

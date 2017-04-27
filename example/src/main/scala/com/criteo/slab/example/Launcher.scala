@@ -27,7 +27,7 @@ object Launcher {
         }
       else None
     }.getOrElse(NoopValueStore)
-    new WebServer(List(SimpleBoard())).apply(8082, {
+    new WebServer(List(SimpleBoard()), statsDays = 14).apply(8082, {
       case GET at "/api/heartbeat" => Future.successful(Response(200))
     })
   }

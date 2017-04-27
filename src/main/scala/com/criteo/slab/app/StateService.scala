@@ -10,10 +10,17 @@ import org.slf4j.LoggerFactory
 import scala.collection.concurrent.TrieMap
 import scala.concurrent.ExecutionContext
 
-/** A service for the app state */
-class StateService(
+/** A service for the app state
+  *
+  * @param boards The boards
+  * @param intervalSeconds The number of seconds for polling interval
+  * @param statsDays The number of days of the statistics to calculate, defaults to 7
+  * @param ec The execution context
+  */
+private class StateService(
                     val boards: Seq[Board],
-                    intervalSeconds: Int
+                    val intervalSeconds: Int,
+                    val statsDays: Int = 7
                   )(implicit ec: ExecutionContext) {
 
   import StateService._
@@ -52,13 +59,13 @@ class StateService(
     }
   }
 
-  // Load the stats of last 7 days
+  // Load the stats of last n days
   private def loadStats(): Unit = {
     val now = Instant.now
     boards foreach { board =>
       logger.info(s"loading stats for ${board.title}")
       board
-        .fetchHistory(now.minus(7, DAYS), now)
+        .fetchHistory(now.minus(statsDays, DAYS), now)
         .map(getStatsByDay)
         .foreach { newStats =>
           stats.get(board.title) match {

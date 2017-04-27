@@ -13,18 +13,19 @@ import scala.util.Try
 
 /** Slab Web server
   *
-  * @param boards list of boards
-  * @param pollingInterval polling interval in seconds
-  * @param ec Execution context for the web server
+  * @param boards The list of boards
+  * @param pollingInterval The polling interval in seconds
+  * @param statsDays Specifies how many days of history to be counted into statistics
+  * @param ec The execution context for the web server
   */
-class WebServer(val boards: Seq[Board], pollingInterval: Int = 60)(implicit ec: ExecutionContext) {
+class WebServer(val boards: Seq[Board], pollingInterval: Int = 60, statsDays: Int = 7)(implicit ec: ExecutionContext) {
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   private val boardsMap: Map[String, Board] = boards.foldLeft(Map.empty[String, Board]) {
     case (acc, board) => acc + (board.title -> board)
   }
 
-  private val stateService = new StateService(boards, pollingInterval)
+  private val stateService = new StateService(boards, pollingInterval, statsDays)
 
   private val routes: PartialFunction[Request, Future[Response]] = {
     case GET at url"/api/boards" => {
