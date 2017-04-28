@@ -15,8 +15,7 @@ lazy val root = (project in file("."))
       "org.scalatest" %% "scalatest" % "3.0.1" % Test,
       "org.mockito" % "mockito-core" % "2.7.0" % Test,
       "org.slf4j" % "slf4j-api" % "1.7.25",
-      "org.criteo.lolhttp" %% "lolhttp" % "0.2.2",
-      "io.netty" % "netty-codec-http2" % "4.1.7.Final"
+      "org.criteo.lolhttp" %% "lolhttp" % "0.3.2"
     ),
     publishTo := Some("Criteo thirdparty" at "http://nexus.criteo.prod/content/repositories/criteo.thirdparty"),
     credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.criteo.prod", System.getenv("MAVEN_USER"), System.getenv("MAVEN_PASSWORD"))
