@@ -8,9 +8,9 @@ import scala.concurrent.{ExecutionContext, Future}
 
 /** A class for declaring a metric to check
   *
-  * @param id The identifier
-  * @param title The title of the check
-  * @param apply A function when called, should return a future of target value
+  * @param id      The identifier
+  * @param title   The title of the check
+  * @param apply   A function when called, should return a future of target value
   * @param display A function that takes a checked value and a [[com.criteo.slab.core.Context Context]]
   * @tparam V A type parameter which corresponds to the type of the checked value
   */
@@ -25,14 +25,20 @@ case class Check[V: Metrical](
   /** Execute a check
     *
     * @param store The store for uploading the checked value
-    * @param ec The execution context
+    * @param ec    The execution context
     * @return Future of a [[CheckView]]
     */
   def now(implicit store: ValueStore, ec: ExecutionContext): Future[CheckView] = {
     val currCtx = Context(Instant.now())
     apply()
       .flatMap { value =>
-        store.upload(id, implicitly[Metrical[V]].toMetrics(value))
+        store
+          .upload(id, implicitly[Metrical[V]].toMetrics(value))
+          .recover {
+            case e =>
+              logger.error(e.getMessage, e)
+              value
+          }
           .map(_ => display(value, currCtx))
       }
       .recover { case e =>
@@ -45,8 +51,8 @@ case class Check[V: Metrical](
   /** Replay the check at the given datetime
     *
     * @param context The context
-    * @param store The store for fetching the data
-    * @param ec The execution context
+    * @param store   The store for fetching the data
+    * @param ec      The execution context
     * @return Future of a [[CheckView]]
     */
   def replay(context: Context)(implicit store: ValueStore, ec: ExecutionContext): Future[CheckView] = {
@@ -63,10 +69,10 @@ case class Check[V: Metrical](
 
   /** Fetch the history within the given date range
     *
-    * @param from The start date
+    * @param from  The start date
     * @param until The end date
     * @param store The store for fetching the data
-    * @param ec The execution context
+    * @param ec    The execution context
     * @return Future of a [[CheckView]]
     */
   def fetchHistory(from: Instant, until: Instant)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, CheckView]] = {
