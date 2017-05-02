@@ -109,7 +109,7 @@ class WebServer(val boards: Seq[Board], pollingInterval: Int = 60, statsDays: In
         }
       }
     }
-    case GET at url"/$file[.]$ext" => {
+    case GET at url"/$file.$ext" => {
       logger.info(s"GET /$file.$ext")
       ClasspathResource(s"/$file.$ext").fold(NotFound())(r => Ok(r))
     }
