@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 
 import com.criteo.slab.core._
 import com.criteo.slab.utils
-import com.criteo.slab.utils.{HttpClient, Jsonable}
+import com.criteo.slab.utils.{HttpUtils, Jsonable}
 import org.json4s.DefaultFormats
 import org.slf4j.LoggerFactory
 
@@ -33,6 +33,8 @@ class GraphiteStore(
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
+  private val GraphiteClient = HttpUtils.makeGet(new URL(webHost))
+
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id
 
@@ -50,37 +52,34 @@ class GraphiteStore(
   }
 
   override def fetch(id: String, context: Context): Future[Metrical.Out] = {
-    val query = HttpClient.makeQuery(Map(
+    val query = HttpUtils.makeQuery(Map(
       "target" -> s"${getPrefix(id)}.*",
       "from" -> s"${DateFormatter.format(context.when)}",
       "until" -> s"${DateFormatter.format(context.when.plus(checkInterval))}",
       "format" -> "json"
     ))
-    val url = new URL(s"$webHost/render$query")
-    HttpClient.get[String](url, Map.empty).flatMap {
-      content =>
-        Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) match {
-          case Success(metrics) =>
-            val pairs = transformMetrics(s"${getPrefix(id)}", metrics)
-            if (pairs.isEmpty)
-              Future.failed(MissingValueException(s"cannot fetch metric for ${getPrefix(id)}"))
-            else
-              Future.successful(pairs)
-          case Failure(e) => Future.failed(e)
-        }
+    GraphiteClient[String](s"/render$query", Map.empty) flatMap { content =>
+      Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) match {
+        case Success(metrics) =>
+          val pairs = transformMetrics(s"${getPrefix(id)}", metrics)
+          if (pairs.isEmpty)
+            Future.failed(MissingValueException(s"cannot fetch metric for ${getPrefix(id)}"))
+          else
+            Future.successful(pairs)
+        case Failure(e) => Future.failed(e)
+      }
     }
   }
 
   override def fetchHistory(id: String, from: Instant, until: Instant): Future[Map[Long, Metrical.Out]] = {
-    val query = HttpClient.makeQuery(Map(
+    val query = HttpUtils.makeQuery(Map(
       "target" -> s"${getPrefix(id)}.*",
       "from" -> s"${DateFormatter.format(from)}",
       "until" -> s"${DateFormatter.format(until)}",
       "format" -> "json",
       "noNullPoints" -> "true"
     ))
-    val url = new URL(s"$webHost/render$query")
-    HttpClient.get[String](url, Map.empty) flatMap { content =>
+    GraphiteClient[String](s"/render$query", Map.empty) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) map { metrics =>
         groupMetrics(s"${getPrefix(id)}", metrics)
       } match {
