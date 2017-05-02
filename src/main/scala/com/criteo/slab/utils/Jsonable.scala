@@ -5,11 +5,15 @@ import org.json4s.{DefaultFormats, Formats, Serializer}
 
 import scala.util.Try
 
-trait Jsonable[T] {
+/** A type class that enables JSON serialization/deserialization
+  *
+  * @tparam T The underlying type
+  */
+private[slab] trait Jsonable[T] {
   val serializers: Seq[Serializer[_]] = List.empty
 }
 
-object Jsonable {
+private[slab] object Jsonable {
 
   def apply[T: Jsonable]() = implicitly[Jsonable[T]]
 

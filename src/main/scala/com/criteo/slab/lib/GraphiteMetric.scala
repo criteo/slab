@@ -4,7 +4,7 @@ import com.criteo.slab.utils.Jsonable
 import org.json4s.JsonAST.{JArray, JDouble, JInt, JNull}
 import org.json4s.{CustomSerializer, Serializer}
 
-case class DataPoint(value: Option[Double], timestamp: Long)
+private[slab] case class DataPoint(value: Option[Double], timestamp: Long)
 
 object DataPoint {
 
@@ -35,7 +35,7 @@ object DataPoint {
 
 }
 
-case class GraphiteMetric(
+private[slab] case class GraphiteMetric(
                            target: String,
                            datapoints: List[DataPoint]
                          )

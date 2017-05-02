@@ -17,7 +17,7 @@ import scala.concurrent.ExecutionContext
   * @param statsDays The number of days of the statistics to calculate, defaults to 7
   * @param ec The execution context
   */
-private class StateService(
+private[slab] class StateService(
                     val boards: Seq[Board],
                     val intervalSeconds: Int,
                     val statsDays: Int = 7

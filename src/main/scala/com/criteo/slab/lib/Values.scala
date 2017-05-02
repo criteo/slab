@@ -5,9 +5,15 @@ import java.time.Instant
 import com.criteo.slab.core.Metrical
 import com.criteo.slab.core.Metrical.Out
 
+/**
+  * Predefined value types that are subject to checks
+  */
 object Values {
 
-  // Latency check
+  /**
+    * A value representing a latency
+    * @param underlying The latency value
+    */
   case class Latency(
                       underlying: Long
                     )
@@ -18,7 +24,10 @@ object Values {
     override def fromMetrics(ms: Metrical.Out): Latency = Latency(ms("latency").toInt)
   }
 
-  // Version check
+  /**
+    * A value representing a version number
+    * @param underlying
+    */
   case class Version(
                       underlying: Double
                     )
@@ -29,7 +38,6 @@ object Values {
     override def fromMetrics(ms: Out): Version = Version(ms("version"))
   }
 
-  // Instant
   implicit def instantMetric = new Metrical[Instant] {
     override def toMetrics(value: Instant): Out = Map(
       "datetime" -> value.toEpochMilli

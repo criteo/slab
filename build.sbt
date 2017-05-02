@@ -23,11 +23,23 @@ lazy val root = (project in file("."))
 
 lazy val example = (project in file("example"))
   .settings(commonSettings: _*)
-    .settings(
-      libraryDependencies ++= Seq(
-        "org.slf4j" % "slf4j-simple" % "1.7.25"
-      )
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.slf4j" % "slf4j-simple" % "1.7.25"
     )
+  )
+  .settings(
+    Option(System.getenv().get("GENERATE_EXAMPLE_DOC")).map { _ =>
+      Seq(
+        autoCompilerPlugins := true,
+        addCompilerPlugin("com.criteo.socco" %% "socco-plugin" % "0.1.1"),
+        scalacOptions := Seq(
+          "-P:socco:out:examples",
+          "-P:socco:package_scala.concurrent:http://www.scala-lang.org/api/current/"
+        )
+      )
+    }.getOrElse(Nil): _*
+  )
   .dependsOn(root)
 
 lazy val buildWebapp = taskKey[Unit]("build webapp")
@@ -44,6 +56,7 @@ packageBin in Compile <<= (packageBin in Compile) dependsOn buildWebapp
 
 assemblyMergeStrategy in assembly := {
   case "BUILD" => MergeStrategy.discard
-  case PathList("javax", "annotation", xs @ _*) => MergeStrategy.first
+  case PathList("javax", "annotation", xs@_*) => MergeStrategy.first
   case other => MergeStrategy.defaultMergeStrategy(other)
 }
+

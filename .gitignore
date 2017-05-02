@@ -4,4 +4,5 @@ project/*
 !project/*.sbt
 node_modules/
 
+examples/
 npm-debug.log

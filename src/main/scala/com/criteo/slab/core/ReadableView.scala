@@ -6,7 +6,7 @@ import org.json4s.Serializer
 /** Serializable view to be used by the web app
   *
   */
-trait ReadableView {
+private[slab] trait ReadableView {
   val title: String
   val message: String
   val status: Status
@@ -14,31 +14,30 @@ trait ReadableView {
   def asView = View(status, message)
 }
 
-case class BoardView(
+private[slab] object ReadableView {
+
+  implicit object ToJSON extends Jsonable[ReadableView] {
+    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[Status]].serializers
+  }
+}
+
+private[slab] case class BoardView(
                       title: String,
                       status: Status,
                       message: String,
                       boxes: Seq[BoxView]
                     ) extends ReadableView
 
-case class BoxView(
+private[slab] case class BoxView(
                     title: String,
                     status: Status,
                     message: String,
                     checks: Seq[CheckView]
                   ) extends ReadableView
 
-case class CheckView(
+private[slab] case class CheckView(
                       title: String,
                       status: Status,
                       message: String,
                       label: Option[String] = None
                     ) extends ReadableView
-
-object ReadableView {
-
-  implicit object ToJSON extends Jsonable[ReadableView] {
-    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[Status]].serializers
-  }
-
-}

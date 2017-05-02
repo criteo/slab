@@ -6,7 +6,7 @@ import org.json4s.JsonAST.{JArray, JString}
 import org.json4s.{CustomSerializer, Serializer}
 
 /** Represents the configuration of a board, to be used by the web app */
-case class BoardConfig(
+private[slab] case class BoardConfig(
                     title: String,
                     layout: Layout,
                     links: Seq[(Box, Box)] = Seq.empty
