@@ -1,4 +1,8 @@
 .DS_Store
-target/
+/target/
+example/target/*
+!example/target/html/
 project/
 .idea/
+node_modules/
+npm-debug.log

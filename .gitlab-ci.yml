@@ -3,6 +3,7 @@ pages:
   script:
   - mkdir public
   - cp -r api/ public/
+  - cp -r example/target/html public/examples
   artifacts:
     paths:
     - public
