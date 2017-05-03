@@ -1,6 +1,6 @@
 lazy val commonSettings = Seq(
   organization := "org.criteo",
-  version := "0.1.8",
+  version := "0.1.9",
   scalaVersion := "2.12.1",
   crossScalaVersions := Seq("2.11.8", "2.12.1")
 )
@@ -9,13 +9,12 @@ lazy val root = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
     name := "slab",
-    resolvers += "Nexus" at "http://nexus.criteo.prod/content/repositories/criteo.thirdparty",
     libraryDependencies ++= Seq(
       "org.json4s" %% "json4s-native" % "3.4.2",
       "org.scalatest" %% "scalatest" % "3.0.1" % Test,
       "org.mockito" % "mockito-core" % "2.7.0" % Test,
       "org.slf4j" % "slf4j-api" % "1.7.25",
-      "org.criteo.lolhttp" %% "lolhttp" % "0.3.2",
+      "com.criteo.lolhttp" %% "lolhttp" % "0.3.2",
       "io.netty" % "netty-codec-http2" % "4.1.9.Final"
     ),
     publishTo := Some("Criteo thirdparty" at "http://nexus.criteo.prod/content/repositories/criteo.thirdparty"),
