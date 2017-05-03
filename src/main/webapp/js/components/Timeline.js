@@ -1,6 +1,6 @@
 // @flow
 import { Component } from 'react';
-import { findDOMNode } from 'react-dom';
+import { findDOMNode, render } from 'react-dom';
 import { connect } from 'react-redux';
 import vis from 'vis';
 import moment from 'moment';
@@ -13,7 +13,8 @@ type Props = {
   error: ?string,
   isLoading: boolean,
   isLiveMode: boolean,
-  switchBoardView: (isLiveMode: boolean, timestamp?: number) => void
+  switchBoardView: (isLiveMode: boolean, timestamp?: number) => void,
+  selectedDate: ?string
 };
 
 class Timeline extends Component {
@@ -101,19 +102,19 @@ class Timeline extends Component {
         })
         .sort((a, b) => a.start.localeCompare(b.start));
       if (dataset.length > 0) {
+        // if selectedDate is not defined, defaults to last 24 hours
+        const { selectedDate } = this.props;
+        const min = selectedDate ? moment(selectedDate) : moment().subtract(24, 'hour');
+        const max = selectedDate ? moment(selectedDate).add(24, 'hour') : moment();
         const timeline = new vis.Timeline(container, dataset, {
           height: 75,
-          min: dataset[0].date
-            .clone()
-            .subtract(1, 'hour')
-            .format(Timeline.DATE_FORMAT),
-          max: dataset[dataset.length - 1].date
-            .clone()
-            .add(1, 'hour')
-            .format(Timeline.DATE_FORMAT),
           type: 'point',
           stack: false,
-          zoomMin: 60 * 1000
+          zoomMin: 60 * 1000,
+          min,
+          max,
+          start: min,
+          end: max
         });
         timeline.on('select', ({ items }) => {
           if (items.length > 0) {
@@ -125,6 +126,17 @@ class Timeline extends Component {
           }
         });
         this.timeline = timeline;
+      } else {
+        render(
+          <div className="info">
+            {
+              Object.keys(history).length > 0 ?
+              <div>No warnings or errors in this period</div> :
+              <div>No data available</div>
+            }
+          </div>,
+          container
+        );
       }
     }
   }
@@ -132,6 +144,7 @@ class Timeline extends Component {
 
 const select = (state: State) => ({
   history: state.history.data,
+  selectedDate: state.history.date,
   error: state.history.error,
   isLoading: state.history.isLoading,
   isLiveMode: state.isLiveMode
