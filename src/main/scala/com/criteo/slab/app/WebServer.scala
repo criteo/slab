@@ -78,8 +78,8 @@ class WebServer(
       boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
         stateService.getHistory(boardName).fold(
           Future.successful(Response(412)) // Not yet ready
-        ) { history: Map[Long, ReadableView] =>
-          Ok(history.toJSON).addHeaders(HttpString("content-type") -> HttpString("application/json"))
+        ) {
+          Ok(_).addHeaders(HttpString("content-type") -> HttpString("application/json"))
         }
       }
     }

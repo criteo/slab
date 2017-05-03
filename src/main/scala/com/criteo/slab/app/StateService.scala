@@ -4,11 +4,12 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit.{DAYS, MINUTES}
 import java.util.concurrent.{Executors, TimeUnit}
 
-import com.criteo.slab.core.{Board, BoardView, Status}
+import com.criteo.slab.core.{Board, BoardView, ReadableView, Status}
 import org.slf4j.LoggerFactory
 
 import scala.collection.concurrent.TrieMap
 import scala.concurrent.ExecutionContext
+import com.criteo.slab.utils.Jsonable._
 
 /** A service for the app state
   *
@@ -29,6 +30,8 @@ private[slab] class StateService(
 
   // history in (board name -> (timestamp -> view tree))
   private val history = TrieMap.empty[String, TrieMap[Long, BoardView]]
+  // history in (board name -> JSON string)
+  private val historyJSON = TrieMap.empty[String, String]
   // current state in (board name -> view tree)
   private val current = TrieMap.empty[String, BoardView]
   // stats in (board name -> (timestamp -> Stats))
@@ -51,7 +54,9 @@ private[slab] class StateService(
         .fetchHistory(now.minus(1, DAYS), now)
         .foreach { entries =>
           history.get(board.title) match {
-            case Some(value) => value ++= entries
+            case Some(value) =>
+              value ++= entries
+              historyJSON += board.title -> (entries:Map[Long, ReadableView]).toJSON
             case None =>
               history += board.title -> (TrieMap.empty ++= entries)
           }
@@ -69,7 +74,8 @@ private[slab] class StateService(
         .map(getStatsByDay)
         .foreach { newStats =>
           stats.get(board.title) match {
-            case Some(value) => value ++= newStats
+            case Some(value) =>
+              value ++= newStats
             case None =>
               stats += board.title -> (TrieMap.empty ++= newStats)
           }
@@ -81,8 +87,8 @@ private[slab] class StateService(
     current.get(name)
   }
 
-  def getHistory(name: String): Option[Map[Long, BoardView]] = {
-    history.get(name).map(_.toMap)
+  def getHistory(name: String): Option[String] = {
+    historyJSON.get(name)
   }
 
   def getStats(name: String): Option[Map[Long, Stats]] = {
@@ -107,6 +113,7 @@ private[slab] class StateService(
               logger.debug(s"evicted ${obsoleted.size} history entries")
               records --= obsoleted
             }
+            historyJSON += board.title -> records.toMap[Long, ReadableView].toJSON
             logger.debug(s"history cache updated, new size: ${records.size}")
             // Update stats
             stats
