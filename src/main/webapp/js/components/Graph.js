@@ -56,6 +56,10 @@ class Graph extends Component {
     window.addEventListener('resize', this.drawLines);
   }
 
+  componentDidUpdate() {
+    this.drawLines();
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.drawLines);
   }
