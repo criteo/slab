@@ -16,7 +16,7 @@ object HttpUtils {
 
   def makeGet(url: URL)(implicit ec: ExecutionContext) = {
     val port = if (url.getPort > 0) url.getPort else url.getDefaultPort
-    val client = Client(url.getHost, port, url.getProtocol)
+    val client = Client(url.getHost, port, url.getProtocol, maxWaiters = 1024)
     SafeHTTPGet(client, Map(
       HttpString("Host") -> HttpString(s"${url.getHost}:$port")
     ))
