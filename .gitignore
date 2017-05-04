@@ -3,6 +3,6 @@ target/
 project/*
 !project/*.sbt
 node_modules/
-
 examples/
+dist/
 npm-debug.log

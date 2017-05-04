@@ -1,8 +1,40 @@
 lazy val commonSettings = Seq(
-  organization := "org.criteo",
-  version := "0.1.9",
+  organization := "com.criteo",
+  version := "0.2.0",
   scalaVersion := "2.12.1",
-  crossScalaVersions := Seq("2.11.8", "2.12.1")
+  crossScalaVersions := Seq("2.11.8", "2.12.1"),
+  credentials += Credentials(
+    "Sonatype Nexus Repository Manager",
+    "oss.sonatype.org",
+    "criteo-oss",
+    sys.env.getOrElse("SONATYPE_PASSWORD", "")
+  ),
+  pgpPassphrase := sys.env.get("SONATYPE_PASSWORD").map(_.toArray),
+  pgpSecretRing := file(".travis/secring.gpg"),
+  pgpPublicRing := file(".travis/pubring.gpg"),
+  pomExtra in Global := {
+    <url>https://github.com/criteo/lolhttp</url>
+      <licenses>
+        <license>
+          <name>Apache 2</name>
+          <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+      </licenses>
+      <scm>
+        <connection>scm:git:github.com/criteo/slab.git</connection>
+        <developerConnection>scm:git:git@github.com:criteo/slab.git</developerConnection>
+        <url>github.com/criteo/slab</url>
+      </scm>
+      <developers>
+        <developer>
+          <name>Sheng Ran</name>
+          <email>s.ran@criteo.com</email>
+          <url>https://github.com/jedirandy</url>
+          <organization>Criteo</organization>
+          <organizationUrl>http://www.criteo.com</organizationUrl>
+        </developer>
+      </developers>
+  }
 )
 
 lazy val root = (project in file("."))
@@ -16,9 +48,7 @@ lazy val root = (project in file("."))
       "org.slf4j" % "slf4j-api" % "1.7.25",
       "com.criteo.lolhttp" %% "lolhttp" % "0.3.2",
       "io.netty" % "netty-codec-http2" % "4.1.9.Final"
-    ),
-    publishTo := Some("Criteo thirdparty" at "http://nexus.criteo.prod/content/repositories/criteo.thirdparty"),
-    credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.criteo.prod", System.getenv("MAVEN_USER"), System.getenv("MAVEN_PASSWORD"))
+    )
   )
 
 lazy val example = (project in file("example"))
@@ -53,10 +83,3 @@ buildWebapp := {
 }
 
 packageBin in Compile <<= (packageBin in Compile) dependsOn buildWebapp
-
-assemblyMergeStrategy in assembly := {
-  case "BUILD" => MergeStrategy.discard
-  case PathList("javax", "annotation", xs@_*) => MergeStrategy.first
-  case other => MergeStrategy.defaultMergeStrategy(other)
-}
-

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/criteo/slab.svg?branch=master)](https://travis-ci.org/criteo/slab)
 
-A Scala framework for creating SLA monitoring dashboards.
+A Scala framework for creating monitoring dashboards.
 
 ## Installation
 
@@ -20,4 +20,8 @@ Slab is available for Scala `2.11` and `2.12`
 
 ## Contribution
 
-Please refer to [Contribution guide](/CONTRIBUTING.md)
+Please refer to [contribution guide](/CONTRIBUTING.md)
+
+## License
+
+Licensed under the [Apache License 2.0](/LICENSE)
