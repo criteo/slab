@@ -155,12 +155,6 @@
                           Board
                         </a>
                       </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="BoardView.html" title=""></a>
-                        <a href="BoardView.html" title="">
-                          BoardView
-                        </a>
-                      </li><li class="current-entities indented4">
                         <a class="object" href="Box$.html" title=""></a>
                         <a class="class" href="" title="A box that groups checks
 "></a>
@@ -170,23 +164,11 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="BoxView.html" title=""></a>
-                        <a href="BoxView.html" title="">
-                          BoxView
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
                         <a class="class" href="Check.html" title="A class for declaring a metric to check
 "></a>
                         <a href="Check.html" title="A class for declaring a metric to check
 ">
                           Check
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="CheckView.html" title=""></a>
-                        <a href="CheckView.html" title="">
-                          CheckView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -219,18 +201,6 @@
                         <a href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
 ">
                           Metrical
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="object" href="NoopValueStore$.html" title="A dummy store that does nothing"></a>
-                        <a href="NoopValueStore$.html" title="A dummy store that does nothing">
-                          NoopValueStore
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="ReadableView$.html" title=""></a>
-                        <a class="trait" href="ReadableView.html" title="Serializable view to be used by the web app"></a>
-                        <a href="ReadableView.html" title="Serializable view to be used by the web app">
-                          ReadableView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -445,7 +415,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="context">context: <span class="extype" name="scala.Option">Option</span>[<a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="valueStore">valueStore: <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<a href="BoxView.html" class="extype" name="com.criteo.slab.core.BoxView">BoxView</a>]</span>
+        <span class="name">apply</span><span class="params">(<span name="context">context: <span class="extype" name="scala.Option">Option</span>[<a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="valueStore">valueStore: <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.BoxView">BoxView</span>]</span>
       </span>
       
       
@@ -536,9 +506,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="com.criteo.slab.core.Box#fetchHistory" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="fetchHistory(from:org.joda.time.DateTime,until:org.joda.time.DateTime)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[Map[Long,com.criteo.slab.core.BoxView]]"></a><a id="fetchHistory(DateTime,DateTime)(ValueStore,ExecutionContext):Future[Map[Long,BoxView]]"></a>
+      <a id="fetchHistory(from:java.time.Instant,until:java.time.Instant)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[Map[Long,com.criteo.slab.core.BoxView]]"></a><a id="fetchHistory(Instant,Instant)(ValueStore,ExecutionContext):Future[Map[Long,BoxView]]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Box.html#fetchHistory(from:org.joda.time.DateTime,until:org.joda.time.DateTime)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[Map[Long,com.criteo.slab.core.BoxView]]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Box.html#fetchHistory(from:java.time.Instant,until:java.time.Instant)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[Map[Long,com.criteo.slab.core.BoxView]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -547,7 +517,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fetchHistory</span><span class="params">(<span name="from">from: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>, <span name="until">until: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="store">store: <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <a href="BoxView.html" class="extype" name="com.criteo.slab.core.BoxView">BoxView</a>]]</span>
+        <span class="name">fetchHistory</span><span class="params">(<span name="from">from: <span class="extype" name="java.time.Instant">Instant</span></span>, <span name="until">until: <span class="extype" name="java.time.Instant">Instant</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="store">store: <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <span class="extype" name="com.criteo.slab.core.BoxView">BoxView</span>]]</span>
       </span>
       
       

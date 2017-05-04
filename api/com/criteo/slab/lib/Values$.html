@@ -147,33 +147,23 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.criteo.slab">slab</a></dd></dl></div>
     </li><li class="current-entities indented4">
-                        <a class="object" href="DataPoint$.html" title=""></a>
-                        <a class="class" href="DataPoint.html" title=""></a>
-                        <a href="DataPoint.html" title="">
-                          DataPoint
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="GraphiteMetric$.html" title=""></a>
-                        <a class="class" href="GraphiteMetric.html" title=""></a>
-                        <a href="GraphiteMetric.html" title="">
-                          GraphiteMetric
-                        </a>
-                      </li><li class="current-entities indented4">
                         <a class="object" href="GraphiteStore$.html" title=""></a>
-                        <a class="class" href="GraphiteStore.html" title=""></a>
-                        <a href="GraphiteStore.html" title="">
+                        <a class="class" href="GraphiteStore.html" title="A value store that uses Graphite"></a>
+                        <a href="GraphiteStore.html" title="A value store that uses Graphite">
                           GraphiteStore
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="MissingValueException.html" title=""></a>
-                        <a href="MissingValueException.html" title="">
-                          MissingValueException
+                        <a class="object" href="NoopValueStore$.html" title="A dummy store that does nothing"></a>
+                        <a href="NoopValueStore$.html" title="A dummy store that does nothing">
+                          NoopValueStore
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="object" href="" title=""></a>
-                        <a href="" title="">
+                        <a class="object" href="" title="Predefined value types that are subject to checks
+"></a>
+                        <a href="" title="Predefined value types that are subject to checks
+">
                           Values
                         </a>
                       </li>
@@ -204,7 +194,8 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Predefined value types that are subject to checks
+</p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -256,7 +247,7 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="com.criteo.slab.lib.Values.Latency" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="com.criteo.slab.lib.Values.Latency" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="LatencyextendsProductwithSerializable"></a><a id="Latency:Latency"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/lib/Values$.html#LatencyextendsProductwithSerializable" title="Permalink">
@@ -268,12 +259,12 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="Values$$Latency.html">
+        <a title="A value representing a latency" href="Values$$Latency.html">
               <span class="name">Latency</span>
             </a><span class="params">(<span name="underlying">underlying: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">A value representing a latency</p><div class="fullcomment"><div class="comment cmt"><p>A value representing a latency</p></div><dl class="paramcmts block"><dt class="param">underlying</dt><dd class="cmt"><p>The latency value</p></dd></dl></div>
     </li><li name="com.criteo.slab.lib.Values.Version" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="VersionextendsProductwithSerializable"></a><a id="Version:Version"></a>
       <span class="permalink">
@@ -286,12 +277,12 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="Values$$Version.html">
+        <a title="A value representing a version number" href="Values$$Version.html">
               <span class="name">Version</span>
-            </a><span class="params">(<span name="underlying">underlying: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+            </a><span class="params">(<span name="underlying">underlying: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">A value representing a version number</p>
     </li></ol>
             </div>
 
@@ -472,6 +463,22 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.criteo.slab.lib.Values#instantMetric" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="instantMetric:com.criteo.slab.core.Metrical[java.time.Instant]"></a><a id="instantMetric:Metrical[Instant]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/Values$.html#instantMetric:com.criteo.slab.core.Metrical[java.time.Instant]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">instantMetric</span><span class="result">: <a href="../core/Metrical.html" class="extype" name="com.criteo.slab.core.Metrical">Metrical</a>[<span class="extype" name="java.time.Instant">Instant</span>]</span>
+      </span>
+      
+      
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <span class="permalink">
@@ -488,22 +495,6 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.criteo.slab.lib.Values#jodaTimeMetric" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="jodaTimeMetric:com.criteo.slab.core.Metrical[org.joda.time.DateTime]"></a><a id="jodaTimeMetric:Metrical[DateTime]"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/Values$.html#jodaTimeMetric:com.criteo.slab.core.Metrical[org.joda.time.DateTime]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">jodaTimeMetric</span><span class="result">: <a href="../core/Metrical.html" class="extype" name="com.criteo.slab.core.Metrical">Metrical</a>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>]</span>
-      </span>
-      
-      
     </li><li name="com.criteo.slab.lib.Values#latencyMetric" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="latencyMetric:com.criteo.slab.core.Metrical[com.criteo.slab.lib.Values.Latency]"></a><a id="latencyMetric:Metrical[Latency]"></a>
       <span class="permalink">

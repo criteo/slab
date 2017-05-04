@@ -181,33 +181,23 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.criteo.slab">slab</a></dd></dl></div>
     </li><li class="current-entities indented4">
-                        <a class="object" href="DataPoint$.html" title=""></a>
-                        <a class="class" href="DataPoint.html" title=""></a>
-                        <a href="DataPoint.html" title="">
-                          DataPoint
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="GraphiteMetric$.html" title=""></a>
-                        <a class="class" href="GraphiteMetric.html" title=""></a>
-                        <a href="GraphiteMetric.html" title="">
-                          GraphiteMetric
-                        </a>
-                      </li><li class="current-entities indented4">
                         <a class="object" href="GraphiteStore$.html" title=""></a>
-                        <a class="class" href="GraphiteStore.html" title=""></a>
-                        <a href="GraphiteStore.html" title="">
+                        <a class="class" href="GraphiteStore.html" title="A value store that uses Graphite"></a>
+                        <a href="GraphiteStore.html" title="A value store that uses Graphite">
                           GraphiteStore
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="MissingValueException.html" title=""></a>
-                        <a href="MissingValueException.html" title="">
-                          MissingValueException
+                        <a class="object" href="NoopValueStore$.html" title="A dummy store that does nothing"></a>
+                        <a href="NoopValueStore$.html" title="A dummy store that does nothing">
+                          NoopValueStore
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="object" href="Values$.html" title=""></a>
-                        <a href="Values$.html" title="">
+                        <a class="object" href="Values$.html" title="Predefined value types that are subject to checks
+"></a>
+                        <a href="Values$.html" title="Predefined value types that are subject to checks
+">
                           Values
                         </a>
                       </li><li name="com.criteo.slab.utils" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -291,43 +281,7 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="com.criteo.slab.lib.DataPoint" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="DataPointextendsProductwithSerializable"></a><a id="DataPoint:DataPoint"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/index.html#DataPointextendsProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="DataPoint.html">
-              <span class="name">DataPoint</span>
-            </a><span class="params">(<span name="value">value: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>, <span name="timestamp">timestamp: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
-    </li><li name="com.criteo.slab.lib.GraphiteMetric" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="GraphiteMetricextendsProductwithSerializable"></a><a id="GraphiteMetric:GraphiteMetric"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/index.html#GraphiteMetricextendsProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="GraphiteMetric.html">
-              <span class="name">GraphiteMetric</span>
-            </a><span class="params">(<span name="target">target: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="datapoints">datapoints: <span class="extype" name="scala.List">List</span>[<a href="DataPoint.html" class="extype" name="com.criteo.slab.lib.DataPoint">DataPoint</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
-    </li><li name="com.criteo.slab.lib.GraphiteStore" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="com.criteo.slab.lib.GraphiteStore" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="GraphiteStoreextendsValueStore"></a><a id="GraphiteStore:GraphiteStore"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/lib/index.html#GraphiteStoreextendsValueStore" title="Permalink">
@@ -339,30 +293,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a title="" href="GraphiteStore.html">
+        <a title="A value store that uses Graphite" href="GraphiteStore.html">
               <span class="name">GraphiteStore</span>
             </a><span class="result"> extends <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>
       </span>
       
-      
-    </li><li name="com.criteo.slab.lib.MissingValueException" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="MissingValueExceptionextendsExceptionwithProductwithSerializable"></a><a id="MissingValueException:MissingValueException"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/index.html#MissingValueExceptionextendsExceptionwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="MissingValueException.html">
-              <span class="name">MissingValueException</span>
-            </a><span class="params">(<span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Exception">Exception</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
+      <p class="shortcomment cmt">A value store that uses Graphite</p>
     </li></ol>
             </div>
 
@@ -371,43 +307,7 @@
         <div class="values members">
               <h3>Value Members</h3>
               <ol>
-                <li name="com.criteo.slab.lib.DataPoint" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="DataPoint"></a><a id="DataPoint:DataPoint"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/index.html#DataPoint" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="DataPoint$.html">
-              <span class="name">DataPoint</span>
-            </a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
-    </li><li name="com.criteo.slab.lib.GraphiteMetric" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="GraphiteMetric"></a><a id="GraphiteMetric:GraphiteMetric"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/index.html#GraphiteMetric" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="GraphiteMetric$.html">
-              <span class="name">GraphiteMetric</span>
-            </a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
-    </li><li name="com.criteo.slab.lib.GraphiteStore" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+                <li name="com.criteo.slab.lib.GraphiteStore" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="GraphiteStore"></a><a id="GraphiteStore:GraphiteStore"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/lib/index.html#GraphiteStore" title="Permalink">
@@ -425,6 +325,24 @@
       </span>
       
       
+    </li><li name="com.criteo.slab.lib.NoopValueStore" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NoopValueStore"></a><a id="NoopValueStore:NoopValueStore"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/index.html#NoopValueStore" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="A dummy store that does nothing" href="NoopValueStore$.html">
+              <span class="name">NoopValueStore</span>
+            </a><span class="result"> extends <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">A dummy store that does nothing</p>
     </li><li name="com.criteo.slab.lib.Values" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="Values"></a><a id="Values:Values"></a>
       <span class="permalink">
@@ -437,12 +355,14 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a title="" href="Values$.html">
+        <a title="Predefined value types that are subject to checks
+" href="Values$.html">
               <span class="name">Values</span>
             </a>
       </span>
       
-      
+      <p class="shortcomment cmt">Predefined value types that are subject to checks
+</p>
     </li>
               </ol>
             </div>

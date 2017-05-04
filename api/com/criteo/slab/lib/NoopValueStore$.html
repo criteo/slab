@@ -128,10 +128,10 @@
       <p class="shortcomment cmt">API doc for Slab
 </p><div class="fullcomment"><div class="comment cmt"><p>API doc for Slab
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.criteo">criteo</a></dd></dl></div>
-    </li><li name="com.criteo.slab.app" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="app"></a><a id="app:app"></a>
+    </li><li name="com.criteo.slab.lib" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="lib"></a><a id="lib:lib"></a>
       <span class="permalink">
-      <a href="../../../com/criteo/slab/index.html#app" title="Permalink">
+      <a href="../../../com/criteo/slab/index.html#lib" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -141,36 +141,30 @@
       </span>
       <span class="symbol">
         <a title="" href="index.html">
-              <span class="name">app</span>
+              <span class="name">lib</span>
             </a>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.criteo.slab">slab</a></dd></dl></div>
     </li><li class="current-entities indented4">
-                        <a class="object" href="" title=""></a>
-                        <a class="class" href="BoardConfig.html" title="Represents the configuration of a bord, to be used by the web app"></a>
-                        <a href="BoardConfig.html" title="Represents the configuration of a bord, to be used by the web app">
-                          BoardConfig
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="StateService$.html" title=""></a>
-                        <a class="class" href="StateService.html" title="A service for the app state"></a>
-                        <a href="StateService.html" title="A service for the app state">
-                          StateService
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="Stats$.html" title=""></a>
-                        <a class="class" href="Stats.html" title="Statistics of history
-"></a>
-                        <a href="Stats.html" title="Statistics of history
-">
-                          Stats
+                        <a class="object" href="GraphiteStore$.html" title=""></a>
+                        <a class="class" href="GraphiteStore.html" title="A value store that uses Graphite"></a>
+                        <a href="GraphiteStore.html" title="A value store that uses Graphite">
+                          GraphiteStore
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="WebServer.html" title=""></a>
-                        <a href="WebServer.html" title="">
-                          WebServer
+                        <a class="object" href="" title="A dummy store that does nothing"></a>
+                        <a href="" title="A dummy store that does nothing">
+                          NoopValueStore
+                        </a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="Values$.html" title="Predefined value types that are subject to checks
+"></a>
+                        <a href="Values$.html" title="Predefined value types that are subject to checks
+">
+                          Values
                         </a>
                       </li>
               </ul>
@@ -179,16 +173,14 @@
           <div id="content">
             <body class="object value">
       <div id="definition">
-        <a href="BoardConfig.html" title="See companion class"><div class="big-circle object-companion-class">o</div></a>
-        <p id="owner"><a href="../../../index.html" class="extype" name="com">com</a>.<a href="../../index.html" class="extype" name="com.criteo">criteo</a>.<a href="../index.html" class="extype" name="com.criteo.slab">slab</a>.<a href="index.html" class="extype" name="com.criteo.slab.app">app</a></p>
-        <h1><a href="BoardConfig.html" title="See companion class">BoardConfig</a><span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html" title="Permalink">
+        <div class="big-circle object">o</div>
+        <p id="owner"><a href="../../../index.html" class="extype" name="com">com</a>.<a href="../../index.html" class="extype" name="com.criteo">criteo</a>.<a href="../index.html" class="extype" name="com.criteo.slab">slab</a>.<a href="index.html" class="extype" name="com.criteo.slab.lib">lib</a></p>
+        <h1>NoopValueStore<span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span></h1>
-        <h3><span class="morelinks"><div>
-            Companion <a href="BoardConfig.html" title="See companion class">class BoardConfig</a>
-          </div></span></h3>
+        <h3><span class="morelinks"></span></h3>
       </div>
 
       <h4 id="signature" class="signature">
@@ -197,16 +189,16 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">BoardConfig</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">NoopValueStore</span><span class="result"> extends <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>
       </span>
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A dummy store that does nothing</p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -232,7 +224,7 @@
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="com.criteo.slab.app.BoardConfig"><span>BoardConfig</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="com.criteo.slab.lib.NoopValueStore"><span>NoopValueStore</span></li><li class="in" name="com.criteo.slab.core.ValueStore"><span>ValueStore</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -262,7 +254,7 @@
                 <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#!=(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#!=(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -278,7 +270,7 @@
     </li><li name="scala.AnyRef###" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="##():Int"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html###():Int" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html###():Int" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -294,7 +286,7 @@
     </li><li name="scala.AnyRef#==" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="==(x$1:Any):Boolean"></a><a id="==(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#==(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#==(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -310,7 +302,7 @@
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#asInstanceOf[T0]:T0" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#asInstanceOf[T0]:T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -326,7 +318,7 @@
     </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a><a id="clone():AnyRef"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#clone():Object" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#clone():Object" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -348,7 +340,7 @@
     </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#eq(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#eq(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -364,7 +356,7 @@
     </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#equals(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#equals(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -377,10 +369,42 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.criteo.slab.lib.NoopValueStore#fetch" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fetch(id:String,context:com.criteo.slab.core.Context):scala.concurrent.Future[Map[String,Double]]"></a><a id="fetch(String,Context):Future[Map[String,Double]]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#fetch(id:String,context:com.criteo.slab.core.Context):scala.concurrent.Future[Map[String,Double]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fetch</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="context">context: <a href="../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Double">Double</span>]]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.NoopValueStore">NoopValueStore</a> → <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></dd></dl></div>
+    </li><li name="com.criteo.slab.lib.NoopValueStore#fetchHistory" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fetchHistory(id:String,from:java.time.Instant,until:java.time.Instant):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]"></a><a id="fetchHistory(String,Instant,Instant):Future[Map[Long,Out]]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#fetchHistory(id:String,from:java.time.Instant,until:java.time.Instant):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fetchHistory</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="from">from: <span class="extype" name="java.time.Instant">Instant</span></span>, <span name="until">until: <span class="extype" name="java.time.Instant">Instant</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <a href="../core/Metrical$.html#Out=Map[String,Double]" class="extmbr" name="com.criteo.slab.core.Metrical.Out">Out</a>]]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.NoopValueStore">NoopValueStore</a> → <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#finalize():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#finalize():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -402,7 +426,7 @@
     </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#getClass():Class[_]" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#getClass():Class[_]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -418,7 +442,7 @@
     </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#hashCode():Int" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#hashCode():Int" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -434,7 +458,7 @@
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#isInstanceOf[T0]:Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#isInstanceOf[T0]:Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -450,7 +474,7 @@
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#ne(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#ne(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -466,7 +490,7 @@
     </li><li name="scala.AnyRef#notify" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#notify():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#notify():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -482,7 +506,7 @@
     </li><li name="scala.AnyRef#notifyAll" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notifyAll():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#notifyAll():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#notifyAll():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -498,7 +522,7 @@
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -514,7 +538,7 @@
     </li><li name="scala.AnyRef#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toString():String"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#toString():String" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#toString():String" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -527,10 +551,26 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.criteo.slab.lib.NoopValueStore#upload" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="upload(id:String,values:Map[String,Double]):scala.concurrent.Future[Unit]"></a><a id="upload(String,Map[String,Double]):Future[Unit]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#upload(id:String,values:Map[String,Double]):scala.concurrent.Future[Unit]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">upload</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="values">values: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Double">Double</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.NoopValueStore">NoopValueStore</a> → <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#wait():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#wait():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -552,7 +592,7 @@
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long,x$2:Int):Unit"></a><a id="wait(Long,Int):Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -574,7 +614,7 @@
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long):Unit"></a><a id="wait(Long):Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#wait(x$1:Long):Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/NoopValueStore$.html#wait(x$1:Long):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -593,24 +633,6 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.criteo.slab.app.BoardConfig.ToJSON" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="ToJSON"></a><a id="ToJSON:ToJSON"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/BoardConfig$.html#ToJSON" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="BoardConfig$$ToJSON$.html">
-              <span class="name">ToJSON</span>
-            </a><span class="result"> extends <a href="../utils/Jsonable.html" class="extype" name="com.criteo.slab.utils.Jsonable">Jsonable</a>[<a href="BoardConfig.html" class="extype" name="com.criteo.slab.app.BoardConfig">BoardConfig</a>]</span>
-      </span>
-      
-      
     </li>
               </ol>
             </div>
@@ -621,10 +643,8 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.Serializable">
-              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
-            </div><div class="parent" name="java.io.Serializable">
-              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+        <div class="parent" name="com.criteo.slab.core.ValueStore">
+              <h3>Inherited from <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">

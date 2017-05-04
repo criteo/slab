@@ -146,56 +146,60 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.criteo.slab">slab</a></dd></dl></div>
-    </li><li class="current-entities indented4">
+    </li><li name="com.criteo.slab.utils.HttpUtils" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="HttpUtils"></a><a id="HttpUtils:HttpUtils"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/utils/index.html#HttpUtils" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="A Http client" href="HttpUtils$.html">
+              <span class="name">HttpUtils</span>
+            </a>
+      </span>
+      
+      <p class="shortcomment cmt">A Http client</p><div class="fullcomment"><div class="comment cmt"><p>A Http client</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="index.html" class="extype" name="com.criteo.slab.utils">utils</a></dd></dl></div>
+    </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="FailedRequestException.html" title=""></a>
-                        <a href="FailedRequestException.html" title="">
+                        <a class="class" href="HttpUtils$$FailedRequestException.html" title=""></a>
+                        <a href="HttpUtils$$FailedRequestException.html" title="">
                           FailedRequestException
                         </a>
-                      </li><li class="current-entities indented4">
+                      </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="object" href="FutureUtils$.html" title=""></a>
-                        <a href="FutureUtils$.html" title="">
-                          FutureUtils
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="object" href="HttpClient$.html" title=""></a>
-                        <a href="HttpClient$.html" title="">
-                          HttpClient
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="Jsonable$.html" title=""></a>
-                        <a class="trait" href="" title=""></a>
+                        <a class="class" href="" title=""></a>
                         <a href="" title="">
-                          Jsonable
+                          SafeHTTPGet
                         </a>
                       </li>
               </ul>
             </div>
           </div>
           <div id="content">
-            <body class="trait type">
+            <body class="class type">
       <div id="definition">
-        <a href="Jsonable$.html" title="See companion object"><div class="big-circle trait-companion-object">t</div></a>
-        <p id="owner"><a href="../../../index.html" class="extype" name="com">com</a>.<a href="../../index.html" class="extype" name="com.criteo">criteo</a>.<a href="../index.html" class="extype" name="com.criteo.slab">slab</a>.<a href="index.html" class="extype" name="com.criteo.slab.utils">utils</a></p>
-        <h1><a href="Jsonable$.html" title="See companion object">Jsonable</a><span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html" title="Permalink">
+        <div class="big-circle class">c</div>
+        <p id="owner"><a href="../../../index.html" class="extype" name="com">com</a>.<a href="../../index.html" class="extype" name="com.criteo">criteo</a>.<a href="../index.html" class="extype" name="com.criteo.slab">slab</a>.<a href="index.html" class="extype" name="com.criteo.slab.utils">utils</a>.<a href="HttpUtils$.html" class="extype" name="com.criteo.slab.utils.HttpUtils">HttpUtils</a></p>
+        <h1>SafeHTTPGet<span class="permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span></h1>
-        <h3><span class="morelinks"><div>
-            Companion <a href="Jsonable$.html" title="See companion object">object Jsonable</a>
-          </div></span></h3>
+        <h3><span class="morelinks"></span></h3>
       </div>
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">trait</span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Jsonable</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+        <span class="name">SafeHTTPGet</span><span class="params">(<span name="client">client: <span class="extype" name="lol.http.Client">Client</span></span>, <span name="defaultHeaders">defaultHeaders: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
@@ -204,13 +208,8 @@
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
-        </div><div class="toggleContainer block">
-            <span class="toggle">
-              Known Subclasses
-            </span>
-            <div class="subClasses hiddenContent"><a href="../app/BoardConfig$$ToJSON$.html" class="extype" name="com.criteo.slab.app.BoardConfig.ToJSON">ToJSON</a>, <a href="../app/Stats$$ToJSON$.html" class="extype" name="com.criteo.slab.app.Stats.ToJSON">ToJSON</a>, <a href="../core/Box$$toJSON$.html" class="extype" name="com.criteo.slab.core.Box.toJSON">toJSON</a>, <a href="../core/Layout$$ToJSON$.html" class="extype" name="com.criteo.slab.core.Layout.ToJSON">ToJSON</a>, <a href="../core/ReadableView$$ToJSON$.html" class="extype" name="com.criteo.slab.core.ReadableView.ToJSON">ToJSON</a>, <a href="../core/Status$$ToJSON$.html" class="extype" name="com.criteo.slab.core.Status.ToJSON">ToJSON</a>, <a href="../lib/DataPoint$$ToJSON$.html" class="extype" name="com.criteo.slab.lib.DataPoint.ToJSON">ToJSON</a>, <a href="../lib/GraphiteMetric$$ToJSON$.html" class="extype" name="com.criteo.slab.lib.GraphiteMetric.ToJSON">ToJSON</a></div>
-          </div></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
         
 
       <div id="mbrsel">
@@ -235,7 +234,7 @@
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="com.criteo.slab.utils.Jsonable"><span>Jsonable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet"><span>SafeHTTPGet</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -253,7 +252,26 @@
 
       <div id="template">
         <div id="allMembers">
-        
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(client:lol.http.Client,defaultHeaders:Map[lol.http.HttpString,lol.http.HttpString])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet"></a><a id="&lt;init&gt;:SafeHTTPGet"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#&lt;init&gt;(client:lol.http.Client,defaultHeaders:Map[lol.http.HttpString,lol.http.HttpString])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">SafeHTTPGet</span><span class="params">(<span name="client">client: <span class="extype" name="lol.http.Client">Client</span></span>, <span name="defaultHeaders">defaultHeaders: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
+      </span>
+      
+      
+    </li></ol>
+            </div>
 
         
 
@@ -265,7 +283,7 @@
                 <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#!=(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#!=(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -281,7 +299,7 @@
     </li><li name="scala.AnyRef###" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="##():Int"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html###():Int" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html###():Int" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -297,7 +315,7 @@
     </li><li name="scala.AnyRef#==" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="==(x$1:Any):Boolean"></a><a id="==(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#==(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#==(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -310,10 +328,26 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="apply[A](path:String,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$1:lol.http.ContentDecoder[A]):scala.concurrent.Future[A]"></a><a id="apply[A](String,Map[HttpString,HttpString])(ContentDecoder[A]):Future[A]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#apply[A](path:String,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$1:lol.http.ContentDecoder[A]):scala.concurrent.Future[A]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="headers">headers: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>] = <span class="symbol">Map.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="lol.http.ContentDecoder">ContentDecoder</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet.apply.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet.apply.A">A</span>]</span>
+      </span>
+      
+      
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#asInstanceOf[T0]:T0" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#asInstanceOf[T0]:T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -326,10 +360,26 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet#client" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="client:lol.http.Client"></a><a id="client:Client"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#client:lol.http.Client" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">client</span><span class="result">: <span class="extype" name="lol.http.Client">Client</span></span>
+      </span>
+      
+      
     </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a><a id="clone():AnyRef"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#clone():Object" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#clone():Object" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -348,10 +398,26 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet#defaultHeaders" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="defaultHeaders:Map[lol.http.HttpString,lol.http.HttpString]"></a><a id="defaultHeaders:Map[HttpString,HttpString]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#defaultHeaders:Map[lol.http.HttpString,lol.http.HttpString]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">defaultHeaders</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>]</span>
+      </span>
+      
+      
     </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#eq(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#eq(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -364,26 +430,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#equals(x$1:Any):Boolean" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#finalize():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#finalize():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -405,7 +455,7 @@
     </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#getClass():Class[_]" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#getClass():Class[_]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -418,26 +468,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="hashCode():Int"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#hashCode():Int" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#isInstanceOf[T0]:Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#isInstanceOf[T0]:Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -453,7 +487,7 @@
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#ne(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#ne(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -469,7 +503,7 @@
     </li><li name="scala.AnyRef#notify" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#notify():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#notify():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -485,7 +519,7 @@
     </li><li name="scala.AnyRef#notifyAll" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notifyAll():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#notifyAll():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#notifyAll():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -498,26 +532,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.criteo.slab.utils.Jsonable#serializers" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="serializers:Seq[org.json4s.Serializer[_]]"></a><a id="serializers:Seq[Serializer[_]]"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#serializers:Seq[org.json4s.Serializer[_]]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">serializers</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="org.json4s.Serializer">Serializer</span>[_]]</span>
-      </span>
-      
-      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -530,26 +548,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="toString():String"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#toString():String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#wait():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#wait():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -571,7 +573,7 @@
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long,x$2:Int):Unit"></a><a id="wait(Long,Int):Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -593,7 +595,7 @@
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long):Unit"></a><a id="wait(Long):Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/Jsonable.html#wait(x$1:Long):Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#wait(x$1:Long):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -622,7 +624,15 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.Product">
+              <h3>Inherited from <span class="extype" name="scala.Product">Product</span></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>

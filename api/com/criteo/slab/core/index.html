@@ -171,12 +171,6 @@
                           Board
                         </a>
                       </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="BoardView.html" title=""></a>
-                        <a href="BoardView.html" title="">
-                          BoardView
-                        </a>
-                      </li><li class="current-entities indented4">
                         <a class="object" href="Box$.html" title=""></a>
                         <a class="class" href="Box.html" title="A box that groups checks
 "></a>
@@ -186,23 +180,11 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="BoxView.html" title=""></a>
-                        <a href="BoxView.html" title="">
-                          BoxView
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
                         <a class="class" href="Check.html" title="A class for declaring a metric to check
 "></a>
                         <a href="Check.html" title="A class for declaring a metric to check
 ">
                           Check
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="CheckView.html" title=""></a>
-                        <a href="CheckView.html" title="">
-                          CheckView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -235,18 +217,6 @@
                         <a href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
 ">
                           Metrical
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="object" href="NoopValueStore$.html" title="A dummy store that does nothing"></a>
-                        <a href="NoopValueStore$.html" title="A dummy store that does nothing">
-                          NoopValueStore
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="ReadableView$.html" title=""></a>
-                        <a class="trait" href="ReadableView.html" title="Serializable view to be used by the web app"></a>
-                        <a href="ReadableView.html" title="Serializable view to be used by the web app">
-                          ReadableView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -398,24 +368,6 @@
       <p class="shortcomment cmt">Top level component
 </p><div class="fullcomment"><div class="comment cmt"><p>Top level component
 </p></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The board title</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The children boxes</p></dd><dt class="param">aggregate</dt><dd class="cmt"><p>Aggregates its children boxes views</p></dd><dt class="param">layout</dt><dd class="cmt"><p>The layout of the board</p></dd><dt class="param">links</dt><dd class="cmt"><p>Defines links between boxes, will draw lines in the UI</p></dd><dt class="param">valueStore</dt><dd class="cmt"><p>The store used for</p></dd></dl></div>
-    </li><li name="com.criteo.slab.core.BoardView" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="BoardViewextendsReadableViewwithProductwithSerializable"></a><a id="BoardView:BoardView"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/index.html#BoardViewextendsReadableViewwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="BoardView.html">
-              <span class="name">BoardView</span>
-            </a><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="status">status: <a href="Status.html" class="extype" name="com.criteo.slab.core.Status">Status</a></span>, <span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="BoxView.html" class="extype" name="com.criteo.slab.core.BoxView">BoxView</a>]</span>)</span><span class="result"> extends <a href="ReadableView.html" class="extype" name="com.criteo.slab.core.ReadableView">ReadableView</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
     </li><li name="com.criteo.slab.core.Box" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="BoxextendsProductwithSerializable"></a><a id="Box:Box"></a>
       <span class="permalink">
@@ -437,24 +389,6 @@
       <p class="shortcomment cmt">A box that groups checks
 </p><div class="fullcomment"><div class="comment cmt"><p>A box that groups checks
 </p></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">checks</dt><dd class="cmt"><p>The checks</p></dd><dt class="param">aggregate</dt><dd class="cmt"><p>Aggregates the views of its checks, return a view</p></dd><dt class="param">description</dt><dd class="cmt"><p>The description of the box in markdown syntax</p></dd><dt class="param">labelLimit</dt><dd class="cmt"><p>The limit of visible check labels shown on the box</p></dd></dl></div>
-    </li><li name="com.criteo.slab.core.BoxView" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="BoxViewextendsReadableViewwithProductwithSerializable"></a><a id="BoxView:BoxView"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/index.html#BoxViewextendsReadableViewwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="BoxView.html">
-              <span class="name">BoxView</span>
-            </a><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="status">status: <a href="Status.html" class="extype" name="com.criteo.slab.core.Status">Status</a></span>, <span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checks">checks: <span class="extype" name="scala.Seq">Seq</span>[<a href="CheckView.html" class="extype" name="com.criteo.slab.core.CheckView">CheckView</a>]</span>)</span><span class="result"> extends <a href="ReadableView.html" class="extype" name="com.criteo.slab.core.ReadableView">ReadableView</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
     </li><li name="com.criteo.slab.core.Check" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Check[V]extendsProductwithSerializable"></a><a id="Check[V]:Check[V]"></a>
       <span class="permalink">
@@ -476,24 +410,6 @@
       <p class="shortcomment cmt">A class for declaring a metric to check
 </p><div class="fullcomment"><div class="comment cmt"><p>A class for declaring a metric to check
 </p></div><dl class="paramcmts block"><dt class="tparam">V</dt><dd class="cmt"><p>A type parameter which corresponds to the type of the checked value</p></dd><dt class="param">id</dt><dd class="cmt"><p>The identifier</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title of the check</p></dd><dt class="param">apply</dt><dd class="cmt"><p>A function when called, should return a future of target value</p></dd><dt class="param">display</dt><dd class="cmt"><p>A function that takes a checked value and a <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></p></dd></dl></div>
-    </li><li name="com.criteo.slab.core.CheckView" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="CheckViewextendsReadableViewwithProductwithSerializable"></a><a id="CheckView:CheckView"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/index.html#CheckViewextendsReadableViewwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="CheckView.html">
-              <span class="name">CheckView</span>
-            </a><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="status">status: <a href="Status.html" class="extype" name="com.criteo.slab.core.Status">Status</a></span>, <span name="message">message: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="label">label: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <a href="ReadableView.html" class="extype" name="com.criteo.slab.core.ReadableView">ReadableView</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      
     </li><li name="com.criteo.slab.core.Column" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ColumnextendsProductwithSerializable"></a><a id="Column:Column"></a>
       <span class="permalink">
@@ -530,7 +446,7 @@
         <a title="Represents the context when a check occurs
 " href="Context.html">
               <span class="name">Context</span>
-            </a><span class="params">(<span name="when">when: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+            </a><span class="params">(<span name="when">when: <span class="extype" name="java.time.Instant">Instant</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
       <p class="shortcomment cmt">Represents the context when a check occurs
@@ -578,24 +494,6 @@
       <p class="shortcomment cmt">Defines types that are serializable to metrical values, and deserializable from metrical values
 </p><div class="fullcomment"><div class="comment cmt"><p>Defines types that are serializable to metrical values, and deserializable from metrical values
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The underlying type that implements <a href="Metrical.html" class="extype" name="com.criteo.slab.core.Metrical">Metrical</a> interfaces</p></dd></dl></div>
-    </li><li name="com.criteo.slab.core.ReadableView" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="ReadableViewextendsAnyRef"></a><a id="ReadableView:ReadableView"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/index.html#ReadableViewextendsAnyRef" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a title="Serializable view to be used by the web app" href="ReadableView.html">
-              <span class="name">ReadableView</span>
-            </a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      
-      <p class="shortcomment cmt">Serializable view to be used by the web app</p>
     </li><li name="com.criteo.slab.core.Row" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="RowextendsProductwithSerializable"></a><a id="Row:Row"></a>
       <span class="permalink">
@@ -611,12 +509,12 @@
         <a title="Represents a row inside a column
 " href="Row.html">
               <span class="name">Row</span>
-            </a><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+            </a><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">100</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
       <p class="shortcomment cmt">Represents a row inside a column
 </p><div class="fullcomment"><div class="comment cmt"><p>Represents a row inside a column
-</p></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as height</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The boxes to be displayed in the row</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as height, defaults to 100</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The boxes to be displayed in the row</p></dd></dl></div>
     </li><li name="com.criteo.slab.core.Status" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="StatusextendsOrdered[com.criteo.slab.core.Status]"></a><a id="Status:Status"></a>
       <span class="permalink">
@@ -734,42 +632,6 @@
       <span class="symbol">
         <a title="" href="Metrical$.html">
               <span class="name">Metrical</span>
-            </a>
-      </span>
-      
-      
-    </li><li name="com.criteo.slab.core.NoopValueStore" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="NoopValueStore"></a><a id="NoopValueStore:NoopValueStore"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/index.html#NoopValueStore" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="A dummy store that does nothing" href="NoopValueStore$.html">
-              <span class="name">NoopValueStore</span>
-            </a><span class="result"> extends <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>
-      </span>
-      
-      <p class="shortcomment cmt">A dummy store that does nothing</p>
-    </li><li name="com.criteo.slab.core.ReadableView" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="ReadableView"></a><a id="ReadableView:ReadableView"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/index.html#ReadableView" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="ReadableView$.html">
-              <span class="name">ReadableView</span>
             </a>
       </span>
       

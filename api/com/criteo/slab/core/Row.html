@@ -155,12 +155,6 @@
                           Board
                         </a>
                       </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="BoardView.html" title=""></a>
-                        <a href="BoardView.html" title="">
-                          BoardView
-                        </a>
-                      </li><li class="current-entities indented4">
                         <a class="object" href="Box$.html" title=""></a>
                         <a class="class" href="Box.html" title="A box that groups checks
 "></a>
@@ -170,23 +164,11 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="BoxView.html" title=""></a>
-                        <a href="BoxView.html" title="">
-                          BoxView
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
                         <a class="class" href="Check.html" title="A class for declaring a metric to check
 "></a>
                         <a href="Check.html" title="A class for declaring a metric to check
 ">
                           Check
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="CheckView.html" title=""></a>
-                        <a href="CheckView.html" title="">
-                          CheckView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -219,18 +201,6 @@
                         <a href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
 ">
                           Metrical
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="object" href="NoopValueStore$.html" title="A dummy store that does nothing"></a>
-                        <a href="NoopValueStore$.html" title="A dummy store that does nothing">
-                          NoopValueStore
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="ReadableView$.html" title=""></a>
-                        <a class="trait" href="ReadableView.html" title="Serializable view to be used by the web app"></a>
-                        <a href="ReadableView.html" title="Serializable view to be used by the web app">
-                          ReadableView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -285,13 +255,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">100</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Represents a row inside a column
-</p></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as height</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The boxes to be displayed in the row</p></dd></dl><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as height, defaults to 100</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The boxes to be displayed in the row</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -353,10 +323,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span>
+        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">100</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as height</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The boxes to be displayed in the row</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as height, defaults to 100</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The boxes to be displayed in the row</p></dd></dl></div>
     </li></ol>
             </div>
 

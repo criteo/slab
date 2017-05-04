@@ -155,12 +155,6 @@
                           Board
                         </a>
                       </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="BoardView.html" title=""></a>
-                        <a href="BoardView.html" title="">
-                          BoardView
-                        </a>
-                      </li><li class="current-entities indented4">
                         <a class="object" href="Box$.html" title=""></a>
                         <a class="class" href="Box.html" title="A box that groups checks
 "></a>
@@ -170,23 +164,11 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="BoxView.html" title=""></a>
-                        <a href="BoxView.html" title="">
-                          BoxView
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
                         <a class="class" href="Check.html" title="A class for declaring a metric to check
 "></a>
                         <a href="Check.html" title="A class for declaring a metric to check
 ">
                           Check
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="class" href="CheckView.html" title=""></a>
-                        <a href="CheckView.html" title="">
-                          CheckView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -219,18 +201,6 @@
                         <a href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
 ">
                           Metrical
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <span class="separator"></span>
-                        <a class="object" href="NoopValueStore$.html" title="A dummy store that does nothing"></a>
-                        <a href="NoopValueStore$.html" title="A dummy store that does nothing">
-                          NoopValueStore
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="ReadableView$.html" title=""></a>
-                        <a class="trait" href="ReadableView.html" title="Serializable view to be used by the web app"></a>
-                        <a href="ReadableView.html" title="Serializable view to be used by the web app">
-                          ReadableView
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -299,7 +269,7 @@
             <span class="toggle">
               Known Subclasses
             </span>
-            <div class="subClasses hiddenContent"><a href="NoopValueStore$.html" class="extype" name="com.criteo.slab.core.NoopValueStore">NoopValueStore</a>, <a href="../lib/GraphiteStore.html" class="extype" name="com.criteo.slab.lib.GraphiteStore">GraphiteStore</a></div>
+            <div class="subClasses hiddenContent"><a href="../lib/GraphiteStore.html" class="extype" name="com.criteo.slab.lib.GraphiteStore">GraphiteStore</a>, <a href="../lib/NoopValueStore$.html" class="extype" name="com.criteo.slab.lib.NoopValueStore">NoopValueStore</a></div>
           </div></div>
         
 
@@ -366,9 +336,9 @@
       
       
     </li><li name="com.criteo.slab.core.ValueStore#fetchHistory" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="fetchHistory(id:String,from:org.joda.time.DateTime,until:org.joda.time.DateTime):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]"></a><a id="fetchHistory(String,DateTime,DateTime):Future[Map[Long,Out]]"></a>
+      <a id="fetchHistory(id:String,from:java.time.Instant,until:java.time.Instant):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]"></a><a id="fetchHistory(String,Instant,Instant):Future[Map[Long,Out]]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/ValueStore.html#fetchHistory(id:String,from:org.joda.time.DateTime,until:org.joda.time.DateTime):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/ValueStore.html#fetchHistory(id:String,from:java.time.Instant,until:java.time.Instant):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -377,7 +347,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fetchHistory</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="from">from: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>, <span name="until">until: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <a href="Metrical$.html#Out=Map[String,Double]" class="extmbr" name="com.criteo.slab.core.Metrical.Out">Out</a>]]</span>
+        <span class="name">fetchHistory</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="from">from: <span class="extype" name="java.time.Instant">Instant</span></span>, <span name="until">until: <span class="extype" name="java.time.Instant">Instant</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <a href="Metrical$.html#Out=Map[String,Double]" class="extmbr" name="com.criteo.slab.core.Metrical.Out">Out</a>]]</span>
       </span>
       
       

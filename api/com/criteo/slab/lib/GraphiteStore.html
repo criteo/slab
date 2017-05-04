@@ -147,33 +147,23 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.criteo.slab">slab</a></dd></dl></div>
     </li><li class="current-entities indented4">
-                        <a class="object" href="DataPoint$.html" title=""></a>
-                        <a class="class" href="DataPoint.html" title=""></a>
-                        <a href="DataPoint.html" title="">
-                          DataPoint
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="GraphiteMetric$.html" title=""></a>
-                        <a class="class" href="GraphiteMetric.html" title=""></a>
-                        <a href="GraphiteMetric.html" title="">
-                          GraphiteMetric
-                        </a>
-                      </li><li class="current-entities indented4">
                         <a class="object" href="GraphiteStore$.html" title=""></a>
-                        <a class="class" href="" title=""></a>
-                        <a href="" title="">
+                        <a class="class" href="" title="A value store that uses Graphite"></a>
+                        <a href="" title="A value store that uses Graphite">
                           GraphiteStore
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="MissingValueException.html" title=""></a>
-                        <a href="MissingValueException.html" title="">
-                          MissingValueException
+                        <a class="object" href="NoopValueStore$.html" title="A dummy store that does nothing"></a>
+                        <a href="NoopValueStore$.html" title="A dummy store that does nothing">
+                          NoopValueStore
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="object" href="Values$.html" title=""></a>
-                        <a href="Values$.html" title="">
+                        <a class="object" href="Values$.html" title="Predefined value types that are subject to checks
+"></a>
+                        <a href="Values$.html" title="Predefined value types that are subject to checks
+">
                           Values
                         </a>
                       </li>
@@ -206,7 +196,7 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A value store that uses Graphite</p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -256,10 +246,10 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.criteo.slab.lib.GraphiteStore#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:org.joda.time.Duration,group:Option[String])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.GraphiteStore"></a><a id="&lt;init&gt;:GraphiteStore"></a>
+              <ol><li name="com.criteo.slab.lib.GraphiteStore#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:java.time.Duration,group:Option[String],serverTimeZone:java.time.ZoneId)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.GraphiteStore"></a><a id="&lt;init&gt;:GraphiteStore"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/GraphiteStore.html#&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:org.joda.time.Duration,group:Option[String])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.GraphiteStore" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/GraphiteStore.html#&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:java.time.Duration,group:Option[String],serverTimeZone:java.time.ZoneId)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.GraphiteStore" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -268,10 +258,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">GraphiteStore</span><span class="params">(<span name="host">host: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="port">port: <span class="extype" name="scala.Int">Int</span></span>, <span name="webHost">webHost: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkInterval">checkInterval: <span class="extype" name="org.joda.time.Duration">Duration</span></span>, <span name="group">group: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
+        <span class="name">GraphiteStore</span><span class="params">(<span name="host">host: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="port">port: <span class="extype" name="scala.Int">Int</span></span>, <span name="webHost">webHost: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkInterval">checkInterval: <span class="extype" name="java.time.Duration">Duration</span></span>, <span name="group">group: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="serverTimeZone">serverTimeZone: <span class="extype" name="java.time.ZoneId">ZoneId</span> = <span class="symbol">ZoneId.systemDefault()</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
       </span>
       
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">host</dt><dd class="cmt"><p>The host of the writing endpoint</p></dd><dt class="param">port</dt><dd class="cmt"><p>The port of the writing endpoint</p></dd><dt class="param">webHost</dt><dd class="cmt"><p>The URL of the Web host for reading</p></dd><dt class="param">checkInterval</dt><dd class="cmt"><p>Check interval in <span class="extype" name="java.time.Duration">Duration</span></p></dd><dt class="param">group</dt><dd class="cmt"><p>The group name of Graphite metrics</p></dd><dt class="param">serverTimeZone</dt><dd class="cmt"><p>The timezone of the server</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -417,9 +407,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.GraphiteStore">GraphiteStore</a> → <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></dd></dl></div>
     </li><li name="com.criteo.slab.lib.GraphiteStore#fetchHistory" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="fetchHistory(id:String,from:org.joda.time.DateTime,until:org.joda.time.DateTime):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]"></a><a id="fetchHistory(String,DateTime,DateTime):Future[Map[Long,Out]]"></a>
+      <a id="fetchHistory(id:String,from:java.time.Instant,until:java.time.Instant):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]"></a><a id="fetchHistory(String,Instant,Instant):Future[Map[Long,Out]]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/GraphiteStore.html#fetchHistory(id:String,from:org.joda.time.DateTime,until:org.joda.time.DateTime):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/GraphiteStore.html#fetchHistory(id:String,from:java.time.Instant,until:java.time.Instant):scala.concurrent.Future[Map[Long,com.criteo.slab.core.Metrical.Out]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -428,7 +418,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fetchHistory</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="from">from: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>, <span name="until">until: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <a href="../core/Metrical$.html#Out=Map[String,Double]" class="extmbr" name="com.criteo.slab.core.Metrical.Out">Out</a>]]</span>
+        <span class="name">fetchHistory</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="from">from: <span class="extype" name="java.time.Instant">Instant</span></span>, <span name="until">until: <span class="extype" name="java.time.Instant">Instant</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <a href="../core/Metrical$.html#Out=Map[String,Double]" class="extmbr" name="com.criteo.slab.core.Metrical.Out">Out</a>]]</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.GraphiteStore">GraphiteStore</a> → <a href="../core/ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></dd></dl></div>
