@@ -1,27 +1,52 @@
 # Slab
 
 [![Build Status](https://travis-ci.org/criteo/slab.svg?branch=master)](https://travis-ci.org/criteo/slab)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.criteo/slab_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.criteo/slab_2.12)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 
 A Scala framework for creating monitoring dashboards.
+
+![screencast](https://criteo.github.io/slab/public/slab.gif)
 
 ## Installation
 
 Add the following to your project's dependencies:
 
-    "com.criteo" %% "slab" % "0.2.0"
+- sbt
+
+    `"com.criteo" %% "slab" % "0.2.0"`
+
+- Maven
+
+    ```xml
+    <dependency>
+        <groupId>com.criteo</groupId>
+        <artifactId>slab_${SCALA_SHORT_VERSION}</artifactId>
+        <version>0.2.0</version>
+    </dependency>
+    ```
 
 Slab is available for Scala `2.11` and `2.12`
 
 ## Getting started
 
-- [API documentation](https://criteo.github.com/slab/api/com/criteo/slab)
+The easiest way to get started is to follow the guides:
 - [Guide for creating a Slab board](https://criteo.github.com/slab/examples/SimpleBoard.scala.html)
 - [Guide for creating a Slab server](https://criteo.github.com/slab/examples/Launcher.scala.html)
 
+
+The documentation is also available:
+- [API documentation](https://criteo.github.com/slab/api/com/criteo/slab)
+
 ## Contribution
 
-Please refer to [contribution guide](/CONTRIBUTING.md)
+Please read the [contribution guide](/CONTRIBUTING.md)
 
 ## License
 
 Licensed under the [Apache License 2.0](/LICENSE)
+
+## Copyright
+
+Copyright © Criteo, 2017.
