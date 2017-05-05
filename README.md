@@ -1,11 +1,11 @@
-# Slab
+# Slab <img src="https://criteo.github.io/slab/public/logo.png" height="36">
 
 [![Build Status](https://travis-ci.org/criteo/slab.svg?branch=master)](https://travis-ci.org/criteo/slab)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.criteo/slab_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.criteo/slab_2.12)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
-A Scala framework for creating monitoring dashboards.
+An extensible Scala framework for creating monitoring dashboards.
 
 ![screencast](https://criteo.github.io/slab/public/slab.gif)
 
