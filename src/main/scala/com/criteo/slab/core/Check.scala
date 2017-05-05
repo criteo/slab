@@ -5,6 +5,7 @@ import java.time.Instant
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success, Try}
 
 /** A class for declaring a metric to check
   *
@@ -81,8 +82,14 @@ case class Check[V: Metrical](
       .fetchHistory(id, from, until)
       .map {
         _.map { case (timestamp, metrics) =>
-          val view = display(metrical.fromMetrics(metrics), Context(Instant.ofEpochMilli(timestamp)))
-          (timestamp, CheckView(title, view.status, view.message, view.label))
+          Try(metrical.fromMetrics(metrics)) match {
+            case Success(value) =>
+              val view = display(value, Context(Instant.ofEpochMilli(timestamp)))
+              (timestamp, CheckView(title, view.status, view.message, view.label))
+            case Failure(e) =>
+              logger.error(e.getMessage, e)
+              (timestamp, CheckView(title, Status.Unknown, e.getMessage))
+          }
         }
       }
   }
