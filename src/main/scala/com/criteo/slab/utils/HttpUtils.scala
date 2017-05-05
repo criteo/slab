@@ -35,7 +35,7 @@ object HttpUtils {
       val request = Get(path).addHeaders(defaultHeaders ++ headers)
       logger.info(s"Requesting $url")
       val start = Instant.now
-      client(request) flatMap { res =>
+      client.run(request) { res =>
         logger.info(s"Response from $url, status: ${res.status}, ${Instant.now.toEpochMilli - start.toEpochMilli}ms")
         if (res.status < 400)
           res.readAs[A]
@@ -48,5 +48,6 @@ object HttpUtils {
       }
     }
   }
+
 }
 
