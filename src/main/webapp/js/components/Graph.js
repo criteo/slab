@@ -28,7 +28,7 @@ class Graph extends Component {
               <section className="column" key={i} style={ { 'flexBasis': `${col.percentage}%` } }>
                 {
                   col.rows.map(row => (
-                    <section className="row" key={row.title}>
+                    <section className="row" key={row.title} style={ { 'flexBasis': `${row.percentage}%` } }>
                       <h2>{row.title}</h2>
                       {
                         row.boxes.map(box => (
