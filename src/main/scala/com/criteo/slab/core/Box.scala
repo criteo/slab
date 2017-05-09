@@ -2,7 +2,7 @@ package com.criteo.slab.core
 
 import java.time.Instant
 
-import com.criteo.slab.utils.{FutureUtils, Jsonable}
+import com.criteo.slab.utils.Jsonable
 import org.json4s.CustomSerializer
 import org.json4s.JsonDSL._
 
@@ -10,11 +10,11 @@ import scala.concurrent.{ExecutionContext, Future}
 
 /** A box that groups checks
   *
-  * @param title The title
-  * @param checks The checks
-  * @param aggregate Aggregates the views of its checks, return a view
+  * @param title       The title
+  * @param checks      The checks
+  * @param aggregate   Aggregates the views of its checks, return a view
   * @param description The description of the box in markdown syntax
-  * @param labelLimit The limit of visible check labels shown on the box
+  * @param labelLimit  The limit of visible check labels shown on the box
   */
 case class Box(
                 title: String,
@@ -24,8 +24,8 @@ case class Box(
                 labelLimit: Option[Int] = None
               ) {
   def apply(context: Option[Context])(implicit valueStore: ValueStore, ec: ExecutionContext): Future[BoxView] = {
-    FutureUtils
-      .join(checks.map(c => context.fold(c.now)(c.replay)))
+    Future
+      .sequence(checks.map(c => context.fold(c.now)(c.replay)))
       .map { checkViews =>
         val view = aggregate(checkViews.map(_.asView))
         BoxView(
@@ -38,22 +38,22 @@ case class Box(
   }
 
   def fetchHistory(from: Instant, until: Instant)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, BoxView]] = {
-    FutureUtils.join(
-      checks.map(_.fetchHistory(from, until))
-    ).map { maps =>
-      maps.flatMap(_.toList)
-        .groupBy(_._1)
-        .mapValues { in =>
-          val checkViews = in.map(_._2)
-          val view = aggregate(checkViews.map(_.asView))
-          BoxView(
-            title,
-            view.status,
-            view.message,
-            checkViews
-          )
-        }
-    }
+    Future
+      .sequence(checks.map(_.fetchHistory(from, until)))
+      .map { maps =>
+        maps.flatMap(_.toList)
+          .groupBy(_._1)
+          .mapValues { in =>
+            val checkViews = in.map(_._2)
+            val view = aggregate(checkViews.map(_.asView))
+            BoxView(
+              title,
+              view.status,
+              view.message,
+              checkViews
+            )
+          }
+      }
   }
 }
 
