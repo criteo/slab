@@ -265,20 +265,18 @@ a {
           </section>
           
               <section class="">
-                <div class="comment "><p>Guide for creating a Slab server
-Using the simple board from the example</p></p></div>
+                <div class="comment "><p>Guide for creating a Slab server</p></p></div>
                 <div class="code "><span class="keyword">package</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">example</span>
 
 <span class="keyword">import</span> <span class="identifier">java</span>.<span class="identifier">time</span>.<span class="identifier">Duration</span>
 
 <span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">app</span>.<span class="identifier">WebServer</span>
-<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">core</span>.{<span class="identifier">NoopValueStore</span>, <span class="identifier">ValueStore</span>}
-<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">lib</span>.<span class="identifier">GraphiteStore</span>
+<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">core</span>.<span class="identifier">ValueStore</span>
+<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">lib</span>.{<span class="identifier">GraphiteStore</span>, <span class="identifier">NoopValueStore</span>}
 <span class="keyword">import</span> <span class="identifier">lol</span>.<span class="identifier">http</span>._
 <span class="keyword">import</span> <span class="identifier">org</span>.<span class="identifier">slf4j</span>.<span class="identifier">LoggerFactory</span>
 
 <span class="keyword">import</span> <span class="identifier">scala</span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/index.html" data-tooltip="<span>scala.concurrent</span>">concurrent</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/ExecutionContext$.html" data-tooltip="<span>scala.concurrent.ExecutionContext</span>">ExecutionContext</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/ExecutionContext$$Implicits$.html" data-tooltip="<span>scala.concurrent.ExecutionContext.Implicits</span>">Implicits</a></span>.<span class="identifier">global</span>
-<span class="keyword">import</span> <span class="identifier">scala</span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/index.html" data-tooltip="<span>scala.concurrent</span>">concurrent</a></span>.<span class="identifier">Future</span>
 
 <span class="keyword">object</span> <span class="identifier">Launcher</span> {
   <span class="keyword">val</span> <span class="identifier">logger</span> = <span class="identifier">LoggerFactory</span>.<span class="identifier">getLogger</span>(this.<span class="identifier">getClass</span>)
@@ -287,7 +285,8 @@ Using the simple board from the example</p></p></div>
               </section>
             
               <section class="">
-                <div class="comment "><p>Define a value store for uploading and restoring history</p></p></div>
+                <div class="comment "><p>Define a value store for uploading and restoring history
+Use NoopValueStore (which does nothing) as fallback</p></p></div>
                 <div class="code ">    <span class="keyword">implicit</span> <span class="keyword">val</span> <span class="identifier">store</span>: <span class="identifier">ValueStore</span> = <span class="identifier">sys</span>.<span class="identifier">env</span>.<span class="identifier">get</span>(<span class="string">"USE_GRAPHITE"</span>).<span class="identifier">flatMap</span> { <span class="identifier">useGraphite</span> =>
       <span class="keyword">if</span> (<span class="identifier">useGraphite</span> <span class="identifier">==</span> <span class="string">"true"</span>)
         <span class="keyword">for</span> {
@@ -303,15 +302,22 @@ Using the simple board from the example</p></p></div>
               </section>
             
               <section class="">
-                <div class="comment "><p>Define a Slab web server with the list of boards
-Launch it at port 8082</p></p></div>
-                <div class="code ">    <span class="keyword">new</span> <span class="identifier">WebServer</span>(<span class="identifier">List</span>(<span class="identifier">SimpleBoard</span>()), <span class="identifier">statsDays</span> = <span class="number">14</span>).<span class="identifier">apply</span>(<span class="number">8082</span>, {&nbsp;</div>
+                <div class="comment "><p>Define a Slab web server with the list of boards</p></p></div>
+                <div class="code ">    <span class="keyword">new</span> <span class="identifier">WebServer</span>(
+      <span class="identifier">List</span>(<span class="identifier">SimpleBoard</span>()),&nbsp;</div>
+              </section>
+            
+              <section class="">
+                <div class="comment "><p>Retrieve the statistics of last 14 days after launch, which will be shown on the calendar</p></p></div>
+                <div class="code ">      <span class="identifier">statsDays</span> = <span class="number">14</span>,&nbsp;</div>
               </section>
             
               <section class="">
                 <div class="comment "><p>Define a custom route, Slab is built with <a href="https://github.com/criteo/lolhttp">lolhttp</a></p></p></div>
-                <div class="code ">      <span class="keyword">case</span> <span class="identifier">GET</span> <span class="identifier">at</span> <span class="string">"/api/heartbeat"</span> => <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/Future$.html" data-tooltip="<span>scala.concurrent.Future</span>">Future</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/Future$.html#successful[T](result:T)scala.concurrent.Future[T]" data-tooltip="<span>scala.concurrent.Future.successful[T](result: T): scala.concurrent.Future[T]</span>">successful</a></span>(<span class="identifier">Response</span>(<span class="number">200</span>))
-    })
+                <div class="code ">      <span class="identifier">customRoutes</span> = {
+        <span class="keyword">case</span> <span class="identifier">GET</span> <span class="identifier">at</span> <span class="string">"/api/heartbeat"</span> => <span class="identifier">Ok</span>(<span class="string">"Ok"</span>)
+      }
+    ).<span class="identifier">apply</span>(<span class="number">8082</span>)
   }
 }&nbsp;</div>
               </section>

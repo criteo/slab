@@ -148,8 +148,8 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.criteo.slab">slab</a></dd></dl></div>
     </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="object" href="" title="A Http client"></a>
-                        <a href="" title="A Http client">
+                        <a class="object" href="" title="Http utilities"></a>
+                        <a href="" title="Http utilities">
                           HttpUtils
                         </a>
                       </li>
@@ -180,7 +180,7 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A Http client</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Http utilities</p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -416,6 +416,24 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.criteo.slab.utils.HttpUtils#get" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="get[A](url:java.net.URL,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$1:lol.http.ContentDecoder[A],implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[A]"></a><a id="get[A](URL,Map[HttpString,HttpString])(ContentDecoder[A],ExecutionContext):Future[A]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#get[A](url:java.net.URL,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$1:lol.http.ContentDecoder[A],implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[A]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">get</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="url">url: <span class="extype" name="java.net.URL">URL</span></span>, <span name="headers">headers: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>] = <span class="symbol">Map.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="lol.http.ContentDecoder">ContentDecoder</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.get.A">A</span>]</span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.get.A">A</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt">Send a GET request
+</p><div class="fullcomment"><div class="comment cmt"><p>Send a GET request
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>The result type which should provide a content decoder implementation</p></dd><dt class="param">url</dt><dd class="cmt"><p>The URL</p></dd><dt class="param">headers</dt><dd class="cmt"><p>The request headers</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The <span class="extype" name="ExecutionContext">ExecutionContext</span></p></dd><dt>returns</dt><dd class="cmt"><p>The result wrapped in <span class="extype" name="Future">Future</span></p></dd></dl></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <span class="permalink">
@@ -464,7 +482,7 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.criteo.slab.utils.HttpUtils#makeGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.criteo.slab.utils.HttpUtils#makeGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="makeGet(url:java.net.URL)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet"></a><a id="makeGet(URL)(ExecutionContext):SafeHTTPGet"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#makeGet(url:java.net.URL)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet" title="Permalink">
@@ -479,8 +497,8 @@
         <span class="name">makeGet</span><span class="params">(<span name="url">url: <span class="extype" name="java.net.URL">URL</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <a href="HttpUtils$$SafeHTTPGet.html" class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet">SafeHTTPGet</a></span>
       </span>
       
-      
-    </li><li name="com.criteo.slab.utils.HttpUtils#makeQuery" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Make a HTTP Get client of which the connection is kept open</p><div class="fullcomment"><div class="comment cmt"><p>Make a HTTP Get client of which the connection is kept open</p><p>Do not use this until lolhttp client leak issue is resolved</p></div><dl class="paramcmts block"><dt class="param">url</dt><dd class="cmt"><p>The URL</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The <span class="extype" name="ExecutionContext">ExecutionContext</span></p></dd><dt>returns</dt><dd class="cmt"><p>The client with which a GET request can be sent</p></dd></dl></div>
+    </li><li name="com.criteo.slab.utils.HttpUtils#makeQuery" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="makeQuery(queries:Map[String,String]):String"></a><a id="makeQuery(Map[String,String]):String"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#makeQuery(queries:Map[String,String]):String" title="Permalink">
@@ -495,7 +513,9 @@
         <span class="name">makeQuery</span><span class="params">(<span name="queries">queries: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">Make a query string
+</p><div class="fullcomment"><div class="comment cmt"><p>Make a query string
+</p></div><dl class="paramcmts block"><dt class="param">queries</dt><dd class="cmt"><p>The queries in key-value paris</p></dd><dt>returns</dt><dd class="cmt"><p>The query string beginning with &quot;?&quot;</p></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
