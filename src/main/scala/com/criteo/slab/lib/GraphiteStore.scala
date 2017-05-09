@@ -43,8 +43,6 @@ class GraphiteStore(
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
-  private val GraphiteClient = HttpUtils.makeGet(new URL(webHost))
-
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id
 
@@ -68,7 +66,7 @@ class GraphiteStore(
       "until" -> s"${DateFormatter.format(context.when.plus(checkInterval))}",
       "format" -> "json"
     ))
-    GraphiteClient[String](s"/render$query", Map.empty) flatMap { content =>
+    HttpUtils.get[String](new URL(s"$webHost/render$query"), Map.empty) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) match {
         case Success(metrics) =>
           val pairs = transformMetrics(s"${getPrefix(id)}", metrics)
@@ -89,7 +87,7 @@ class GraphiteStore(
       "format" -> "json",
       "noNullPoints" -> "true"
     ))
-    GraphiteClient[String](s"/render$query", Map.empty) flatMap { content =>
+    HttpUtils.get[String](new URL(s"$webHost/render$query"), Map.empty) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) map { metrics =>
         groupMetrics(s"${getPrefix(id)}", metrics)
       } match {
