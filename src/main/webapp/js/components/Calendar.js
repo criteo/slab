@@ -54,7 +54,10 @@ class Calendar extends PureComponent {
         <div>{day.getDate()}</div>
         { stats &&
           <div style={ { 'fontSize': '10px'} } >
-            { (stats.successes * 100 / stats.total).toFixed(2) + '%' }
+            {
+              // rate of successes + warnings
+              (100 * (stats.successes + stats.warnings) / stats.total).toFixed(2) + '%'
+            }
           </div>
         }
       </div>
