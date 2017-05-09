@@ -62,10 +62,12 @@ lazy val example = (project in file("example"))
     Option(System.getenv().get("GENERATE_EXAMPLE_DOC")).map { _ =>
       Seq(
         autoCompilerPlugins := true,
-        addCompilerPlugin("com.criteo.socco" %% "socco-plugin" % "0.1.1"),
+        addCompilerPlugin("com.criteo.socco" %% "socco-plugin" % "0.1.6"),
         scalacOptions := Seq(
           "-P:socco:out:examples",
-          "-P:socco:package_scala.concurrent:http://www.scala-lang.org/api/current/"
+          "-P:socco:package_scala:http://www.scala-lang.org/api/current/",
+          "-P:socco:package_lol.http:https://criteo.github.io/lolhttp/api/",
+          "-P:socco:package_com.criteo.slab:https://criteo.github.io/slab/api/"
         )
       )
     }.getOrElse(Nil): _*
