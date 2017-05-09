@@ -178,6 +178,8 @@ body {
 
 section {
   display: flex;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 a {
@@ -187,11 +189,16 @@ a {
   color: inherit;
 }
 
+hr {
+  border: none;
+  border-bottom: 4px solid #efeff3;
+  margin-top: 11px;
+  margin-bottom: 46px;
+}
+
 .comment {
   font-family: 'Georgia', Serif;
   flex: 1;
-  font-size: 14px;
-  line-height: 21px;
   color: #191e21;
   padding: 0 15px 0 50px;
 }
@@ -206,12 +213,11 @@ a {
 .comment p {
   margin-top: 0;
   margin-bottom: 1.5em;
-  line-height: 23px;
 }
 
 .comment code {
   font-family: monospace;
-  font-size: 13px;
+  font-size: 85%;
   color: #30404f;
   background: #f5f5ff;
   padding: 1px 0;
@@ -224,8 +230,7 @@ a {
 
 .code {
   font-family: monospace;
-  font-size: 13px;
-  line-height: 23px;
+  font-size: 85%;
   white-space: pre;
   width: 60vw;
   margin-left: 25px;
@@ -257,7 +262,8 @@ a {
 #footer {
   height: 10px;
   flex: 1;
-}</style>
+}
+</style>
           
           <section id="header">
             <div class="comment"><h1>A Slab server</h1></div>
@@ -266,45 +272,45 @@ a {
           
               <section class="">
                 <div class="comment "><p>Guide for creating a Slab server</p></p></div>
-                <div class="code "><span class="keyword">package</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">example</span>
+                <div class="code "><span class="keyword">package</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/index.html" data-tooltip="<span>com.criteo.slab</span>">slab</a></span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/example/index.html" data-tooltip="<span>com.criteo.slab.example</span>">example</a></span>
 
 <span class="keyword">import</span> <span class="identifier">java</span>.<span class="identifier">time</span>.<span class="identifier">Duration</span>
 
-<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">app</span>.<span class="identifier">WebServer</span>
-<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">core</span>.<span class="identifier">ValueStore</span>
-<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier">slab</span>.<span class="identifier">lib</span>.{<span class="identifier">GraphiteStore</span>, <span class="identifier">NoopValueStore</span>}
-<span class="keyword">import</span> <span class="identifier">lol</span>.<span class="identifier">http</span>._
+<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/index.html" data-tooltip="<span>com.criteo.slab</span>">slab</a></span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/app/index.html" data-tooltip="<span>com.criteo.slab.app</span>">app</a></span>.<span class="identifier">WebServer</span>
+<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/index.html" data-tooltip="<span>com.criteo.slab</span>">slab</a></span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/core/index.html" data-tooltip="<span>com.criteo.slab.core</span>">core</a></span>.<span class="identifier">ValueStore</span>
+<span class="keyword">import</span> <span class="identifier">com</span>.<span class="identifier">criteo</span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/index.html" data-tooltip="<span>com.criteo.slab</span>">slab</a></span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/lib/index.html" data-tooltip="<span>com.criteo.slab.lib</span>">lib</a></span>.{<span class="identifier">GraphiteStore</span>, <span class="identifier">NoopValueStore</span>}
+<span class="keyword">import</span> <span class="identifier">lol</span>.<span class="identifier"><a target="doc" href="https://criteo.github.io/lolhttp/api//lol/http/index.html" data-tooltip="<span>lol.http</span>">http</a></span>._
 <span class="keyword">import</span> <span class="identifier">org</span>.<span class="identifier">slf4j</span>.<span class="identifier">LoggerFactory</span>
 
-<span class="keyword">import</span> <span class="identifier">scala</span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/index.html" data-tooltip="<span>scala.concurrent</span>">concurrent</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/ExecutionContext$.html" data-tooltip="<span>scala.concurrent.ExecutionContext</span>">ExecutionContext</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/ExecutionContext$$Implicits$.html" data-tooltip="<span>scala.concurrent.ExecutionContext.Implicits</span>">Implicits</a></span>.<span class="identifier">global</span>
+<span class="keyword">import</span> <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/index.html" data-tooltip="<span>scala</span>">scala</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/index.html" data-tooltip="<span>scala.concurrent</span>">concurrent</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/ExecutionContext$.html" data-tooltip="<span>scala.concurrent.ExecutionContext</span>">ExecutionContext</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/concurrent/ExecutionContext$$Implicits$.html" data-tooltip="<span>scala.concurrent.ExecutionContext.Implicits</span>">Implicits</a></span>.<span class="identifier">global</span>
 
-<span class="keyword">object</span> <span class="identifier">Launcher</span> {
-  <span class="keyword">val</span> <span class="identifier">logger</span> = <span class="identifier">LoggerFactory</span>.<span class="identifier">getLogger</span>(this.<span class="identifier">getClass</span>)
+<span class="keyword">object</span> <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/example/Launcher$.html" data-tooltip="<span>com.criteo.slab.example.Launcher</span>">Launcher</a></span> {
+  <span class="keyword">val</span> <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/example/Launcher$.html#logger=>org.slf4j.Logger" data-tooltip="<span>com.criteo.slab.example.Launcher.logger: org.slf4j.Logger</span>">logger</a></span> = <span class="identifier">LoggerFactory</span>.<span class="identifier">getLogger</span>(this.<span class="identifier">getClass</span>)
 
-  <span class="keyword">def</span> <span class="identifier">main</span>(<span class="identifier">args</span>: <span class="identifier">Array</span>[<span class="identifier">String</span>]): <span class="identifier">Unit</span> = {&nbsp;</div>
+  <span class="keyword">def</span> <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/example/Launcher$.html#main(args:Array[String])Unit" data-tooltip="<span>com.criteo.slab.example.Launcher.main(args: Array[String]): Unit</span>">main</a></span>(<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Array.html" data-tooltip="<span>Array[String]</span>">args</a></span>: <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Array.html" data-tooltip="<span>scala.Array</span>">Array</a></span>[<span class="identifier">String</span>]): <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Unit.html" data-tooltip="<span>scala.Unit</span>">Unit</a></span> = {&nbsp;</div>
               </section>
             
               <section class="">
                 <div class="comment "><p>Define a value store for uploading and restoring history
 Use NoopValueStore (which does nothing) as fallback</p></p></div>
-                <div class="code ">    <span class="keyword">implicit</span> <span class="keyword">val</span> <span class="identifier">store</span>: <span class="identifier">ValueStore</span> = <span class="identifier">sys</span>.<span class="identifier">env</span>.<span class="identifier">get</span>(<span class="string">"USE_GRAPHITE"</span>).<span class="identifier">flatMap</span> { <span class="identifier">useGraphite</span> =>
+                <div class="code ">    <span class="keyword">implicit</span> <span class="keyword">val</span> <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/core/ValueStore.html" data-tooltip="<span>com.criteo.slab.core.ValueStore</span>">store</a></span>: <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/core/ValueStore.html" data-tooltip="<span>com.criteo.slab.core.ValueStore</span>">ValueStore</a></span> = <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/index.html" data-tooltip="<span>scala.sys</span>">sys</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/package$.html#env=>scala.collection.immutable.Map[String,String]" data-tooltip="<span>scala.sys.env: scala.collection.immutable.Map[String,String]</span>">env</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/collection/MapLike.html#get(key:K)Option[V]" data-tooltip="<span>scala.collection.MapLike.get(key: K): Option[V]</span>">get</a></span>(<span class="string">"USE_GRAPHITE"</span>).<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Option.html#flatMap[B](f:A=>Option[B])Option[B]" data-tooltip="<span>scala.Option.flatMap[B](f: A => Option[B]): Option[B]</span>">flatMap</a></span> { <span class="identifier">useGraphite</span> =>
       <span class="keyword">if</span> (<span class="identifier">useGraphite</span> <span class="identifier">==</span> <span class="string">"true"</span>)
         <span class="keyword">for</span> {
-          <span class="identifier">host</span> &lt;- <span class="identifier">sys</span>.<span class="identifier">env</span>.<span class="identifier">get</span>(<span class="string">"GRAPHITE_HOST"</span>)
-          <span class="identifier">port</span> &lt;- <span class="identifier">sys</span>.<span class="identifier">env</span>.<span class="identifier">get</span>(<span class="string">"GRAPHITE_PORT"</span>).<span class="identifier">map</span>(_.<span class="identifier">toInt</span>)
-          <span class="identifier">webHost</span> &lt;- <span class="identifier">sys</span>.<span class="identifier">env</span>.<span class="identifier">get</span>(<span class="string">"GRAPHITE_WEB_HOST"</span>)
+          <span class="identifier">host</span> &lt;- <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/index.html" data-tooltip="<span>scala.sys</span>">sys</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/package$.html#env=>scala.collection.immutable.Map[String,String]" data-tooltip="<span>scala.sys.env: scala.collection.immutable.Map[String,String]</span>">env</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/collection/MapLike.html#get(key:K)Option[V]" data-tooltip="<span>scala.collection.MapLike.get(key: K): Option[V]</span>">get</a></span>(<span class="string">"GRAPHITE_HOST"</span>)
+          <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Int.html" data-tooltip="<span>Int</span>">port</a></span> &lt;- <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/index.html" data-tooltip="<span>scala.sys</span>">sys</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/package$.html#env=>scala.collection.immutable.Map[String,String]" data-tooltip="<span>scala.sys.env: scala.collection.immutable.Map[String,String]</span>">env</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/collection/MapLike.html#get(key:K)Option[V]" data-tooltip="<span>scala.collection.MapLike.get(key: K): Option[V]</span>">get</a></span>(<span class="string">"GRAPHITE_PORT"</span>).<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Option.html#map[B](f:A=>B)Option[B]" data-tooltip="<span>scala.Option.map[B](f: A => B): Option[B]</span>">map</a></span>(_.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/collection/immutable/StringLike.html#toInt=>Int" data-tooltip="<span>scala.collection.immutable.StringLike.toInt: Int</span>">toInt</a></span>)
+          <span class="identifier">webHost</span> &lt;- <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/index.html" data-tooltip="<span>scala.sys</span>">sys</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/sys/package$.html#env=>scala.collection.immutable.Map[String,String]" data-tooltip="<span>scala.sys.env: scala.collection.immutable.Map[String,String]</span>">env</a></span>.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/collection/MapLike.html#get(key:K)Option[V]" data-tooltip="<span>scala.collection.MapLike.get(key: K): Option[V]</span>">get</a></span>(<span class="string">"GRAPHITE_WEB_HOST"</span>)
         } <span class="keyword">yield</span> {
-          <span class="identifier">logger</span>.<span class="identifier">info</span>(<span class="string">"[Slab Example] using Graphite store"</span>)
-          <span class="keyword">new</span> <span class="identifier">GraphiteStore</span>(<span class="identifier">host</span>, <span class="identifier">port</span>, <span class="identifier">webHost</span>, <span class="identifier">Duration</span>.<span class="identifier">ofSeconds</span>(<span class="number">60</span>), <span class="identifier">Some</span>(<span class="string">"slab.example"</span>))
+          <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/example/Launcher$.html#logger=>org.slf4j.Logger" data-tooltip="<span>com.criteo.slab.example.Launcher.logger: org.slf4j.Logger</span>">logger</a></span>.<span class="identifier">info</span>(<span class="string">"[Slab Example] using Graphite store"</span>)
+          <span class="keyword">new</span> <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/lib/GraphiteStore.html" data-tooltip="<span>com.criteo.slab.lib.GraphiteStore</span>">GraphiteStore</a></span>(<span class="identifier">host</span>, <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Int.html" data-tooltip="<span>Int</span>">port</a></span>, <span class="identifier">webHost</span>, <span class="identifier">Duration</span>.<span class="identifier">ofSeconds</span>(<span class="number">60</span>), <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Some$.html#apply[A](value:A)Some[A]" data-tooltip="<span>scala.Some.apply[A](value: A): Some[A]</span>">Some</a></span>(<span class="string">"slab.example"</span>))
         }
-      <span class="keyword">else</span> <span class="identifier">None</span>
-    }.<span class="identifier">getOrElse</span>(<span class="identifier">NoopValueStore</span>)&nbsp;</div>
+      <span class="keyword">else</span> <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/None$.html" data-tooltip="<span>scala.None</span>">None</a></span>
+    }.<span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/Option.html#getOrElse[B>:A](default:=>B)B" data-tooltip="<span>scala.Option.getOrElse[B >: A](default: => B): B</span>">getOrElse</a></span>(<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/lib/NoopValueStore$.html" data-tooltip="<span>com.criteo.slab.lib.NoopValueStore</span>">NoopValueStore</a></span>)&nbsp;</div>
               </section>
             
               <section class="">
                 <div class="comment "><p>Define a Slab web server with the list of boards</p></p></div>
-                <div class="code ">    <span class="keyword">new</span> <span class="identifier">WebServer</span>(
-      <span class="identifier">List</span>(<span class="identifier">SimpleBoard</span>()),&nbsp;</div>
+                <div class="code ">    <span class="keyword">new</span> <span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/app/WebServer$.html" data-tooltip="<span>com.criteo.slab.app.WebServer</span>">WebServer</a></span>(
+      <span class="identifier"><a target="doc" href="http://www.scala-lang.org/api/current//scala/collection/immutable/List$.html#apply[A](xs:A*)List[A]" data-tooltip="<span>scala.collection.immutable.List.apply[A](xs: A*): List[A]</span>">List</a></span>(<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/example/SimpleBoard$.html#apply()(implicitvalueStore:com.criteo.slab.core.ValueStore)com.criteo.slab.core.Board" data-tooltip="<span>com.criteo.slab.example.SimpleBoard.apply()(implicit valueStore: com.criteo.slab.core.ValueStore): com.criteo.slab.core.Board</span>">SimpleBoard</a></span>()),&nbsp;</div>
               </section>
             
               <section class="">
@@ -315,9 +321,9 @@ Use NoopValueStore (which does nothing) as fallback</p></p></div>
               <section class="">
                 <div class="comment "><p>Define a custom route, Slab is built with <a href="https://github.com/criteo/lolhttp">lolhttp</a></p></p></div>
                 <div class="code ">      <span class="identifier">customRoutes</span> = {
-        <span class="keyword">case</span> <span class="identifier">GET</span> <span class="identifier">at</span> <span class="string">"/api/heartbeat"</span> => <span class="identifier">Ok</span>(<span class="string">"Ok"</span>)
+        <span class="keyword">case</span> <span class="identifier"><a target="doc" href="https://criteo.github.io/lolhttp/api//lol/http/package$.html#GET=>lol.http.HttpMethod" data-tooltip="<span>lol.http.GET: lol.http.HttpMethod</span>">GET</a></span> <span class="identifier"><a target="doc" href="https://criteo.github.io/lolhttp/api//lol/http/at$.html" data-tooltip="<span>lol.http.at</span>">at</a></span> <span class="string">"/api/heartbeat"</span> => <span class="identifier"><a target="doc" href="https://criteo.github.io/lolhttp/api//lol/http/Response.html#apply[A](content:A)(implicitencoder:lol.http.ContentEncoder[A])lol.http.Response" data-tooltip="<span>lol.http.Response.apply[A](content: A)(implicit encoder: lol.http.ContentEncoder[A]): lol.http.Response</span>">Ok</a></span>(<span class="string">"Ok"</span>)
       }
-    ).<span class="identifier">apply</span>(<span class="number">8082</span>)
+    ).<span class="identifier"><a target="doc" href="https://criteo.github.io/slab/api//com/criteo/slab/app/WebServer.html#apply(port:Int)Unit" data-tooltip="<span>com.criteo.slab.app.WebServer.apply(port: Int): Unit</span>">apply</a></span>(<span class="number">8082</span>)
   }
 }&nbsp;</div>
               </section>
