@@ -1,7 +1,7 @@
 # Slab <img src="https://criteo.github.io/slab/public/logo.png" height="36">
 
 [![Build Status](https://travis-ci.org/criteo/slab.svg?branch=master)](https://travis-ci.org/criteo/slab)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.criteo/slab_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.criteo/slab_2.12)
+[![Latest version](https://index.scala-lang.org/criteo/slab/slab/latest.svg)](https://index.scala-lang.org/criteo/slab/slab)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
