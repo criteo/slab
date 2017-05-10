@@ -56,6 +56,23 @@ export function* watchFetchHistory() {
   yield takeLatest('FETCH_HISTORY', fetchHistory);
 }
 
+// fetch snapshot
+export function* fetchSnapshot(action) {
+  try {
+    if (action.isLiveMode)
+      return;
+    const currentBoard = yield select(state => state.currentBoard);
+    const snapshot = yield call(api.fetchSnapshot, currentBoard, action.timestamp);
+    yield put({ type: 'FETCH_SNAPSHOT_SUCCESS', payload: snapshot });
+  } catch (error) {
+    yield put({ type: 'FETCH_SNAPSHOT_FAILURE', payload: error });
+  }
+}
+
+export function* watchSwitchBoardView() {
+  yield takeLatest('SWITCH_BOARD_VIEW', fetchSnapshot);
+}
+
 // fetch stats
 export function* fetchStats(action) {
   try {
@@ -101,6 +118,7 @@ export default function* rootSaga() {
   yield fork(watchFetchHistory);
   yield fork(watchFetchStats);
   yield fork(watchPollingIntervalChange);
+  yield fork(watchSwitchBoardView);
 
   // initial setup
   yield put(navigate(location.pathname, true));

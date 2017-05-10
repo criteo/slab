@@ -3,21 +3,24 @@ package com.criteo.slab.app
 import java.net.URLDecoder
 import java.time.Instant
 
+import com.criteo.slab.app.StateService.NotFoundError
 import com.criteo.slab.core._
+import com.criteo.slab.utils.Jsonable
 import com.criteo.slab.utils.Jsonable._
 import lol.http._
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
+import scala.util.control.NonFatal
 
 /** Slab Web server
   *
-  * @param boards The list of boards
+  * @param boards          The list of boards
   * @param pollingInterval The polling interval in seconds
-  * @param statsDays Specifies how many days of history to be counted into statistics
-  * @param customRoutes Defines custom routes (should starts with "/api")
-  * @param ec The execution context for the web server
+  * @param statsDays       Specifies how many days of history to be counted into statistics
+  * @param customRoutes    Defines custom routes (should starts with "/api")
+  * @param ec              The execution context for the web server
   */
 class WebServer(
                  val boards: Seq[Board],
@@ -32,35 +35,30 @@ class WebServer(
 
   private val stateService = new StateService(boards, pollingInterval, statsDays)
 
+  private implicit def stringDecoder = new Jsonable[String] {}
+
   private val routes: PartialFunction[Request, Future[Response]] = {
+    // Configs of boards
     case GET at url"/api/boards" => {
-      // Configs of boards
       logger.info(s"GET /api/boards")
-      Ok(
-        boards.map { board =>
-          BoardConfig(board.title, board.layout, board.links)
-        }.toList.toJSON
-      ).addHeaders(HttpString("content-type") -> HttpString("application/json"))
+      Future
+        .successful(Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links) }.toList.toJSON))
+        .map(jsonContentType)
     }
+    // Current board view
     case GET at url"/api/boards/$board" => {
-      // Current board view
       logger.info(s"GET /api/boards/$board")
       val boardName = URLDecoder.decode(board, "UTF-8")
-      boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
-        stateService
-          .getCurrent(boardName)
-          .fold(
-            Future.successful(Response(412)) // Not yet ready
-          ) { view: ReadableView =>
-            Future.successful(
-              Ok(view.toJSON).addHeaders(HttpString("content-type") -> HttpString("application/json")
-              )
-            )
-          }
-      }
+      stateService
+        .current(boardName)
+        .map((_: ReadableView).toJSON)
+        .map(Ok(_))
+        .map(jsonContentType)
+        .recoverWith(errorHandler)
     }
-    case GET at url"/api/boards/$board/history/$timestamp" => {
-      logger.info(s"GET /api/boards/$board/history/$timestamp")
+    // Snapshot of the given time point
+    case GET at url"/api/boards/$board/snapshot/$timestamp" => {
+      logger.info(s"GET /api/boards/$board/snapshot/$timestamp")
       val boardName = URLDecoder.decode(board, "UTF-8")
       boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
         Try(timestamp.toLong).map(Instant.ofEpochMilli).toOption.fold(
@@ -68,21 +66,22 @@ class WebServer(
         ) { dateTime =>
           board.apply(Some(Context(dateTime)))
             .map((_: ReadableView).toJSON)
-            .map(Ok(_).addHeaders(HttpString("content-type") -> HttpString("application/json")))
+            .map(Ok(_))
+            .map(jsonContentType)
         }
-      }
+      }.recoverWith(errorHandler)
     }
+    // History of last 24 hours
     case GET at url"/api/boards/$board/history?last" => {
       logger.info(s"GET /api/boards/$board/history?last")
       val boardName = URLDecoder.decode(board, "UTF-8")
-      boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
-        stateService.getHistory(boardName).fold(
-          Future.successful(Response(412)) // Not yet ready
-        ) {
-          Ok(_).addHeaders(HttpString("content-type") -> HttpString("application/json"))
-        }
-      }
+      stateService
+        .history(boardName)
+        .map { h: Map[Long, String] => Ok(h.toJSON) }
+        .map(jsonContentType)
+        .recoverWith(errorHandler)
     }
+    // History of the given range
     case GET at url"/api/boards/$board/history?from=$fromTS&until=$untilTS" => {
       logger.info(s"GET /api/boards/$board/history?from=$fromTS&until=$untilTS")
       val boardName = URLDecoder.decode(board, "UTF-8")
@@ -93,27 +92,23 @@ class WebServer(
         } yield (from, until)
         range.fold(Future.successful(BadRequest("Invalid timestamp"))) { case (from, until) =>
           board.fetchHistory(from, until)
-            .map((_: Map[Long, ReadableView]).toJSON)
-            .map(Ok(_).addHeaders(
-              HttpString("content-type") -> HttpString("application/json")
-            ))
+            .map(_.mapValues(_.status.name).toJSON)
+            .map(Ok(_))
+            .map(jsonContentType)
         }
-      }
+      }.recoverWith(errorHandler)
     }
+    // Stats of the board
     case GET at url"/api/boards/$board/stats" => {
       logger.info(s"GET /api/boards/$board/stats")
       val boardName = URLDecoder.decode(board, "UTF-8")
-      boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
-        Future.successful {
-          stateService.getStats(boardName)
-            .map(_.toJSON)
-            .map(Ok(_).addHeaders(
-              HttpString("content-type") -> HttpString("application/json")
-            ))
-            .getOrElse(Response(412))
-        }
-      }
+      stateService.stats(boardName)
+        .map(_.toJSON)
+        .map(Ok(_))
+        .map(jsonContentType)
+        .recoverWith(errorHandler)
     }
+    // Static resources
     case GET at url"/$file.$ext" => {
       logger.info(s"GET /$file.$ext")
       ClasspathResource(s"/$file.$ext").fold(NotFound())(r => Ok(r))
@@ -131,6 +126,21 @@ class WebServer(
     }
   }
 
+  private def errorHandler: PartialFunction[Throwable, Future[Response]] = {
+    case f: NotFoundError =>
+      NotFound(f.message)
+    case NonFatal(e) =>
+      logger.error(e.getMessage, e)
+      InternalServerError()
+  }
+
+  private def jsonContentType(res: Response) = res.addHeaders(HttpString("content-type") -> HttpString("application/json"))
+
+  /**
+    * Start the web server
+    *
+    * @param port The server's port
+    */
   def apply(port: Int): Unit = {
     logger.info(s"Starting server at port: $port")
     stateService.start()

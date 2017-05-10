@@ -23,7 +23,7 @@ class App extends Component {
     const { error, board, route } = this.props;
     if (error)
       return (
-        <h1 style={{ color: '#C20', fontSize: '36px' }}>
+        <h1 style={{ color: '#ff9800' }} className="info">
           {error}
         </h1>
       );
@@ -39,15 +39,13 @@ class App extends Component {
         );
       else
         return (
-          <div>
-            <header>
-              <h1>Loading...</h1>
-            </header>
-          </div>
+          <h1 style={{ color: '#BABABA' }} className="info">
+            Loading...
+          </h1>
         );
     } else
       return (
-        <h1 style={{ color: '#BABABA', fontSize: '36px' }}>
+        <h1 style={{ color: '#BABABA' }} className="info">
           Not found
         </h1>
       );

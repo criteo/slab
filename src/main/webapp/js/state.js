@@ -212,22 +212,44 @@ export default function reducers(state: State = initState, action: Action): Stat
           selectedBoardView: state.liveBoardView,
           isLiveMode: action.isLiveMode
         };
-      else {
-        const view = state.history.data[action.timestamp];
-        const config = state.boards.find(_ => _.title === view.title);
-        if (config)
-          return {
-            ...state,
-            selectedBoardView: {
-              isLoading: false,
-              error: null,
-              data: combineViewAndLayout(view, config.layout, config.links),
-            },
-            isLiveMode: action.isLiveMode,
-            selectedTimestamp: action.timestamp
-          };
+      else
+        return {
+          ...state,
+          isLiveMode: action.isLiveMode,
+          selectedBoardView: {
+            ...state.selectedBoardView,
+            isLoading: true
+          },
+          selectedTimestamp: action.timestamp
+        };
+    case 'FETCH_SNAPSHOT_SUCCESS': {
+      if (state.isLiveMode)
         return state;
-      }
+      const view = action.payload;
+      const config = state.boards.find(_ => _.title === view.title);
+      if (config)
+        return {
+          ...state,
+          selectedBoardView: {
+            isLoading: false,
+            error: null,
+            data: combineViewAndLayout(view, config.layout, config.links),
+          }
+        };
+      return state;
+    }
+    case 'FETCH_SNAPSHOT_FAILURE': {
+      if (state.isLiveMode)
+        return state;
+      return {
+        ...state,
+        selectedBoardView: {
+          isLoading: false,
+          error: action.payload,
+          data: state.selectedBoardView.data
+        }
+      };
+    }
     // Stats
     case 'FETCH_STATS':
       return {

@@ -86,10 +86,11 @@ class Timeline extends Component {
       const { history } = this.props;
       const dataset = Object.entries(history)
         .filter(
-          ([_, view]: [string, any]) =>
-            view.status === 'ERROR' || view.status === 'WARNING'
+          ([_, status]: [string, any]) =>
+            // status === 'ERROR' || status === 'WARNING'
+            status === 'ERROR' || status === 'WARNING'
         )
-        .map(([ts, view]: [string, any], i) => {
+        .map(([ts, status]: [string, any], i) => {
           const date = moment(parseInt(ts));
           return {
             date,
@@ -97,7 +98,7 @@ class Timeline extends Component {
             content: '',
             start: date.format(Timeline.DATE_FORMAT),
             title: date.format(Timeline.DATE_FORMAT),
-            className: `${view.status} background`
+            className: `${status} background`
           };
         })
         .sort((a, b) => a.start.localeCompare(b.start));
