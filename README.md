@@ -15,7 +15,7 @@ Add the following to your project's dependencies:
 
 - sbt
 
-    `"com.criteo" %% "slab" % "0.2.3"`
+    `"com.criteo" %% "slab" % "0.2.4"`
 
 - Maven
 
@@ -23,7 +23,7 @@ Add the following to your project's dependencies:
     <dependency>
         <groupId>com.criteo</groupId>
         <artifactId>slab_${SCALA_SHORT_VERSION}</artifactId>
-        <version>0.2.3</version>
+        <version>0.2.4</version>
     </dependency>
     ```
 
