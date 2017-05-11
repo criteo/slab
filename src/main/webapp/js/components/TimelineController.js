@@ -17,7 +17,8 @@ type Props = {
   error: ?string,
   selectedTimestamp: ?number,
   navigateToLiveBoard: () => void,
-  fetchHistory: (date: ?string) => void
+  fetchHistory: (date: ?string) => void,
+  isLoadingBoard: boolean
 };
 
 class TimelineController extends PureComponent {
@@ -41,7 +42,8 @@ class TimelineController extends PureComponent {
       isLiveMode,
       selectedTimestamp,
       isLoading,
-      error
+      error,
+      isLoadingBoard
     } = this.props;
     const { isCalendarOpen, selectedDay } = this.state;
     return (
@@ -67,6 +69,9 @@ class TimelineController extends PureComponent {
             : `SNAPSHOT ${moment(selectedTimestamp).format('YYYY-MM-DD HH:mm')}`}
           {!isLiveMode && <Button onClick={this.hanldeResetClick}>RESET</Button>}
         </span>
+        {
+          isLoadingBoard && <i className="fa fa-circle-o-notch fa-spin" />
+        }
         <Calendar
           isOpen={isCalendarOpen}
           selectedDay={selectedDay}
@@ -100,7 +105,8 @@ const select = (state: State) => ({
   selectedTimestamp: state.selectedTimestamp,
   isLoading: state.history.isLoading,
   error: state.history.error,
-  boardName: state.currentBoard
+  boardName: state.currentBoard,
+  isLoadingBoard: state.selectedBoardView.isLoading
 });
 
 const actions = dispatch => ({
