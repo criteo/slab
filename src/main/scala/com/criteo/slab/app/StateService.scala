@@ -37,7 +37,7 @@ private[slab] class StateService(
   // Current board view
   def current(board: String): Future[BoardView] = get[BoardView, NoSerialization](board) flatMap {
     case Some(boardView) => Future.successful(boardView)
-    case None => Future.failed(NotFoundError(s"$board is not ready"))
+    case None => Future.failed(NotFoundError(s"$board does not exist"))
   }
 
   // Stats of last n days

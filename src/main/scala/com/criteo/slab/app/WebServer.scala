@@ -1,7 +1,7 @@
 package com.criteo.slab.app
 
 import java.net.URLDecoder
-import java.time.Instant
+import java.time.{Duration, Instant}
 
 import com.criteo.slab.app.StateService.NotFoundError
 import com.criteo.slab.core._
@@ -40,14 +40,12 @@ class WebServer(
   private val routes: PartialFunction[Request, Future[Response]] = {
     // Configs of boards
     case GET at url"/api/boards" => {
-      logger.info(s"GET /api/boards")
       Future
         .successful(Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links) }.toList.toJSON))
         .map(jsonContentType)
     }
     // Current board view
     case GET at url"/api/boards/$board" => {
-      logger.info(s"GET /api/boards/$board")
       val boardName = URLDecoder.decode(board, "UTF-8")
       stateService
         .current(boardName)
@@ -58,7 +56,6 @@ class WebServer(
     }
     // Snapshot of the given time point
     case GET at url"/api/boards/$board/snapshot/$timestamp" => {
-      logger.info(s"GET /api/boards/$board/snapshot/$timestamp")
       val boardName = URLDecoder.decode(board, "UTF-8")
       boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
         Try(timestamp.toLong).map(Instant.ofEpochMilli).toOption.fold(
@@ -73,7 +70,6 @@ class WebServer(
     }
     // History of last 24 hours
     case GET at url"/api/boards/$board/history?last" => {
-      logger.info(s"GET /api/boards/$board/history?last")
       val boardName = URLDecoder.decode(board, "UTF-8")
       stateService
         .history(boardName)
@@ -83,7 +79,6 @@ class WebServer(
     }
     // History of the given range
     case GET at url"/api/boards/$board/history?from=$fromTS&until=$untilTS" => {
-      logger.info(s"GET /api/boards/$board/history?from=$fromTS&until=$untilTS")
       val boardName = URLDecoder.decode(board, "UTF-8")
       boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
         val range = for {
@@ -100,7 +95,6 @@ class WebServer(
     }
     // Stats of the board
     case GET at url"/api/boards/$board/stats" => {
-      logger.info(s"GET /api/boards/$board/stats")
       val boardName = URLDecoder.decode(board, "UTF-8")
       stateService.stats(boardName)
         .map(_.toJSON)
@@ -110,16 +104,14 @@ class WebServer(
     }
     // Static resources
     case GET at url"/$file.$ext" => {
-      logger.info(s"GET /$file.$ext")
       ClasspathResource(s"/$file.$ext").fold(NotFound())(r => Ok(r))
     }
     case req if req.method == GET && !req.url.startsWith("/api") => {
-      logger.info(s"GET ${req.url}")
       ClasspathResource("/index.html").fold(NotFound())(r => Ok(r))
     }
   }
 
-  private val notFound: PartialFunction[Request, Future[Response]] = {
+  private def notFound: PartialFunction[Request, Future[Response]] = {
     case anyReq => {
       logger.info(s"${anyReq.method.toString} ${anyReq.url} not found")
       Future.successful(Response(404))
@@ -136,6 +128,15 @@ class WebServer(
 
   private def jsonContentType(res: Response) = res.addHeaders(HttpString("content-type") -> HttpString("application/json"))
 
+  private def routeLogger(router: Request => Future[Response]) = (request: Request) => {
+    val start = Instant.now()
+    val f = router(request)
+    f foreach { res =>
+      val duration = Duration.between(start, Instant.now)
+      logger.info(s"${request.method} ${request.url} - ${res.status} ${duration.toMillis}ms")
+    }
+    f
+  }
   /**
     * Start the web server
     *
@@ -145,7 +146,7 @@ class WebServer(
     logger.info(s"Starting server at port: $port")
     stateService.start()
 
-    Server.listen(port)(routes orElse customRoutes orElse notFound)
+    Server.listen(port)(routeLogger(routes orElse customRoutes orElse notFound))
     logger.info(s"Listening to $port")
 
     sys.addShutdownHook {
