@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import type { State } from '../state';
 
-import { switchBoardView, fetchHistory } from '../actions';
+import { fetchHistory, navigateToLiveBoard } from '../actions';
 import Calendar from './Calendar';
 import { Button } from '../lib';
 
@@ -16,7 +16,7 @@ type Props = {
   isLoading: boolean,
   error: ?string,
   selectedTimestamp: ?number,
-  switchToLiveMode: () => void,
+  navigateToLiveBoard: () => void,
   fetchHistory: (date: ?string) => void
 };
 
@@ -40,7 +40,6 @@ class TimelineController extends PureComponent {
       date,
       isLiveMode,
       selectedTimestamp,
-      switchToLiveMode,
       isLoading,
       error
     } = this.props;
@@ -56,7 +55,7 @@ class TimelineController extends PureComponent {
             {isCalendarOpen ? 'CLOSE' : 'CALENDAR'}
           </Button>
           {date &&
-            <Button onClick={this.handleTimelineResetClick}>
+            <Button onClick={this.handleLast24HClick}>
               LAST 24H
             </Button>}
           {isLoading && <i className="fa fa-circle-o-notch fa-spin" />}
@@ -66,7 +65,7 @@ class TimelineController extends PureComponent {
           {isLiveMode
             ? 'LIVE'
             : `SNAPSHOT ${moment(selectedTimestamp).format('YYYY-MM-DD HH:mm')}`}
-          {!isLiveMode && <Button onClick={switchToLiveMode}>RESET</Button>}
+          {!isLiveMode && <Button onClick={this.hanldeResetClick}>RESET</Button>}
         </span>
         <Calendar
           isOpen={isCalendarOpen}
@@ -85,10 +84,14 @@ class TimelineController extends PureComponent {
     });
   };
 
-  handleTimelineResetClick = () => {
+  handleLast24HClick = () => {
     this.props.fetchHistory();
     this.setState({ selectedDay: new Date(), isCalendarOpen: false });
   };
+
+  hanldeResetClick = () => {
+    this.props.navigateToLiveBoard();
+  }
 }
 
 const select = (state: State) => ({
@@ -101,7 +104,10 @@ const select = (state: State) => ({
 });
 
 const actions = dispatch => ({
-  switchToLiveMode: () => dispatch(switchBoardView(true)),
+  navigateToLiveBoard: function() {
+    const props = this;
+    return dispatch(navigateToLiveBoard(props.boardName));
+  },
   fetchHistory: function(date) {
     const props = this;
     return dispatch(fetchHistory(props.boardName, date));

@@ -2,9 +2,7 @@ const resolve = res => {
   const contentType = res.headers.get('content-type') || '';
   if (contentType.includes('json'))
     return res.json();
-  if (contentType.includes('text'))
-    return res.text();
-  return Promise.reject(new TypeError(`unknown contentType ${contentType}`));
+  return res.text();
 };
 
 const fetcher = (url, options) =>

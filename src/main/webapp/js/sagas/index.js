@@ -1,6 +1,7 @@
 import { takeLatest, call, put, fork, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { navigate } from 'redux-url';
+import moment from 'moment';
 import * as api from '../api';
 import { combineViewAndLayout } from '../utils';
 import { setPollingInterval } from '../actions';
@@ -18,15 +19,18 @@ export function* fetchBoard(action, transformer = combineViewAndLayout) {
   }
 }
 
-export function* watchFetchBoard() {
-  yield takeLatest('FETCH_BOARD', fetchBoard);
+// from route change
+export function* watchLiveBoardChange() {
+  yield takeLatest('GOTO_LIVE_BOARD', fetchBoard);
 }
 
 // fetch boards
 export function* fetchBoards() {
   try {
     const cached = yield select(state => state.boards);
-    const boards = cached && cached.length > 0 ? cached : yield call(api.fetchBoards);
+    if (cached && cached.length > 0)
+      return cached;
+    const boards = yield call(api.fetchBoards);
     yield put({ type: 'FETCH_BOARDS_SUCCESS', payload: boards });
     return boards;
   } catch (error) {
@@ -57,20 +61,35 @@ export function* watchFetchHistory() {
 }
 
 // fetch snapshot
-export function* fetchSnapshot(action) {
+export function* fetchSnapshot(action, transformer = combineViewAndLayout) {
   try {
     if (action.isLiveMode)
       return;
+    const boards = yield call(fetchBoards);
     const currentBoard = yield select(state => state.currentBoard);
     const snapshot = yield call(api.fetchSnapshot, currentBoard, action.timestamp);
-    yield put({ type: 'FETCH_SNAPSHOT_SUCCESS', payload: snapshot });
+    const config = boards.find(_ => _.title === snapshot.title);
+    const { layout, links } = config;
+    yield put({ type: 'FETCH_SNAPSHOT_SUCCESS', payload: transformer(snapshot, layout, links) });
   } catch (error) {
     yield put({ type: 'FETCH_SNAPSHOT_FAILURE', payload: error });
   }
 }
 
-export function* watchSwitchBoardView() {
-  yield takeLatest('SWITCH_BOARD_VIEW', fetchSnapshot);
+// from route change
+export function* watchSnapshotChange() {
+  yield takeLatest('GOTO_SNAPSHOT', handleSnapshotChange);
+}
+
+export function* handleSnapshotChange(action) {
+  // if history is not available, fetch it
+  const history = yield select(state => state.history.data);
+  if (!history) {
+    const datetime = moment(action.timestamp);
+    const date = moment().isSame(datetime, 'day') ? null : datetime.format('YYYY-MM-DD');
+    yield put({ type: 'FETCH_HISTORY', board: action.board, date });
+  }
+  yield call(fetchSnapshot, action);
 }
 
 // fetch stats
@@ -88,7 +107,7 @@ export function* watchFetchStats() {
 }
 
 // polling service
-export function* poll() {
+export function* poll(init = false) {
   const { interval, isLiveMode, date } = yield select(state => ({
     interval: state.pollingIntervalSeconds,
     isLiveMode: state.isLiveMode,
@@ -97,7 +116,8 @@ export function* poll() {
   if (interval > 0) {
     const route = yield select(state => state.route);
     if (route.path === 'BOARD' && route.board && isLiveMode) {
-      yield fork(fetchBoard, { type: 'FETCH_BOARD', board: route.board });
+      if (!init) // do not call it in initialization
+        yield fork(fetchBoard, { type: 'FETCH_BOARD', board: route.board });
       if (!date) // polling history only in last 24 hours mode
         yield fork(fetchHistory, { type: 'FETCH_HISTORY', board: route.board });
     }
@@ -107,18 +127,18 @@ export function* poll() {
 }
 
 export function* watchPollingIntervalChange() {
-  yield takeLatest('SET_POLLING_INTERVAL', poll);
+  yield takeLatest('SET_POLLING_INTERVAL', poll, true);
 }
 
 // root
 export default function* rootSaga() {
   // watchers
-  yield fork(watchFetchBoard);
   yield fork(watchFetchBoards);
   yield fork(watchFetchHistory);
   yield fork(watchFetchStats);
+  yield fork(watchSnapshotChange);
+  yield fork(watchLiveBoardChange);
   yield fork(watchPollingIntervalChange);
-  yield fork(watchSwitchBoardView);
 
   // initial setup
   yield put(navigate(location.pathname, true));

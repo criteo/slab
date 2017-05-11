@@ -1,6 +1,5 @@
 // @flow
 import type { Action } from './actions';
-import { combineViewAndLayout } from './utils';
 
 export type Check = {
   title: string,
@@ -204,39 +203,19 @@ export default function reducers(state: State = initState, action: Action): Stat
           error: action.payload
         }
       };
-    // Time travel
-    case 'SWITCH_BOARD_VIEW':
-      if (action.isLiveMode === true)
-        return {
-          ...state,
-          selectedBoardView: state.liveBoardView,
-          isLiveMode: action.isLiveMode
-        };
-      else
-        return {
-          ...state,
-          isLiveMode: action.isLiveMode,
-          selectedBoardView: {
-            ...state.selectedBoardView,
-            isLoading: true
-          },
-          selectedTimestamp: action.timestamp
-        };
+    // Snapshot
     case 'FETCH_SNAPSHOT_SUCCESS': {
       if (state.isLiveMode)
         return state;
-      const view = action.payload;
-      const config = state.boards.find(_ => _.title === view.title);
-      if (config)
+      else
         return {
           ...state,
           selectedBoardView: {
             isLoading: false,
             error: null,
-            data: combineViewAndLayout(view, config.layout, config.links),
+            data: action.payload
           }
         };
-      return state;
     }
     case 'FETCH_SNAPSHOT_FAILURE': {
       if (state.isLiveMode)
@@ -294,13 +273,35 @@ export default function reducers(state: State = initState, action: Action): Stat
           path: 'BOARDS'
         }
       };
-    case 'GOTO_BOARD':
+    case 'GOTO_LIVE_BOARD':
       return {
         ...state,
-        currentBoard: action.payload.params.board,
+        isLiveMode: true,
+        selectedBoardView: {
+          ...state.selectedBoardView,
+          isLoading: true
+        },
+        selectedTimestamp: null,
+        currentBoard: action.board,
         route: {
           path: 'BOARD',
-          board: action.payload.params.board
+          board: action.board
+        }
+      };
+    // Time travel
+    case 'GOTO_SNAPSHOT':
+      return {
+        ...state,
+        isLiveMode: false,
+        selectedBoardView: {
+          ...state.selectedBoardView,
+          isLoading: true
+        },
+        selectedTimestamp: action.timestamp,
+        currentBoard: action.board,
+        route: {
+          path: 'BOARD',
+          board: action.board
         }
       };
     case 'NOT_FOUND':

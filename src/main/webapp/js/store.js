@@ -10,8 +10,8 @@ export default function configureStore() {
     reducer,
       compose(
       applyMiddleware(
+        router,
         sagaMiddleware,
-        router
       ),
       window.devToolsExtension ? window.devToolsExtension() : _ => _
     )

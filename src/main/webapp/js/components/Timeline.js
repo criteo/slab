@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import vis from 'vis';
 import moment from 'moment';
 import type { State } from '../state';
-import { switchBoardView } from '../actions';
+import { navigateToSnapshot, navigateToLiveBoard } from '../actions';
 import Controller from './TimelineController';
 
 type Props = {
@@ -13,8 +13,10 @@ type Props = {
   error: ?string,
   isLoading: boolean,
   isLiveMode: boolean,
-  switchBoardView: (isLiveMode: boolean, timestamp?: number) => void,
-  selectedDate: ?string
+  navigateToSnapshot: (timestamp: number) => void,
+  navigateToLiveBoard: () => void,
+  selectedDate: ?string,
+  selectedTimestamp: ?number
 };
 
 class Timeline extends Component {
@@ -87,7 +89,6 @@ class Timeline extends Component {
       const dataset = Object.entries(history)
         .filter(
           ([_, status]: [string, any]) =>
-            // status === 'ERROR' || status === 'WARNING'
             status === 'ERROR' || status === 'WARNING'
         )
         .map(([ts, status]: [string, any], i) => {
@@ -104,7 +105,7 @@ class Timeline extends Component {
         .sort((a, b) => a.start.localeCompare(b.start));
       if (dataset.length > 0) {
         // if selectedDate is not defined, defaults to last 24 hours
-        const { selectedDate } = this.props;
+        const { selectedDate, selectedTimestamp } = this.props;
         const min = selectedDate ? moment(selectedDate) : moment().subtract(24, 'hour');
         const max = selectedDate ? moment(selectedDate).add(24, 'hour') : moment();
         const timeline = new vis.Timeline(container, dataset, {
@@ -121,11 +122,15 @@ class Timeline extends Component {
           if (items.length > 0) {
             const entry = dataset.find(_ => _.id === items[0]);
             const timestamp = entry && entry.date.valueOf();
-            this.props.switchBoardView(false, timestamp);
+            timestamp && this.props.navigateToSnapshot(timestamp);
           } else {
-            this.props.switchBoardView(true);
+            this.props.navigateToLiveBoard();
           }
         });
+        if (selectedTimestamp) {
+          const id = dataset.find(_ => _.date.valueOf() === selectedTimestamp);
+          id && timeline.setSelection([id.id]);
+        }
         this.timeline = timeline;
       } else {
         render(
@@ -148,12 +153,20 @@ const select = (state: State) => ({
   selectedDate: state.history.date,
   error: state.history.error,
   isLoading: state.history.isLoading,
-  isLiveMode: state.isLiveMode
+  isLiveMode: state.isLiveMode,
+  selectedTimestamp: state.selectedTimestamp,
+  board: state.currentBoard
 });
 
 const actions = (dispatch) => ({
-  switchBoardView: (isLiveMode, timestamp = 0) =>
-    dispatch(switchBoardView(isLiveMode, timestamp))
+  navigateToSnapshot: function(timestamp) {
+    const props = this;
+    dispatch(navigateToSnapshot(props.board, timestamp));
+  },
+  navigateToLiveBoard: function() {
+    const props = this;
+    dispatch(navigateToLiveBoard(props.board));
+  }
 });
 
 export default connect(select, actions)(Timeline);
