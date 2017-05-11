@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
-import scalacache.ScalaCache
+import scalacache._
 import scalacache.caffeine.CaffeineCache
 import scalacache.memoization._
 
@@ -21,10 +21,10 @@ import scalacache.memoization._
   * @param ec              The execution context
   */
 private[slab] class StateService(
-                       val boards: Seq[Board],
-                       val intervalSeconds: Int,
-                       val statsDays: Int = 7
-                     )(implicit ec: ExecutionContext) {
+                                  val boards: Seq[Board],
+                                  val intervalSeconds: Int,
+                                  val statsDays: Int = 7
+                                )(implicit ec: ExecutionContext) {
 
   import StateService._
 
@@ -35,13 +35,9 @@ private[slab] class StateService(
   private lazy val scheduler = Executors.newSingleThreadScheduledExecutor()
 
   // Current board view
-  def current(board: String): Future[BoardView] = memoize(Duration.create(intervalSeconds, TimeUnit.SECONDS)) {
-    logger.info(s"Updating current status of $board")
-    boards
-      .find(_.title == board)
-      .fold(Future.failed(NotFoundError(s"$board does not exist")): Future[BoardView]) {
-        _.apply(None)
-      }
+  def current(board: String): Future[BoardView] = get[BoardView, NoSerialization](board) flatMap {
+    case Some(boardView) => Future.successful(boardView)
+    case None => Future.failed(NotFoundError(s"$board is not ready"))
   }
 
   // Stats of last n days
@@ -83,7 +79,9 @@ private[slab] class StateService(
   object Poller extends Runnable {
     override def run(): Unit = {
       boards foreach { board =>
-        current(board.title)
+        board
+          .apply(None)
+          .foreach(put(board.title)(_))
         history(board.title)
         stats(board.title)
       }
