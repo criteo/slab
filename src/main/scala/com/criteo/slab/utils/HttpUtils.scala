@@ -28,7 +28,7 @@ object HttpUtils {
   def get[A: ContentDecoder](
                               url: URL,
                               headers: Map[HttpString, HttpString] = Map.empty,
-                              timeout: FiniteDuration = Duration.create(30, SECONDS),
+                              timeout: FiniteDuration = Duration.create(60, SECONDS),
                               connectionTimeout: FiniteDuration = Duration.create(5, SECONDS)
                             )(implicit ec: ExecutionContext): Future[A] = {
     val defaultHeaders = Map(
@@ -114,7 +114,7 @@ object HttpUtils {
     def apply[A: ContentDecoder](
                                   path: String,
                                   headers: Map[HttpString, HttpString] = Map.empty,
-                                  timeout: FiniteDuration = Duration.create(30, SECONDS)
+                                  timeout: FiniteDuration = Duration.create(60, SECONDS)
                                 ): Future[A] = {
       val fullURL = s"${client.scheme}://${client.host}:${client.port}$path"
       val request = Get(path).addHeaders(defaultHeaders ++ headers)

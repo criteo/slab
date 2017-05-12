@@ -4,6 +4,7 @@ import java.io._
 import java.net._
 import java.time._
 import java.time.format.DateTimeFormatter
+import java.util.concurrent.TimeUnit.SECONDS
 
 import com.criteo.slab.core._
 import com.criteo.slab.utils
@@ -11,19 +12,22 @@ import com.criteo.slab.utils.{HttpUtils, Jsonable}
 import org.json4s.DefaultFormats
 import org.slf4j.LoggerFactory
 
+import scala.concurrent.duration.{Duration => CDuration, FiniteDuration}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 /**
   * A value store that uses Graphite
   *
-  * @param host           The host of the writing endpoint
-  * @param port           The port of the writing endpoint
-  * @param webHost        The URL of the Web host for reading
-  * @param checkInterval  Check interval in [[java.time.Duration Duration]]
-  * @param group          The group name of Graphite metrics
-  * @param serverTimeZone The timezone of the server
-  * @param ec             The execution context
+  * @param host              The host of the writing endpoint
+  * @param port              The port of the writing endpoint
+  * @param webHost           The URL of the Web host for reading
+  * @param checkInterval     Check interval in [[java.time.Duration Duration]]
+  * @param group             The group name of Graphite metrics
+  * @param serverTimeZone    The timezone of the server
+  * @param connectionTimeout Connection timeout
+  * @param requestTimeout    Request timeout
+  * @param ec                The execution context
   */
 class GraphiteStore(
                      host: String,
@@ -31,7 +35,9 @@ class GraphiteStore(
                      webHost: String,
                      checkInterval: Duration,
                      group: Option[String] = None,
-                     serverTimeZone: ZoneId = ZoneId.systemDefault()
+                     serverTimeZone: ZoneId = ZoneId.systemDefault(),
+                     connectionTimeout: FiniteDuration = CDuration.create(30, SECONDS),
+                     requestTimeout: FiniteDuration = CDuration.create(60, SECONDS)
                    )(implicit ec: ExecutionContext) extends ValueStore {
 
   import GraphiteStore._
@@ -44,7 +50,7 @@ class GraphiteStore(
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
-  private val Get = HttpUtils.makeGet(new URL(webHost))
+  private val Get = HttpUtils.makeGet(new URL(webHost), connectionTimeout = connectionTimeout)
 
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id
@@ -69,7 +75,7 @@ class GraphiteStore(
       "until" -> s"${DateFormatter.format(context.when.plus(checkInterval))}",
       "format" -> "json"
     ))
-    Get[String](s"/render$query", Map.empty) flatMap { content =>
+    Get[String](s"/render$query", Map.empty, requestTimeout) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) match {
         case Success(metrics) =>
           val pairs = transformMetrics(s"${getPrefix(id)}", metrics)
@@ -90,7 +96,7 @@ class GraphiteStore(
       "format" -> "json",
       "noNullPoints" -> "true"
     ))
-    Get[String](s"/render$query", Map.empty) flatMap { content =>
+    Get[String](s"/render$query", Map.empty, requestTimeout) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) map { metrics =>
         groupMetrics(s"${getPrefix(id)}", metrics)
       } match {
