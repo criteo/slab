@@ -2,10 +2,12 @@ package com.criteo.slab.utils
 
 import java.net.{URL, URLEncoder}
 import java.time.Instant
+import java.util.concurrent.TimeUnit.SECONDS
 
 import lol.http._
 import org.slf4j.LoggerFactory
 
+import scala.concurrent.duration.{Duration, FiniteDuration}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
@@ -23,7 +25,12 @@ object HttpUtils {
     * @tparam A The result type which should provide a content decoder implementation
     * @return The result wrapped in [[Future]]
     */
-  def get[A: ContentDecoder](url: URL, headers: Map[HttpString, HttpString] = Map.empty)(implicit ec: ExecutionContext): Future[A] = {
+  def get[A: ContentDecoder](
+                              url: URL,
+                              headers: Map[HttpString, HttpString] = Map.empty,
+                              timeout: FiniteDuration = Duration.create(30, SECONDS),
+                              connectionTimeout: FiniteDuration = Duration.create(5, SECONDS)
+                            )(implicit ec: ExecutionContext): Future[A] = {
     val defaultHeaders = Map(
       HttpString("Host") -> HttpString(url.getHost)
     )
@@ -49,9 +56,9 @@ object HttpUtils {
     * @param ec  The [[ExecutionContext]]
     * @return The client with which a GET request can be sent
     */
-  def makeGet(url: URL)(implicit ec: ExecutionContext): SafeHTTPGet = {
+  def makeGet(url: URL, connectionTimeout: FiniteDuration = Duration.create(5, SECONDS))(implicit ec: ExecutionContext): SafeHTTPGet = {
     val port = if (url.getPort > 0) url.getPort else url.getDefaultPort
-    val client = Client(url.getHost, port, url.getProtocol, maxWaiters = 1024)
+    val client = Client(url.getHost, port, url.getProtocol, maxWaiters = 1024, connectionTimeout = connectionTimeout)
     SafeHTTPGet(client, Map(
       HttpString("Host") -> HttpString(s"${url.getHost}:$port")
     ))
@@ -104,7 +111,11 @@ object HttpUtils {
     * @param ec             [[ExecutionContext]]
     */
   case class SafeHTTPGet(client: Client, defaultHeaders: Map[HttpString, HttpString])(implicit ec: ExecutionContext) {
-    def apply[A: ContentDecoder](path: String, headers: Map[HttpString, HttpString] = Map.empty): Future[A] = {
+    def apply[A: ContentDecoder](
+                                  path: String,
+                                  headers: Map[HttpString, HttpString] = Map.empty,
+                                  timeout: FiniteDuration = Duration.create(30, SECONDS)
+                                ): Future[A] = {
       val fullURL = s"${client.scheme}://${client.host}:${client.port}$path"
       val request = Get(path).addHeaders(defaultHeaders ++ headers)
       logger.info(s"Requesting $fullURL")

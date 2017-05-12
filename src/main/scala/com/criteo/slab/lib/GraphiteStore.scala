@@ -16,13 +16,14 @@ import scala.util.{Failure, Success, Try}
 
 /**
   * A value store that uses Graphite
-  * @param host The host of the writing endpoint
-  * @param port The port of the writing endpoint
-  * @param webHost The URL of the Web host for reading
-  * @param checkInterval Check interval in [[java.time.Duration Duration]]
-  * @param group The group name of Graphite metrics
+  *
+  * @param host           The host of the writing endpoint
+  * @param port           The port of the writing endpoint
+  * @param webHost        The URL of the Web host for reading
+  * @param checkInterval  Check interval in [[java.time.Duration Duration]]
+  * @param group          The group name of Graphite metrics
   * @param serverTimeZone The timezone of the server
-  * @param ec The execution context
+  * @param ec             The execution context
   */
 class GraphiteStore(
                      host: String,
@@ -42,6 +43,8 @@ class GraphiteStore(
   private val DateFormatter = DateTimeFormatter.ofPattern("HH:mm_YYYYMMdd").withZone(serverTimeZone)
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
+
+  private val Get = HttpUtils.makeGet(new URL(webHost))
 
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id
@@ -66,7 +69,7 @@ class GraphiteStore(
       "until" -> s"${DateFormatter.format(context.when.plus(checkInterval))}",
       "format" -> "json"
     ))
-    HttpUtils.get[String](new URL(s"$webHost/render$query"), Map.empty) flatMap { content =>
+    Get[String](s"/render$query", Map.empty) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) match {
         case Success(metrics) =>
           val pairs = transformMetrics(s"${getPrefix(id)}", metrics)
@@ -87,7 +90,7 @@ class GraphiteStore(
       "format" -> "json",
       "noNullPoints" -> "true"
     ))
-    HttpUtils.get[String](new URL(s"$webHost/render$query"), Map.empty) flatMap { content =>
+    Get[String](s"/render$query", Map.empty) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) map { metrics =>
         groupMetrics(s"${getPrefix(id)}", metrics)
       } match {

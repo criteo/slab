@@ -40,9 +40,7 @@ class WebServer(
   private val routes: PartialFunction[Request, Future[Response]] = {
     // Configs of boards
     case GET at url"/api/boards" => {
-      Future
-        .successful(Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links) }.toList.toJSON))
-        .map(jsonContentType)
+      Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links) }.toList.toJSON).map(jsonContentType)
     }
     // Current board view
     case GET at url"/api/boards/$board" => {
@@ -114,7 +112,7 @@ class WebServer(
   private def notFound: PartialFunction[Request, Future[Response]] = {
     case anyReq => {
       logger.info(s"${anyReq.method.toString} ${anyReq.url} not found")
-      Future.successful(Response(404))
+      Response(404)
     }
   }
 
@@ -130,13 +128,13 @@ class WebServer(
 
   private def routeLogger(router: Request => Future[Response]) = (request: Request) => {
     val start = Instant.now()
-    val f = router(request)
-    f foreach { res =>
+    router(request) map { res =>
       val duration = Duration.between(start, Instant.now)
       logger.info(s"${request.method} ${request.url} - ${res.status} ${duration.toMillis}ms")
+      res
     }
-    f
   }
+
   /**
     * Start the web server
     *
