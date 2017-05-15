@@ -27,6 +27,7 @@ import scala.util.{Failure, Success, Try}
   * @param serverTimeZone    The timezone of the server
   * @param connectionTimeout Connection timeout
   * @param requestTimeout    Request timeout
+  * @param maxConnections    Max connections of the Http client
   * @param ec                The execution context
   */
 class GraphiteStore(
@@ -37,7 +38,8 @@ class GraphiteStore(
                      group: Option[String] = None,
                      serverTimeZone: ZoneId = ZoneId.systemDefault(),
                      connectionTimeout: FiniteDuration = CDuration.create(30, SECONDS),
-                     requestTimeout: FiniteDuration = CDuration.create(60, SECONDS)
+                     requestTimeout: FiniteDuration = CDuration.create(60, SECONDS),
+                     maxConnections: Int = 32
                    )(implicit ec: ExecutionContext) extends ValueStore {
 
   import GraphiteStore._
@@ -50,7 +52,7 @@ class GraphiteStore(
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
-  private val Get = HttpUtils.makeGet(new URL(webHost), connectionTimeout = connectionTimeout)
+  private val Get = HttpUtils.makeGet(new URL(webHost), connectionTimeout = connectionTimeout, maxConnections = maxConnections)
 
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id

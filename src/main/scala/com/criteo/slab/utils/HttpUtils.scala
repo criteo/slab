@@ -56,9 +56,9 @@ object HttpUtils {
     * @param ec  The [[ExecutionContext]]
     * @return The client with which a GET request can be sent
     */
-  def makeGet(url: URL, connectionTimeout: FiniteDuration = Duration.create(5, SECONDS))(implicit ec: ExecutionContext): SafeHTTPGet = {
+  def makeGet(url: URL, connectionTimeout: FiniteDuration = Duration.create(5, SECONDS), maxConnections: Int = 10)(implicit ec: ExecutionContext): SafeHTTPGet = {
     val port = if (url.getPort > 0) url.getPort else url.getDefaultPort
-    val client = Client(url.getHost, port, url.getProtocol, maxWaiters = 1024, connectionTimeout = connectionTimeout)
+    val client = Client(url.getHost, port, url.getProtocol, maxWaiters = 1024, connectionTimeout = connectionTimeout, maxConnections = 10)
     SafeHTTPGet(client, Map(
       HttpString("Host") -> HttpString(s"${url.getHost}:$port")
     ))
