@@ -32,7 +32,8 @@ case class Box(
           title,
           view.status,
           view.message,
-          checkViews
+          checkViews,
+          view.label
         )
       }
   }
@@ -50,7 +51,8 @@ case class Box(
               title,
               view.status,
               view.message,
-              checkViews
+              checkViews,
+              view.label
             )
           }
       }

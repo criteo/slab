@@ -38,7 +38,8 @@ case class Board(
           title,
           view.status,
           view.message,
-          boxViews
+          boxViews,
+          view.label
         )
       }
 
@@ -55,7 +56,8 @@ case class Board(
               title,
               view.status,
               view.message,
-              boxViews
+              boxViews,
+              view.label
             )
           }
       }
