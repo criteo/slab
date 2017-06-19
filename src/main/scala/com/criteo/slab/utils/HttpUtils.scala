@@ -4,7 +4,7 @@ import java.net.{URL, URLEncoder}
 import java.time.Instant
 import java.util.concurrent.TimeUnit.SECONDS
 
-import lol.http._
+import lol.http.{Client, ContentDecoder, HttpString, Get, Response}
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration.{Duration, FiniteDuration}
@@ -58,7 +58,7 @@ object HttpUtils {
     */
   def makeGet(url: URL, connectionTimeout: FiniteDuration = Duration.create(5, SECONDS), maxConnections: Int = 10)(implicit ec: ExecutionContext): SafeHTTPGet = {
     val port = if (url.getPort > 0) url.getPort else url.getDefaultPort
-    val client = Client(url.getHost, port, url.getProtocol, maxWaiters = 1024, connectionTimeout = connectionTimeout, maxConnections = 10)
+    val client = Client(url.getHost, port, url.getProtocol, connectionTimeout = connectionTimeout, maxConnections = 10)
     SafeHTTPGet(client, Map(
       HttpString("Host") -> HttpString(s"${url.getHost}:$port")
     ))
