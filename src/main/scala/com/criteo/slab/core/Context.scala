@@ -9,3 +9,7 @@ import java.time.Instant
 case class Context(
                     when: Instant
                   )
+
+object Context {
+  def now = Context(Instant.now)
+}

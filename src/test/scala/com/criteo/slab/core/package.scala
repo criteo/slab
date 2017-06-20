@@ -1,53 +1,63 @@
 package com.criteo.slab
 
-import java.text.DecimalFormat
 import java.time.Instant
 
-import com.criteo.slab.core.Metrical.Out
-import com.criteo.slab.lib.Values.{Latency, Version}
+import com.criteo.slab.core._
+import shapeless.HNil
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.Try
+import org.mockito.Mockito._
 
 package object core {
+  val check1 = Check[Int](
+    "c.1",
+    "check 1",
+    () => Future.successful(1),
+    (_, _) => View(Status.Success, "check 1 message")
+  )
+  val check2 = Check[String](
+    "c.2",
+    "check 2",
+    () => Future.successful("new value"),
+    (value, _) => View(Status.Success, "check 2 message: " + value)
+  )
+  val spiedCheck1 = spy(check1)
+  val spiedCheck2 = spy(check2)
 
-  // Value stores
-  object TestStore extends ValueStore {
-    override def fetch(id: String, context: Context) = {
-      id match {
-        case "app.version" =>
-          Future.successful(Map("version" -> context.when.toEpochMilli))
-        case "app.latency" =>
-          Future.successful(Map("latency" -> context.when.toEpochMilli))
-        case _ =>
-          Future.failed(new Exception("network error"))
-      }
-    }
+  val box = Box(
+    "box 1",
+    spiedCheck1::spiedCheck2::HNil,
+    (views, _) => views.get(spiedCheck1).getOrElse(View(Status.Unknown, "unknown")).copy(message = "box 1 message")
+  )
 
-    override def upload(id: String, values: Metrical.Out) = Future.successful(())
+  val board = Board(
+    "board",
+    box::HNil,
+    (_, _) => View(Status.Unknown, "board message"),
+    Layout(
+      List.empty
+    )
+  )
 
-    override def fetchHistory(id: String, from: Instant, until: Instant): Future[Map[Long, Out]] = Future.successful(Map.empty)
+
+  implicit def codecInt = new Codec[Int, String] {
+
+    override def encode(v: Int): String = v.toString
+
+    override def decode(v: String): Try[Int] = Try(v.toInt)
   }
 
-  val versionFormatter = new DecimalFormat("##.###")
-  val versionCheck = Check(
-    "app.version",
-    "app version",
-    () => Future.successful(Version(9000)),
-    display = (v: Version, context: Context) => View(Status.Success, s"version ${versionFormatter format v.underlying}")
-  )
+  implicit def codecString = new Codec[String, String] {
+    override def encode(v: String): String = v
 
-  val failedVersionCheck = Check[Version](
-    "app.version",
-    "app version",
-    () => Future.failed(new Exception("failed check")),
-    display = (v: Version, context: Context) => View(Status.Success, s"version ${versionFormatter format v.underlying}")
-  )
+    override def decode(v: String): Try[String] = Try(v)
+  }
+  implicit def store = new Store[String] {
+    override def upload[T](id: String, context: Context, v: T)(implicit ev: Codec[T, String]): Future[Unit] = Future.successful(())
 
-  val latencyCheck = Check(
-    "app.latency",
-    "app latency",
-    () => Future.successful(Latency(2000)),
-    display = (l: Latency, context: Context) => View(Status.Warning, s"latency ${l.underlying}")
-  )
+    override def fetch[T](id: String, context: Context)(implicit ev: Codec[T, String]): Future[T] = Future.successful(ev.decode("100").get)
+
+    override def fetchHistory[T](id: String, from: Instant, until: Instant)(implicit ev: Codec[T, String]): Future[Seq[(Long, T)]] = Future.successful(List.empty)
+  }
 }

@@ -21,4 +21,3 @@ object Stats {
   implicit object ToJSON extends Jsonable[Stats]
 
 }
-

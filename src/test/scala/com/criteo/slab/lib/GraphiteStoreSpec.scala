@@ -4,10 +4,14 @@ import java.net._
 import java.time.Duration
 import java.util.concurrent._
 
+import com.criteo.slab.core.Context
 import com.criteo.slab.helper.FutureTests
+import com.criteo.slab.lib.Values.Latency
+import com.criteo.slab.lib.graphite.{DataPoint, GraphiteMetric, GraphiteStore}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.io._
+import com.criteo.slab.lib.graphite.GraphiteCodecs._
 
 class GraphiteStoreSpec extends FlatSpec with Matchers with FutureTests {
   val port = 5000
@@ -18,17 +22,13 @@ class GraphiteStoreSpec extends FlatSpec with Matchers with FutureTests {
 
   "value store" should "be able to send metrics to Graphite server" in {
     val f = pool.submit(new Echo(server))
-    store.upload("metrics", Map(
-      "latency" -> 200
-    ))
+    store.upload("metrics", Context.now, Latency(200))
     f.get should startWith("metrics.latency 200")
   }
 
   "upload" should "returns the exception when failed" in {
     whenReady(
-      store.upload("metrics", Map(
-        "latency" -> 200
-      )).failed
+      store.upload("metrics", Context.now, Latency(200)).failed
     ) { res =>
       res shouldBe a[java.net.ConnectException]
     }

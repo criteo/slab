@@ -1,12 +1,9 @@
 package com.criteo.slab.core
 
-import java.time.Instant
-
 import com.criteo.slab.utils.Jsonable
 import org.json4s.CustomSerializer
 import org.json4s.JsonDSL._
-
-import scala.concurrent.{ExecutionContext, Future}
+import shapeless.{HList, LUBConstraint}
 
 /** A box that groups checks
   *
@@ -16,62 +13,28 @@ import scala.concurrent.{ExecutionContext, Future}
   * @param description The description of the box in markdown syntax
   * @param labelLimit  The limit of visible check labels shown on the box
   */
-case class Box(
-                title: String,
-                checks: Seq[Check[_]],
-                aggregate: (Seq[View]) => View,
-                description: Option[String] = None,
-                labelLimit: Option[Int] = None
-              ) {
-  def apply(context: Option[Context])(implicit valueStore: ValueStore, ec: ExecutionContext): Future[BoxView] = {
-    Future
-      .sequence(checks.map(c => context.fold(c.now)(c.replay)))
-      .map { checkViews =>
-        val view = aggregate(checkViews.map(_.asView))
-        BoxView(
-          title,
-          view.status,
-          view.message,
-          checkViews,
-          view.label
-        )
-      }
-  }
+case class Box[C <: HList](
+                            title: String,
+                            checks: C,
+                            aggregate: (Map[Check[_], View], Context) => View,
+                            description: Option[String] = None,
+                            labelLimit: Option[Int] = None
+                          )(
+                            implicit constraints: LUBConstraint[C, Check[_]]
+                          )
 
-  def fetchHistory(from: Instant, until: Instant)(implicit store: ValueStore, ec: ExecutionContext): Future[Map[Long, BoxView]] = {
-    Future
-      .sequence(checks.map(_.fetchHistory(from, until)))
-      .map { maps =>
-        maps.flatMap(_.toList)
-          .groupBy(_._1)
-          .mapValues { in =>
-            val checkViews = in.map(_._2)
-            val view = aggregate(checkViews.map(_.asView))
-            BoxView(
-              title,
-              view.status,
-              view.message,
-              checkViews,
-              view.label
-            )
-          }
-      }
-  }
-}
 
 object Box {
-
-  implicit object toJSON extends Jsonable[Box] {
+  implicit object toJSON extends Jsonable[Box[_]] {
     override val serializers = List(Ser)
 
-    object Ser extends CustomSerializer[Box](_ => ( {
+    object Ser extends CustomSerializer[Box[_]](_ => ( {
       case _ => throw new NotImplementedError("Not deserializable")
     }, {
-      case box: Box =>
-        ("title" -> box.title) ~ ("description" -> box.description) ~ ("labelLimit" -> box.labelLimit.getOrElse(box.checks.size))
+      case box: Box[_] =>
+        ("title" -> box.title) ~ ("description" -> box.description) ~ ("labelLimit" -> box.labelLimit.getOrElse(64))
     }
     ))
 
   }
-
 }

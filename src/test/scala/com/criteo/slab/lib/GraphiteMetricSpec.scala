@@ -1,5 +1,6 @@
 package com.criteo.slab.lib
 
+import com.criteo.slab.lib.graphite.{DataPoint, GraphiteMetric}
 import com.criteo.slab.utils.Jsonable
 import org.json4s.DefaultFormats
 import org.scalatest.{FlatSpec, Matchers}

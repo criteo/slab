@@ -1,8 +1,8 @@
 lazy val commonSettings = Seq(
   organization := "com.criteo",
   version := "0.2.9",
-  scalaVersion := "2.12.1",
-  crossScalaVersions := Seq("2.11.8", "2.12.1"),
+  scalaVersion := "2.12.2",
+  crossScalaVersions := Seq("2.11.8", "2.12.2"),
   credentials += Credentials(
     "Sonatype Nexus Repository Manager",
     "oss.sonatype.org",
@@ -48,7 +48,8 @@ lazy val root = (project in file("."))
       "org.slf4j" % "slf4j-api" % "1.7.25",
       "com.criteo.lolhttp" %% "lolhttp" % "0.4.3",
       "com.github.cb372" %% "scalacache-core" % "0.9.3",
-      "com.github.cb372" %% "scalacache-caffeine" % "0.9.3"
+      "com.github.cb372" %% "scalacache-caffeine" % "0.9.3",
+      "com.chuusai" %% "shapeless" % "2.3.2"
     )
   )
 

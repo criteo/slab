@@ -1,4 +1,4 @@
-package com.criteo.slab.lib
+package com.criteo.slab.lib.graphite
 
 import java.io._
 import java.net._
@@ -7,12 +7,13 @@ import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit.SECONDS
 
 import com.criteo.slab.core._
+import com.criteo.slab.lib.graphite.GraphiteStore.Repr
 import com.criteo.slab.utils
 import com.criteo.slab.utils.{HttpUtils, Jsonable}
 import org.json4s.DefaultFormats
 import org.slf4j.LoggerFactory
 
-import scala.concurrent.duration.{Duration => CDuration, FiniteDuration}
+import scala.concurrent.duration.{FiniteDuration, Duration => CDuration}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
@@ -40,7 +41,7 @@ class GraphiteStore(
                      connectionTimeout: FiniteDuration = CDuration.create(30, SECONDS),
                      requestTimeout: FiniteDuration = CDuration.create(60, SECONDS),
                      maxConnections: Int = 32
-                   )(implicit ec: ExecutionContext) extends ValueStore {
+                   )(implicit ec: ExecutionContext) extends Store[Repr] {
 
   import GraphiteStore._
 
@@ -57,8 +58,8 @@ class GraphiteStore(
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id
 
-  override def upload(id: String, values: Metrical.Out): Future[Unit] = {
-    utils.collectTries(values.toList.map { case (name, value) =>
+  override def upload[T](id: String, context: Context, v: T)(implicit codec: Codec[T, Repr]): Future[Unit] = {
+    utils.collectTries(codec.encode(v).toList.map { case (name, value) =>
       send(host, port, s"${getPrefix(id)}.$name", value)
     }) match {
       case Success(_) =>
@@ -70,7 +71,8 @@ class GraphiteStore(
     }
   }
 
-  override def fetch(id: String, context: Context): Future[Metrical.Out] = {
+
+  override def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Repr]): Future[T] = {
     val query = HttpUtils.makeQuery(Map(
       "target" -> s"${getPrefix(id)}.*",
       "from" -> s"${DateFormatter.format(context.when)}",
@@ -84,13 +86,17 @@ class GraphiteStore(
           if (pairs.isEmpty)
             Future.failed(MissingValueException(s"cannot fetch metric for ${getPrefix(id)}"))
           else
-            Future.successful(pairs)
+            codec.decode(pairs) match {
+              case Success(v) => Future.successful(v)
+              case Failure(e) => Future.failed(e)
+            }
         case Failure(e) => Future.failed(e)
       }
     }
   }
 
-  override def fetchHistory(id: String, from: Instant, until: Instant): Future[Map[Long, Metrical.Out]] = {
+
+  override def fetchHistory[T](id: String, from: Instant, until: Instant)(implicit codec: Codec[T, Repr]): Future[Seq[(Long, T)]] = {
     val query = HttpUtils.makeQuery(Map(
       "target" -> s"${getPrefix(id)}.*",
       "from" -> s"${DateFormatter.format(from)}",
@@ -104,7 +110,11 @@ class GraphiteStore(
       } match {
         case Success(metrics) =>
           logger.debug(s"${getPrefix(id)}: fetched ${metrics.size} values")
-          Future.successful(metrics)
+          Future.successful {
+            metrics.mapValues(codec.decode(_)).collect {
+              case (ts, Success(v)) => (ts, v)
+            }.toList
+          }
         case Failure(e) =>
           logger.debug(s"${getPrefix(id)}: Invalid graphite metric, got $content")
           Future.failed(e)
@@ -115,6 +125,7 @@ class GraphiteStore(
 
 
 object GraphiteStore {
+  type Repr = Map[String, Double]
   def send(host: String, port: Int, target: String, value: Double): Try[Unit] = {
     Try {
       val socket = new Socket(InetAddress.getByName(host), port)
@@ -126,7 +137,7 @@ object GraphiteStore {
   }
 
   // take first defined DataPoint of each metric
-  def transformMetrics(prefix: String, metrics: List[GraphiteMetric]): Metrical.Out = {
+  def transformMetrics(prefix: String, metrics: List[GraphiteMetric]): Repr = {
     val pairs = metrics
       .map { metric =>
         metric.datapoints
@@ -143,7 +154,7 @@ object GraphiteStore {
   }
 
   // group metrics by timestamp
-  def groupMetrics(prefix: String, metrics: List[GraphiteMetric]): Map[Long, Metrical.Out] = {
+  def groupMetrics(prefix: String, metrics: List[GraphiteMetric]): Map[Long, Repr] = {
     metrics
       .view
       .flatMap { metric =>

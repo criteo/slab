@@ -1,4 +1,4 @@
-package com.criteo.slab.lib
+package com.criteo.slab.lib.graphite
 
 import com.criteo.slab.utils.Jsonable
 import org.json4s.JsonAST.{JArray, JDouble, JInt, JNull}
@@ -36,9 +36,9 @@ object DataPoint {
 }
 
 private[slab] case class GraphiteMetric(
-                           target: String,
-                           datapoints: List[DataPoint]
-                         )
+                                         target: String,
+                                         datapoints: List[DataPoint]
+                                       )
 
 object GraphiteMetric {
 

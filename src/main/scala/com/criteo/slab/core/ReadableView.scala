@@ -10,9 +10,8 @@ private[slab] trait ReadableView {
   val title: String
   val message: String
   val status: Status
-  val label: Option[String]
 
-  def asView = View(status, message, label)
+  def toView = View(status, message)
 }
 
 private[slab] object ReadableView {
@@ -23,24 +22,22 @@ private[slab] object ReadableView {
 }
 
 private[slab] case class BoardView(
-                      title: String,
-                      status: Status,
-                      message: String,
-                      boxes: Seq[BoxView],
-                      label: Option[String] = None
-                    ) extends ReadableView
+                                    title: String,
+                                    status: Status,
+                                    message: String,
+                                    boxes: Seq[BoxView]
+                                  ) extends ReadableView
 
 private[slab] case class BoxView(
-                    title: String,
-                    status: Status,
-                    message: String,
-                    checks: Seq[CheckView],
-                    label: Option[String] = None
-                  ) extends ReadableView
+                                  title: String,
+                                  status: Status,
+                                  message: String,
+                                  checks: Seq[CheckView]
+                                ) extends ReadableView
 
 private[slab] case class CheckView(
-                      title: String,
-                      status: Status,
-                      message: String,
-                      label: Option[String] = None
-                    ) extends ReadableView
+                                    title: String,
+                                    status: Status,
+                                    message: String,
+                                    label: Option[String] = None
+                                  ) extends ReadableView
