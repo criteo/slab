@@ -17,25 +17,18 @@ private[slab] object Jsonable {
 
   def apply[T: Jsonable]() = implicitly[Jsonable[T]]
 
-  implicit class ToJson[T <: AnyRef : Jsonable](in: T) {
-    implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
-
-    def toJSON: String = Serialization.write(in)
-  }
-
-  implicit class ToJsonSeq[S[_] <: Seq[_], T <: AnyRef : Jsonable](in: S[T]) {
-    implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
-
-    def toJSON: String = Serialization.write(in)
-  }
-
-  implicit class ToJsonMap[M[_, _] <: Map[_, _], K, T <: AnyRef : Jsonable](in: M[K, T]) {
-    implicit val formats = DefaultFormats ++ implicitly[Jsonable[T]].serializers
-
-    def toJSON: String = Serialization.write(in)
-  }
-
   def parse[T: Manifest](in: String, formats: Formats = DefaultFormats): Try[T] = {
     Try(Serialization.read[T](in)(formats, implicitly[Manifest[T]]))
   }
+
+  type Id[T <: AnyRef] = T
+
+  class ToJsonable[C[_ <: AnyRef] <: AnyRef, T <: AnyRef : Jsonable](in: C[T]) {
+    implicit val formats = DefaultFormats ++ Jsonable[T].serializers
+    def toJSON: String = Serialization.write(in)
+  }
+
+  implicit class ToJsonPlain[T <: AnyRef: Jsonable](in: T) extends ToJsonable[Id, T](in)
+  implicit class ToJsonMap[M[_, _] <: Map[_, _], K, T <: AnyRef: Jsonable](in: M[K, T]) extends ToJsonable[({type l[A] = M[K, A]})#l, T](in)
+  implicit class ToJsonSeq[S[_] <: Seq[_], T <: AnyRef: Jsonable](in: S[T]) extends ToJsonable[S, T](in)
 }
