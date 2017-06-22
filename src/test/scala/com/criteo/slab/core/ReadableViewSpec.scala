@@ -1,6 +1,5 @@
 package com.criteo.slab.core
 
-import com.criteo.slab.core.{BoardView, BoxView, CheckView, ReadableView}
 import com.criteo.slab.utils.Jsonable._
 import org.scalatest.{FlatSpec, Matchers}
 
