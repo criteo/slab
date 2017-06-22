@@ -16,7 +16,7 @@ case class Column(percentage: Double, rows: Seq[Row])
   * @param percentage The percentage it takes as height, defaults to 100
   * @param boxes The boxes to be displayed in the row
   */
-case class Row(title: String, percentage: Double = 100, boxes: Seq[Box])
+case class Row(title: String, percentage: Double = 100, boxes: Seq[Box[_]])
 
 /** Defines the layout of a board
   *
@@ -27,6 +27,6 @@ case class Layout(columns: Seq[Column])
 object Layout {
 
   implicit object ToJSON extends Jsonable[Layout] {
-    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[Box]].serializers
+    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[Box[_]]].serializers
   }
 }

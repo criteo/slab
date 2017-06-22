@@ -4,11 +4,15 @@ import java.net.URLDecoder
 import java.time.{Duration, Instant}
 
 import com.criteo.slab.app.StateService.NotFoundError
+import com.criteo.slab.core.Executor.{FetchBoardHistory, RunBoard}
 import com.criteo.slab.core._
 import com.criteo.slab.utils.Jsonable
 import com.criteo.slab.utils.Jsonable._
-import lol.http._
+import lol.http.{Request, Response, _}
+import org.json4s.Serializer
 import org.slf4j.LoggerFactory
+import shapeless.HList
+import shapeless.poly.Case3
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
@@ -16,31 +20,68 @@ import scala.util.control.NonFatal
 
 /** Slab Web server
   *
-  * @param boards          The list of boards
   * @param pollingInterval The polling interval in seconds
-  * @param statsDays       Specifies how many days of history to be counted into statistics
+  * @param statsDays       Specifies how many last days of statistics to be retained
   * @param customRoutes    Defines custom routes (should starts with "/api")
+  * @param executors       The executors of the boards
   * @param ec              The execution context for the web server
   */
-class WebServer(
-                 val boards: Seq[Board],
-                 val pollingInterval: Int = 60,
-                 val statsDays: Int = 7,
-                 val customRoutes: PartialFunction[Request, Future[Response]] = PartialFunction.empty)(implicit ec: ExecutionContext) {
-  private val logger = LoggerFactory.getLogger(this.getClass)
-
-  private val boardsMap: Map[String, Board] = boards.foldLeft(Map.empty[String, Board]) {
-    case (acc, board) => acc + (board.title -> board)
+case class WebServer(
+                      val pollingInterval: Int = 60,
+                      val statsDays: Int = 7,
+                      private val customRoutes: PartialFunction[Request, Future[Response]] = PartialFunction.empty,
+                      private val executors: List[Executor[_]] = List.empty
+                    )(implicit ec: ExecutionContext) {
+  /**
+    * Attach a board to the server
+    *
+    * @param board The board
+    * @return
+    */
+  def attach[L <: HList, O](board: Board[L])(
+    implicit
+    runBoard: Case3.Aux[RunBoard.type, Board[L], Context, Boolean, Future[BoardView]],
+    fetchBoardHistory: Case3.Aux[FetchBoardHistory.type, Board[L], Instant, Instant, Future[Seq[(Long, BoardView)]]],
+    store: Store[O]
+  ): WebServer = {
+    this.copy(executors = Executor(board) :: executors)
   }
 
-  private val stateService = new StateService(boards, pollingInterval, statsDays)
+  /**
+    * Start the web server
+    *
+    * @param port The server's port
+    */
+  def apply(port: Int): Unit = {
+    logger.info(s"Starting server at port: $port")
+    stateService.start()
 
-  private implicit def stringDecoder = new Jsonable[String] {}
+    Server.listen(port)(routeLogger(routes orElse customRoutes orElse notFound))
+    logger.info(s"Listening to $port")
+
+    sys.addShutdownHook {
+      logger.info("Shutting down WebServer")
+    }
+  }
+
+  private val logger = LoggerFactory.getLogger(this.getClass)
+
+  private implicit def stringEncoder = new Jsonable[String] {}
+
+  private implicit def longStringEncoder = new Jsonable[(Long, String)] {}
+
+  private implicit def longStatsEncoder = new Jsonable[(Long, Stats)] {
+    override val serializers: Seq[Serializer[_]] = implicitly[Jsonable[Stats]].serializers
+  }
+
+  private lazy val stateService = new StateService(executors, pollingInterval, statsDays)
+
+  private lazy val boards = executors.map(_.board)
 
   private val routes: PartialFunction[Request, Future[Response]] = {
     // Configs of boards
     case GET at url"/api/boards" => {
-      Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links) }.toList.toJSON).map(jsonContentType)
+      Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links) }.toJSON).map(jsonContentType)
     }
     // Current board view
     case GET at url"/api/boards/$board" => {
@@ -55,11 +96,11 @@ class WebServer(
     // Snapshot of the given time point
     case GET at url"/api/boards/$board/snapshot/$timestamp" => {
       val boardName = URLDecoder.decode(board, "UTF-8")
-      boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
+      executors.find(_.board.title == boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { executor =>
         Try(timestamp.toLong).map(Instant.ofEpochMilli).toOption.fold(
           Future.successful(BadRequest("invalid timestamp"))
         ) { dateTime =>
-          board.apply(Some(Context(dateTime)))
+          executor.apply(Some(Context(dateTime)))
             .map((_: ReadableView).toJSON)
             .map(Ok(_))
             .map(jsonContentType)
@@ -71,21 +112,21 @@ class WebServer(
       val boardName = URLDecoder.decode(board, "UTF-8")
       stateService
         .history(boardName)
-        .map { h: Map[Long, String] => Ok(h.toJSON) }
+        .map(h => Ok(h.toJSON))
         .map(jsonContentType)
         .recoverWith(errorHandler)
     }
     // History of the given range
     case GET at url"/api/boards/$board/history?from=$fromTS&until=$untilTS" => {
       val boardName = URLDecoder.decode(board, "UTF-8")
-      boardsMap.get(boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { board =>
+      executors.find(_.board.title == boardName).fold(Future.successful(NotFound(s"Board $boardName does not exist"))) { executor =>
         val range = for {
           from <- Try(fromTS.toLong).map(Instant.ofEpochMilli).toOption
           until <- Try(untilTS.toLong).map(Instant.ofEpochMilli).toOption
         } yield (from, until)
         range.fold(Future.successful(BadRequest("Invalid timestamp"))) { case (from, until) =>
-          board.fetchHistory(from, until)
-            .map(_.mapValues(_.status.name).toJSON)
+          executor.fetchHistory(from, until)
+            .map(_.toMap.mapValues(_.status.name).toJSON)
             .map(Ok(_))
             .map(jsonContentType)
         }
@@ -132,23 +173,6 @@ class WebServer(
       val duration = Duration.between(start, Instant.now)
       logger.info(s"${request.method} ${request.url} - ${res.status} ${duration.toMillis}ms")
       res
-    }
-  }
-
-  /**
-    * Start the web server
-    *
-    * @param port The server's port
-    */
-  def apply(port: Int): Unit = {
-    logger.info(s"Starting server at port: $port")
-    stateService.start()
-
-    Server.listen(port)(routeLogger(routes orElse customRoutes orElse notFound))
-    logger.info(s"Listening to $port")
-
-    sys.addShutdownHook {
-      logger.info("Shutting down WebServer")
     }
   }
 }

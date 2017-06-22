@@ -1,8 +1,9 @@
 package com.criteo.slab.core
 
+import com.criteo.slab.core.{BoardView, BoxView, CheckView, ReadableView}
+import com.criteo.slab.utils.Jsonable._
 import org.scalatest.{FlatSpec, Matchers}
 
-import com.criteo.slab.utils.Jsonable._
 class ReadableViewSpec extends FlatSpec with Matchers {
 
   "toJSON" should "work" in {
