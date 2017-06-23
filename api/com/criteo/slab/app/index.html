@@ -298,26 +298,27 @@
       <p class="shortcomment cmt">Statistics of history
 </p><div class="fullcomment"><div class="comment cmt"><p>Statistics of history
 </p></div><dl class="paramcmts block"><dt class="param">successes</dt><dd class="cmt"><p>Number of checks that are successful</p></dd><dt class="param">warnings</dt><dd class="cmt"><p>Number of checks that are in the warning state</p></dd><dt class="param">errors</dt><dd class="cmt"><p>Number of checks that are errors</p></dd><dt class="param">total</dt><dd class="cmt"><p>Total number of checks</p></dd></dl></div>
-    </li><li name="com.criteo.slab.app.WebServer" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="WebServerextendsAnyRef"></a><a id="WebServer:WebServer"></a>
+    </li><li name="com.criteo.slab.app.WebServer" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="WebServerextendsProductwithSerializable"></a><a id="WebServer:WebServer"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/index.html#WebServerextendsAnyRef" title="Permalink">
+      <a href="../../../../com/criteo/slab/app/index.html#WebServerextendsProductwithSerializable" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">class</span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
         <a title="Slab Web server
 " href="WebServer.html">
               <span class="name">WebServer</span>
-            </a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+            </a><span class="params">(<span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="customRoutes">customRoutes: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">PartialFunction.empty</span></span>, <span name="executors">executors: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.criteo.slab.core.Executor">Executor</span>[_]] = <span class="symbol">List.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
       <p class="shortcomment cmt">Slab Web server
-</p>
+</p><div class="fullcomment"><div class="comment cmt"><p>Slab Web server
+</p></div><dl class="paramcmts block"><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many last days of statistics to be retained</p></dd><dt class="param">customRoutes</dt><dd class="cmt"><p>Defines custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">executors</dt><dd class="cmt"><p>The executors of the boards</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl></div>
     </li></ol>
             </div>
 

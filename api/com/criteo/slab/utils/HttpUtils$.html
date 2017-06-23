@@ -232,7 +232,7 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="com.criteo.slab.utils.HttpUtils.FailedRequestException" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="com.criteo.slab.utils.HttpUtils.FailedRequestException" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="FailedRequestExceptionextendsExceptionwithProductwithSerializable"></a><a id="FailedRequestException:FailedRequestException"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#FailedRequestExceptionextendsExceptionwithProductwithSerializable" title="Permalink">
@@ -244,13 +244,16 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="HttpUtils$$FailedRequestException.html">
+        <a title="A response with status &gt;= 400
+" href="HttpUtils$$FailedRequestException.html">
               <span class="name">FailedRequestException</span>
             </a><span class="params">(<span name="response">response: <span class="extype" name="lol.http.Response">Response</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Exception">Exception</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      
-    </li><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">A response with status &gt;= 400
+</p><div class="fullcomment"><div class="comment cmt"><p>A response with status &gt;= 400
+</p></div><dl class="paramcmts block"><dt class="param">response</dt><dd class="cmt"><p>The <span class="extype" name="Response">Response</span></p></dd></dl></div>
+    </li><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="SafeHTTPGetextendsProductwithSerializable"></a><a id="SafeHTTPGet:SafeHTTPGet"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#SafeHTTPGetextendsProductwithSerializable" title="Permalink">
@@ -262,12 +265,15 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="HttpUtils$$SafeHTTPGet.html">
+        <a title="It be used to send GET requests using the same client
+" href="HttpUtils$$SafeHTTPGet.html">
               <span class="name">SafeHTTPGet</span>
             </a><span class="params">(<span name="client">client: <span class="extype" name="lol.http.Client">Client</span></span>, <span name="defaultHeaders">defaultHeaders: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">It be used to send GET requests using the same client
+</p><div class="fullcomment"><div class="comment cmt"><p>It be used to send GET requests using the same client
+</p></div><dl class="paramcmts block"><dt class="param">client</dt><dd class="cmt"><p>The client</p></dd><dt class="param">defaultHeaders</dt><dd class="cmt"><p>Default request headers</p></dd><dt class="param">ec</dt><dd class="cmt"><p><span class="extype" name="ExecutionContext">ExecutionContext</span></p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -417,9 +423,9 @@
               
         </dd></dl></div>
     </li><li name="com.criteo.slab.utils.HttpUtils#get" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="get[A](url:java.net.URL,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$1:lol.http.ContentDecoder[A],implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[A]"></a><a id="get[A](URL,Map[HttpString,HttpString])(ContentDecoder[A],ExecutionContext):Future[A]"></a>
+      <a id="get[A](url:java.net.URL,headers:Map[lol.http.HttpString,lol.http.HttpString],timeout:scala.concurrent.duration.FiniteDuration,connectionTimeout:scala.concurrent.duration.FiniteDuration)(implicitevidence$1:lol.http.ContentDecoder[A],implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[A]"></a><a id="get[A](URL,Map[HttpString,HttpString],FiniteDuration,FiniteDuration)(ContentDecoder[A],ExecutionContext):Future[A]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#get[A](url:java.net.URL,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$1:lol.http.ContentDecoder[A],implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[A]" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#get[A](url:java.net.URL,headers:Map[lol.http.HttpString,lol.http.HttpString],timeout:scala.concurrent.duration.FiniteDuration,connectionTimeout:scala.concurrent.duration.FiniteDuration)(implicitevidence$1:lol.http.ContentDecoder[A],implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[A]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -428,7 +434,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">get</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="url">url: <span class="extype" name="java.net.URL">URL</span></span>, <span name="headers">headers: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>] = <span class="symbol">Map.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="lol.http.ContentDecoder">ContentDecoder</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.get.A">A</span>]</span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.get.A">A</span>]</span>
+        <span class="name">get</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="url">url: <span class="extype" name="java.net.URL">URL</span></span>, <span name="headers">headers: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>] = <span class="symbol">Map.empty</span></span>, <span name="timeout">timeout: <span class="extype" name="scala.concurrent.duration.FiniteDuration">FiniteDuration</span> = <span class="symbol">Duration.create(60, SECONDS)</span></span>, <span name="connectionTimeout">connectionTimeout: <span class="extype" name="scala.concurrent.duration.FiniteDuration">FiniteDuration</span> = <span class="symbol">Duration.create(5, SECONDS)</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="lol.http.ContentDecoder">ContentDecoder</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.get.A">A</span>]</span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.get.A">A</span>]</span>
       </span>
       
       <p class="shortcomment cmt">Send a GET request
@@ -483,9 +489,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="com.criteo.slab.utils.HttpUtils#makeGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="makeGet(url:java.net.URL)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet"></a><a id="makeGet(URL)(ExecutionContext):SafeHTTPGet"></a>
+      <a id="makeGet(url:java.net.URL,connectionTimeout:scala.concurrent.duration.FiniteDuration,maxConnections:Int)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet"></a><a id="makeGet(URL,FiniteDuration,Int)(ExecutionContext):SafeHTTPGet"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#makeGet(url:java.net.URL)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$.html#makeGet(url:java.net.URL,connectionTimeout:scala.concurrent.duration.FiniteDuration,maxConnections:Int)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -494,10 +500,11 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">makeGet</span><span class="params">(<span name="url">url: <span class="extype" name="java.net.URL">URL</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <a href="HttpUtils$$SafeHTTPGet.html" class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet">SafeHTTPGet</a></span>
+        <span class="name">makeGet</span><span class="params">(<span name="url">url: <span class="extype" name="java.net.URL">URL</span></span>, <span name="connectionTimeout">connectionTimeout: <span class="extype" name="scala.concurrent.duration.FiniteDuration">FiniteDuration</span> = <span class="symbol">Duration.create(5, SECONDS)</span></span>, <span name="maxConnections">maxConnections: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <a href="HttpUtils$$SafeHTTPGet.html" class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet">SafeHTTPGet</a></span>
       </span>
       
-      <p class="shortcomment cmt">Make a HTTP Get client of which the connection is kept open</p><div class="fullcomment"><div class="comment cmt"><p>Make a HTTP Get client of which the connection is kept open</p><p>Do not use this until lolhttp client leak issue is resolved</p></div><dl class="paramcmts block"><dt class="param">url</dt><dd class="cmt"><p>The URL</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The <span class="extype" name="ExecutionContext">ExecutionContext</span></p></dd><dt>returns</dt><dd class="cmt"><p>The client with which a GET request can be sent</p></dd></dl></div>
+      <p class="shortcomment cmt">Make a HTTP Get client of which the connection is kept open</p><div class="fullcomment"><div class="comment cmt"><p>Make a HTTP Get client of which the connection is kept open</p><p>Do not use this until lolhttp client leak issue is resolved
+</p></div><dl class="paramcmts block"><dt class="param">url</dt><dd class="cmt"><p>The URL</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The <span class="extype" name="ExecutionContext">ExecutionContext</span></p></dd><dt>returns</dt><dd class="cmt"><p>The client with which a GET request can be sent</p></dd></dl></div>
     </li><li name="com.criteo.slab.utils.HttpUtils#makeQuery" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="makeQuery(queries:Map[String,String]):String"></a><a id="makeQuery(Map[String,String]):String"></a>
       <span class="permalink">

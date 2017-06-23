@@ -166,14 +166,18 @@
       <p class="shortcomment cmt">Http utilities</p><div class="fullcomment"><div class="comment cmt"><p>Http utilities</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="index.html" class="extype" name="com.criteo.slab.utils">utils</a></dd></dl></div>
     </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="HttpUtils$$FailedRequestException.html" title=""></a>
-                        <a href="HttpUtils$$FailedRequestException.html" title="">
+                        <a class="class" href="HttpUtils$$FailedRequestException.html" title="A response with status &gt;= 400
+"></a>
+                        <a href="HttpUtils$$FailedRequestException.html" title="A response with status &gt;= 400
+">
                           FailedRequestException
                         </a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="" title=""></a>
-                        <a href="" title="">
+                        <a class="class" href="" title="It be used to send GET requests using the same client
+"></a>
+                        <a href="" title="It be used to send GET requests using the same client
+">
                           SafeHTTPGet
                         </a>
                       </li>
@@ -204,7 +208,8 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>It be used to send GET requests using the same client
+</p></div><dl class="paramcmts block"><dt class="param">client</dt><dd class="cmt"><p>The client</p></dd><dt class="param">defaultHeaders</dt><dd class="cmt"><p>Default request headers</p></dd><dt class="param">ec</dt><dd class="cmt"><p><span class="extype" name="ExecutionContext">ExecutionContext</span></p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -254,7 +259,7 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="&lt;init&gt;(client:lol.http.Client,defaultHeaders:Map[lol.http.HttpString,lol.http.HttpString])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet"></a><a id="&lt;init&gt;:SafeHTTPGet"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#&lt;init&gt;(client:lol.http.Client,defaultHeaders:Map[lol.http.HttpString,lol.http.HttpString])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.utils.HttpUtils.SafeHTTPGet" title="Permalink">
@@ -269,7 +274,7 @@
         <span class="name">SafeHTTPGet</span><span class="params">(<span name="client">client: <span class="extype" name="lol.http.Client">Client</span></span>, <span name="defaultHeaders">defaultHeaders: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
       </span>
       
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">client</dt><dd class="cmt"><p>The client</p></dd><dt class="param">defaultHeaders</dt><dd class="cmt"><p>Default request headers</p></dd><dt class="param">ec</dt><dd class="cmt"><p><span class="extype" name="ExecutionContext">ExecutionContext</span></p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -329,9 +334,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply[A](path:String,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$2:lol.http.ContentDecoder[A]):scala.concurrent.Future[A]"></a><a id="apply[A](String,Map[HttpString,HttpString])(ContentDecoder[A]):Future[A]"></a>
+      <a id="apply[A](path:String,headers:Map[lol.http.HttpString,lol.http.HttpString],timeout:scala.concurrent.duration.FiniteDuration)(implicitevidence$3:lol.http.ContentDecoder[A]):scala.concurrent.Future[A]"></a><a id="apply[A](String,Map[HttpString,HttpString],FiniteDuration)(ContentDecoder[A]):Future[A]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#apply[A](path:String,headers:Map[lol.http.HttpString,lol.http.HttpString])(implicitevidence$2:lol.http.ContentDecoder[A]):scala.concurrent.Future[A]" title="Permalink">
+      <a href="../../../../com/criteo/slab/utils/HttpUtils$$SafeHTTPGet.html#apply[A](path:String,headers:Map[lol.http.HttpString,lol.http.HttpString],timeout:scala.concurrent.duration.FiniteDuration)(implicitevidence$3:lol.http.ContentDecoder[A]):scala.concurrent.Future[A]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -340,7 +345,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="headers">headers: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>] = <span class="symbol">Map.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="lol.http.ContentDecoder">ContentDecoder</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet.apply.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet.apply.A">A</span>]</span>
+        <span class="name">apply</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="headers">headers: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="lol.http.HttpString">HttpString</span>, <span class="extype" name="lol.http.HttpString">HttpString</span>] = <span class="symbol">Map.empty</span></span>, <span name="timeout">timeout: <span class="extype" name="scala.concurrent.duration.FiniteDuration">FiniteDuration</span> = <span class="symbol">Duration.create(60, SECONDS)</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="lol.http.ContentDecoder">ContentDecoder</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet.apply.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.utils.HttpUtils.SafeHTTPGet.apply.A">A</span>]</span>
       </span>
       
       

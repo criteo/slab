@@ -182,20 +182,20 @@
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">class</span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">WebServer</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+        <span class="name">WebServer</span><span class="params">(<span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="customRoutes">customRoutes: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">PartialFunction.empty</span></span>, <span name="executors">executors: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.criteo.slab.core.Executor">Executor</span>[_]] = <span class="symbol">List.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Slab Web server
-</p></div><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many last days of statistics to be retained</p></dd><dt class="param">customRoutes</dt><dd class="cmt"><p>Defines custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">executors</dt><dd class="cmt"><p>The executors of the boards</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -221,7 +221,7 @@
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="com.criteo.slab.app.WebServer"><span>WebServer</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="com.criteo.slab.app.WebServer"><span>WebServer</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -242,9 +242,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.app.WebServer#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(boards:Seq[com.criteo.slab.core.Board],pollingInterval:Int,statsDays:Int,customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer"></a><a id="&lt;init&gt;:WebServer"></a>
+      <a id="&lt;init&gt;(pollingInterval:Int,statsDays:Int,customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]],executors:List[com.criteo.slab.core.Executor[_]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer"></a><a id="&lt;init&gt;:WebServer"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/WebServer.html#&lt;init&gt;(boards:Seq[com.criteo.slab.core.Board],pollingInterval:Int,statsDays:Int,customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer" title="Permalink">
+      <a href="../../../../com/criteo/slab/app/WebServer.html#&lt;init&gt;(pollingInterval:Int,statsDays:Int,customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]],executors:List[com.criteo.slab.core.Executor[_]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -253,10 +253,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">WebServer</span><span class="params">(<span name="boards">boards: <span class="extype" name="scala.Seq">Seq</span>[<a href="../core/Board.html" class="extype" name="com.criteo.slab.core.Board">Board</a>]</span>, <span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="customRoutes">customRoutes: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">PartialFunction.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
+        <span class="name">WebServer</span><span class="params">(<span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="customRoutes">customRoutes: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">PartialFunction.empty</span></span>, <span name="executors">executors: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.criteo.slab.core.Executor">Executor</span>[_]] = <span class="symbol">List.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">boards</dt><dd class="cmt"><p>The list of boards</p></dd><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many days of history to be counted into statistics</p></dd><dt class="param">customRoutes</dt><dd class="cmt"><p>Defines custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many last days of statistics to be retained</p></dd><dt class="param">customRoutes</dt><dd class="cmt"><p>Defines custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">executors</dt><dd class="cmt"><p>The executors of the boards</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -315,7 +315,7 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.criteo.slab.app.WebServer#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.criteo.slab.app.WebServer#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply(port:Int):Unit"></a><a id="apply(Int):Unit"></a>
       <span class="permalink">
       <a href="../../../../com/criteo/slab/app/WebServer.html#apply(port:Int):Unit" title="Permalink">
@@ -330,7 +330,9 @@
         <span class="name">apply</span><span class="params">(<span name="port">port: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">Start the web server
+</p><div class="fullcomment"><div class="comment cmt"><p>Start the web server
+</p></div><dl class="paramcmts block"><dt class="param">port</dt><dd class="cmt"><p>The server's port</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -347,22 +349,24 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.criteo.slab.app.WebServer#boards" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="boards:Seq[com.criteo.slab.core.Board]"></a><a id="boards:Seq[Board]"></a>
+    </li><li name="com.criteo.slab.app.WebServer#attach" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="attach[L&lt;:shapeless.HList,O](board:com.criteo.slab.core.Board[L])(implicitrunBoard:shapeless.poly.Case3.Aux[com.criteo.slab.core.Executor.RunBoard.type,com.criteo.slab.core.Board[L],com.criteo.slab.core.Context,Boolean,scala.concurrent.Future[com.criteo.slab.core.BoardView]],implicitfetchBoardHistory:shapeless.poly.Case3.Aux[com.criteo.slab.core.Executor.FetchBoardHistory.type,com.criteo.slab.core.Board[L],java.time.Instant,java.time.Instant,scala.concurrent.Future[Seq[(Long,com.criteo.slab.core.BoardView)]]],implicitstore:com.criteo.slab.core.Store[O]):com.criteo.slab.app.WebServer"></a><a id="attach[L&lt;:HList,O](Board[L])(Aux[RunBoard.type,Board[L],Context,Boolean,Future[BoardView]],Aux[FetchBoardHistory.type,Board[L],Instant,Instant,Future[Seq[(Long,BoardView)]]],Store[O]):WebServer"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/WebServer.html#boards:Seq[com.criteo.slab.core.Board]" title="Permalink">
+      <a href="../../../../com/criteo/slab/app/WebServer.html#attach[L&lt;:shapeless.HList,O](board:com.criteo.slab.core.Board[L])(implicitrunBoard:shapeless.poly.Case3.Aux[com.criteo.slab.core.Executor.RunBoard.type,com.criteo.slab.core.Board[L],com.criteo.slab.core.Context,Boolean,scala.concurrent.Future[com.criteo.slab.core.BoardView]],implicitfetchBoardHistory:shapeless.poly.Case3.Aux[com.criteo.slab.core.Executor.FetchBoardHistory.type,com.criteo.slab.core.Board[L],java.time.Instant,java.time.Instant,scala.concurrent.Future[Seq[(Long,com.criteo.slab.core.BoardView)]]],implicitstore:com.criteo.slab.core.Store[O]):com.criteo.slab.app.WebServer" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">val</span>
+        <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">boards</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="../core/Board.html" class="extype" name="com.criteo.slab.core.Board">Board</a>]</span>
+        <span class="name">attach</span><span class="tparams">[<span name="L">L &lt;: <span class="extype" name="shapeless.HList">HList</span></span>, <span name="O">O</span>]</span><span class="params">(<span name="board">board: <a href="../core/Board.html" class="extype" name="com.criteo.slab.core.Board">Board</a>[<span class="extype" name="com.criteo.slab.app.WebServer.attach.L">L</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="runBoard">runBoard: <span class="extype" name="shapeless.Cases.Case3.Aux">Aux</span>[<span class="extype" name="com.criteo.slab.core.Executor.RunBoard">RunBoard</span>.type, <a href="../core/Board.html" class="extype" name="com.criteo.slab.core.Board">Board</a>[<span class="extype" name="com.criteo.slab.app.WebServer.attach.L">L</span>], <a href="../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>, <span class="extype" name="scala.Boolean">Boolean</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.BoardView">BoardView</span>]]</span>, <span name="fetchBoardHistory">fetchBoardHistory: <span class="extype" name="shapeless.Cases.Case3.Aux">Aux</span>[<span class="extype" name="com.criteo.slab.core.Executor.FetchBoardHistory">FetchBoardHistory</span>.type, <a href="../core/Board.html" class="extype" name="com.criteo.slab.core.Board">Board</a>[<span class="extype" name="com.criteo.slab.app.WebServer.attach.L">L</span>], <span class="extype" name="java.time.Instant">Instant</span>, <span class="extype" name="java.time.Instant">Instant</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Seq">Seq</span>[(<span class="extype" name="scala.Long">Long</span>, <span class="extype" name="com.criteo.slab.core.BoardView">BoardView</span>)]]]</span>, <span name="store">store: <a href="../core/Store.html" class="extype" name="com.criteo.slab.core.Store">Store</a>[<span class="extype" name="com.criteo.slab.app.WebServer.attach.O">O</span>]</span>)</span><span class="result">: <a href="" class="extype" name="com.criteo.slab.app.WebServer">WebServer</a></span>
       </span>
       
-      
+      <p class="shortcomment cmt">Attach a board to the server
+</p><div class="fullcomment"><div class="comment cmt"><p>Attach a board to the server
+</p></div><dl class="paramcmts block"><dt class="param">board</dt><dd class="cmt"><p>The board</p></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a><a id="clone():AnyRef"></a>
       <span class="permalink">
@@ -385,22 +389,6 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.criteo.slab.app.WebServer#customRoutes" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]]"></a><a id="customRoutes:PartialFunction[Request,Future[Response]]"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/WebServer.html#customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">customRoutes</span><span class="result">: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]]</span>
-      </span>
-      
-      
     </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
       <span class="permalink">
@@ -417,22 +405,6 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/WebServer.html#equals(x$1:Any):Boolean" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
@@ -468,22 +440,6 @@
       </span>
       <span class="symbol">
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="hashCode():Int"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/WebServer.html#hashCode():Int" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -599,22 +555,6 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="toString():String"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/WebServer.html#toString():String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
@@ -691,7 +631,15 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.Product">
+              <h3>Inherited from <span class="extype" name="scala.Product">Product</span></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>

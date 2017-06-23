@@ -164,11 +164,17 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="" title="A class for declaring a metric to check
+                        <a class="class" href="" title="Basic unit for declaring a metric to check
 "></a>
-                        <a href="" title="A class for declaring a metric to check
+                        <a href="" title="Basic unit for declaring a metric to check
 ">
                           Check
+                        </a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="Codec.html" title="Codec for values to be put in a store"></a>
+                        <a href="Codec.html" title="Codec for values to be put in a store">
+                          Codec
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -179,7 +185,7 @@
                           Column
                         </a>
                       </li><li class="current-entities indented4">
-                        <span class="separator"></span>
+                        <a class="object" href="Context$.html" title=""></a>
                         <a class="class" href="Context.html" title="Represents the context when a check occurs
 "></a>
                         <a href="Context.html" title="Represents the context when a check occurs
@@ -193,14 +199,6 @@
                         <a href="Layout.html" title="Defines the layout of a board
 ">
                           Layout
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="Metrical$.html" title=""></a>
-                        <a class="trait" href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
-"></a>
-                        <a href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
-">
-                          Metrical
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -220,9 +218,11 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="trait" href="ValueStore.html" title="A store provides a service to upload and fetch metrics"></a>
-                        <a href="ValueStore.html" title="A store provides a service to upload and fetch metrics">
-                          ValueStore
+                        <a class="trait" href="Store.html" title="Persists checked values
+"></a>
+                        <a href="Store.html" title="Persists checked values
+">
+                          Store
                         </a>
                       </li><li class="current-entities indented4">
                         <a class="object" href="View$.html" title=""></a>
@@ -255,13 +255,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Check</span><span class="tparams">[<span name="V">V</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="apply">apply: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.V">V</span>]</span>, <span name="display">display: (<span class="extype" name="com.criteo.slab.core.Check.V">V</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="evidence$1">evidence$1: <a href="Metrical.html" class="extype" name="com.criteo.slab.core.Metrical">Metrical</a>[<span class="extype" name="com.criteo.slab.core.Check.V">V</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Check</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="apply">apply: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.T">T</span>]</span>, <span name="display">display: (<span class="extype" name="com.criteo.slab.core.Check.T">T</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A class for declaring a metric to check
-</p></div><dl class="paramcmts block"><dt class="tparam">V</dt><dd class="cmt"><p>A type parameter which corresponds to the type of the checked value</p></dd><dt class="param">id</dt><dd class="cmt"><p>The identifier</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title of the check</p></dd><dt class="param">apply</dt><dd class="cmt"><p>A function when called, should return a future of target value</p></dd><dt class="param">display</dt><dd class="cmt"><p>A function that takes a checked value and a <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></p></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Basic unit for declaring a metric to check
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>A type parameter which corresponds to the type of the checked value</p></dd><dt class="param">id</dt><dd class="cmt"><p>The identifier</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title of the check</p></dd><dt class="param">apply</dt><dd class="cmt"><p>A function when called, should return a future of target value</p></dd><dt class="param">display</dt><dd class="cmt"><p>A function that takes a checked value and a <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -312,9 +312,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.core.Check#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(id:String,title:String,apply:()=&gt;scala.concurrent.Future[V],display:(V,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View)(implicitevidence$1:com.criteo.slab.core.Metrical[V]):com.criteo.slab.core.Check[V]"></a><a id="&lt;init&gt;:Check[V]"></a>
+      <a id="&lt;init&gt;(id:String,title:String,apply:()=&gt;scala.concurrent.Future[T],display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View):com.criteo.slab.core.Check[T]"></a><a id="&lt;init&gt;:Check[T]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#&lt;init&gt;(id:String,title:String,apply:()=&gt;scala.concurrent.Future[V],display:(V,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View)(implicitevidence$1:com.criteo.slab.core.Metrical[V]):com.criteo.slab.core.Check[V]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Check.html#&lt;init&gt;(id:String,title:String,apply:()=&gt;scala.concurrent.Future[T],display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View):com.criteo.slab.core.Check[T]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -323,7 +323,7 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Check</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="apply">apply: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.V">V</span>]</span>, <span name="display">display: (<span class="extype" name="com.criteo.slab.core.Check.V">V</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Metrical.html" class="extype" name="com.criteo.slab.core.Metrical">Metrical</a>[<span class="extype" name="com.criteo.slab.core.Check.V">V</span>]</span>)</span>
+        <span class="name">Check</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="apply">apply: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.T">T</span>]</span>, <span name="display">display: (<span class="extype" name="com.criteo.slab.core.Check.T">T</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>)</span>
       </span>
       
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">id</dt><dd class="cmt"><p>The identifier</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title of the check</p></dd><dt class="param">apply</dt><dd class="cmt"><p>A function when called, should return a future of target value</p></dd><dt class="param">display</dt><dd class="cmt"><p>A function that takes a checked value and a <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></p></dd></dl></div>
@@ -386,9 +386,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.criteo.slab.core.Check#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply:()=&gt;scala.concurrent.Future[V]"></a><a id="apply:()⇒Future[V]"></a>
+      <a id="apply:()=&gt;scala.concurrent.Future[T]"></a><a id="apply:()⇒Future[T]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#apply:()=&gt;scala.concurrent.Future[V]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Check.html#apply:()=&gt;scala.concurrent.Future[T]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -397,7 +397,7 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="result">: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.V">V</span>]</span>
+        <span class="name">apply</span><span class="result">: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.T">T</span>]</span>
       </span>
       
       
@@ -440,9 +440,9 @@
               
         </dd></dl></div>
     </li><li name="com.criteo.slab.core.Check#display" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="display:(V,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View"></a><a id="display:(V,Context)⇒View"></a>
+      <a id="display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View"></a><a id="display:(T,Context)⇒View"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#display:(V,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Check.html#display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -451,7 +451,7 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">display</span><span class="result">: (<span class="extype" name="com.criteo.slab.core.Check.V">V</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>
+        <span class="name">display</span><span class="result">: (<span class="extype" name="com.criteo.slab.core.Check.T">T</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>
       </span>
       
       
@@ -471,24 +471,6 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.criteo.slab.core.Check#fetchHistory" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="fetchHistory(from:java.time.Instant,until:java.time.Instant)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[Map[Long,com.criteo.slab.core.CheckView]]"></a><a id="fetchHistory(Instant,Instant)(ValueStore,ExecutionContext):Future[Map[Long,CheckView]]"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#fetchHistory(from:java.time.Instant,until:java.time.Instant)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[Map[Long,com.criteo.slab.core.CheckView]]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">fetchHistory</span><span class="params">(<span name="from">from: <span class="extype" name="java.time.Instant">Instant</span></span>, <span name="until">until: <span class="extype" name="java.time.Instant">Instant</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="store">store: <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Long">Long</span>, <span class="extype" name="com.criteo.slab.core.CheckView">CheckView</span>]]</span>
-      </span>
-      
-      <p class="shortcomment cmt">Fetch the history within the given date range
-</p><div class="fullcomment"><div class="comment cmt"><p>Fetch the history within the given date range
-</p></div><dl class="paramcmts block"><dt class="param">from</dt><dd class="cmt"><p>The start date</p></dd><dt class="param">until</dt><dd class="cmt"><p>The end date</p></dd><dt class="param">store</dt><dd class="cmt"><p>The store for fetching the data</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context</p></dd><dt>returns</dt><dd class="cmt"><p>Future of a <span class="extype" name="CheckView">CheckView</span></p></dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
@@ -607,42 +589,6 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.criteo.slab.core.Check#now" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="now(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[com.criteo.slab.core.CheckView]"></a><a id="now(ValueStore,ExecutionContext):Future[CheckView]"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#now(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[com.criteo.slab.core.CheckView]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">now</span><span class="params">(<span class="implicit">implicit </span><span name="store">store: <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.CheckView">CheckView</span>]</span>
-      </span>
-      
-      <p class="shortcomment cmt">Execute a check
-</p><div class="fullcomment"><div class="comment cmt"><p>Execute a check
-</p></div><dl class="paramcmts block"><dt class="param">store</dt><dd class="cmt"><p>The store for uploading the checked value</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context</p></dd><dt>returns</dt><dd class="cmt"><p>Future of a <span class="extype" name="CheckView">CheckView</span></p></dd></dl></div>
-    </li><li name="com.criteo.slab.core.Check#replay" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="replay(context:com.criteo.slab.core.Context)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[com.criteo.slab.core.CheckView]"></a><a id="replay(Context)(ValueStore,ExecutionContext):Future[CheckView]"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#replay(context:com.criteo.slab.core.Context)(implicitstore:com.criteo.slab.core.ValueStore,implicitec:scala.concurrent.ExecutionContext):scala.concurrent.Future[com.criteo.slab.core.CheckView]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">replay</span><span class="params">(<span name="context">context: <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="store">store: <a href="ValueStore.html" class="extype" name="com.criteo.slab.core.ValueStore">ValueStore</a></span>, <span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.CheckView">CheckView</span>]</span>
-      </span>
-      
-      <p class="shortcomment cmt">Replay the check at the given datetime
-</p><div class="fullcomment"><div class="comment cmt"><p>Replay the check at the given datetime
-</p></div><dl class="paramcmts block"><dt class="param">context</dt><dd class="cmt"><p>The context</p></dd><dt class="param">store</dt><dd class="cmt"><p>The store for fetching the data</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context</p></dd><dt>returns</dt><dd class="cmt"><p>Future of a <span class="extype" name="CheckView">CheckView</span></p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">

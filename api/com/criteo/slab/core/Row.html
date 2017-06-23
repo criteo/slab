@@ -164,11 +164,17 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="Check.html" title="A class for declaring a metric to check
+                        <a class="class" href="Check.html" title="Basic unit for declaring a metric to check
 "></a>
-                        <a href="Check.html" title="A class for declaring a metric to check
+                        <a href="Check.html" title="Basic unit for declaring a metric to check
 ">
                           Check
+                        </a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="Codec.html" title="Codec for values to be put in a store"></a>
+                        <a href="Codec.html" title="Codec for values to be put in a store">
+                          Codec
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -179,7 +185,7 @@
                           Column
                         </a>
                       </li><li class="current-entities indented4">
-                        <span class="separator"></span>
+                        <a class="object" href="Context$.html" title=""></a>
                         <a class="class" href="Context.html" title="Represents the context when a check occurs
 "></a>
                         <a href="Context.html" title="Represents the context when a check occurs
@@ -193,14 +199,6 @@
                         <a href="Layout.html" title="Defines the layout of a board
 ">
                           Layout
-                        </a>
-                      </li><li class="current-entities indented4">
-                        <a class="object" href="Metrical$.html" title=""></a>
-                        <a class="trait" href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
-"></a>
-                        <a href="Metrical.html" title="Defines types that are serializable to metrical values, and deserializable from metrical values
-">
-                          Metrical
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
@@ -220,9 +218,11 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="trait" href="ValueStore.html" title="A store provides a service to upload and fetch metrics"></a>
-                        <a href="ValueStore.html" title="A store provides a service to upload and fetch metrics">
-                          ValueStore
+                        <a class="trait" href="Store.html" title="Persists checked values
+"></a>
+                        <a href="Store.html" title="Persists checked values
+">
+                          Store
                         </a>
                       </li><li class="current-entities indented4">
                         <a class="object" href="View$.html" title=""></a>
@@ -255,7 +255,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">100</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">100</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>[_]]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
@@ -312,9 +312,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.core.Row#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(title:String,percentage:Double,boxes:Seq[com.criteo.slab.core.Box]):com.criteo.slab.core.Row"></a><a id="&lt;init&gt;:Row"></a>
+      <a id="&lt;init&gt;(title:String,percentage:Double,boxes:Seq[com.criteo.slab.core.Box[_]]):com.criteo.slab.core.Row"></a><a id="&lt;init&gt;:Row"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Row.html#&lt;init&gt;(title:String,percentage:Double,boxes:Seq[com.criteo.slab.core.Box]):com.criteo.slab.core.Row" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Row.html#&lt;init&gt;(title:String,percentage:Double,boxes:Seq[com.criteo.slab.core.Box[_]]):com.criteo.slab.core.Row" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -323,7 +323,7 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">100</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>)</span>
+        <span class="name">Row</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">100</span></span>, <span name="boxes">boxes: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>[_]]</span>)</span>
       </span>
       
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as height, defaults to 100</p></dd><dt class="param">boxes</dt><dd class="cmt"><p>The boxes to be displayed in the row</p></dd></dl></div>
@@ -402,9 +402,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="com.criteo.slab.core.Row#boxes" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="boxes:Seq[com.criteo.slab.core.Box]"></a><a id="boxes:Seq[Box]"></a>
+      <a id="boxes:Seq[com.criteo.slab.core.Box[_]]"></a><a id="boxes:Seq[Box[_]]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Row.html#boxes:Seq[com.criteo.slab.core.Box]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Row.html#boxes:Seq[com.criteo.slab.core.Box[_]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -413,7 +413,7 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">boxes</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>]</span>
+        <span class="name">boxes</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="Box.html" class="extype" name="com.criteo.slab.core.Box">Box</a>[_]]</span>
       </span>
       
       
