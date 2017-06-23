@@ -28,11 +28,22 @@
   }
   > #container {
     height: 75px
-    > .info {
-      color: white
-      text-align: center
-      font-size: 2em
-      padding-top: .5em
+    position: relative
+    > #message {
+      position: absolute
+      z-index: 1
+      width: 100%
+      height: 100%
+      > .no-data {
+        color: white
+        font-size: 2em
+        background: rgba(64, 70, 74, 0.72)
+        width: 100%
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+      }
     }
   }
   .vis-panel.vis-center {
