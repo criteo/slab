@@ -133,7 +133,7 @@ object SimpleBoard {
         Status.Success
       }
       // A view represents the result of a check, such as status, message and label
-      View(status, s"latency ${l}ms", label)
+      View(status, s"latency ${l.underlying} ms", label)
     }
   )
 }
