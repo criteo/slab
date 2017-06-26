@@ -3346,7 +3346,7 @@ mocha@^3.2.0:
     mkdirp "0.5.1"
     supports-color "3.1.2"
 
-moment@^2.17.1, moment@^2.18.1:
+moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -5176,14 +5176,14 @@ verror@1.3.6:
   dependencies:
     extsprintf "1.0.2"
 
-vis@^4.19.1:
-  version "4.19.1"
-  resolved "https://registry.yarnpkg.com/vis/-/vis-4.19.1.tgz#5cef4e72e1f0372a4e5ab502523b88687b1e2027"
+vis@^4.20.0:
+  version "4.20.0"
+  resolved "https://registry.yarnpkg.com/vis/-/vis-4.20.0.tgz#816eb8394dabd648a4a805efa9800b4640602a0c"
   dependencies:
     emitter-component "^1.1.1"
     hammerjs "^2.0.8"
     keycharm "^0.2.0"
-    moment "^2.17.1"
+    moment "^2.18.1"
     propagating-hammerjs "^1.4.6"
 
 vm-browserify@0.0.4:

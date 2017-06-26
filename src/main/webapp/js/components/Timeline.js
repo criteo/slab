@@ -45,7 +45,13 @@ class Timeline extends Component {
         onMouseLeave={() => this.setState({ hasFocus: false })}
       >
         <Controller />
-        {history && <div id="container" />}
+        {
+          history && (
+            <div id="container">
+              <div id="message"></div>
+            </div>
+          )
+        }
       </div>
     );
   }
@@ -77,16 +83,20 @@ class Timeline extends Component {
     if (hasFocus && (prevProps.isLoading === isLoading))
       return;
 
-    this.renderTimeline();
+    if (!isLoading) {
+      this.renderTimeline();
+    }
   }
 
   renderTimeline() {
     const node = findDOMNode(this);
     const container = node.querySelector('#container');
-    if (container) {
-      container.innerHTML = '';
-      const { history } = this.props;
-      const dataset = Object.entries(history)
+    const { history, selectedTimestamp, selectedDate } = this.props;
+
+    // if selectedDate is not defined, defaults to last 24 hours
+    const start = selectedDate ? moment(selectedDate) : moment().subtract(24, 'hour');
+    const end = selectedDate ? moment(selectedDate).add(24, 'hour') : moment();
+    const dataset = Object.entries(history)
         .filter(
           ([_, status]: [string, any]) =>
             status === 'ERROR' || status === 'WARNING'
@@ -103,47 +113,50 @@ class Timeline extends Component {
           };
         })
         .sort((a, b) => a.start.localeCompare(b.start));
-      if (dataset.length > 0) {
-        // if selectedDate is not defined, defaults to last 24 hours
-        const { selectedDate, selectedTimestamp } = this.props;
-        const min = selectedDate ? moment(selectedDate) : moment().subtract(24, 'hour');
-        const max = selectedDate ? moment(selectedDate).add(24, 'hour') : moment();
-        const timeline = new vis.Timeline(container, dataset, {
-          height: 75,
-          type: 'point',
-          stack: false,
-          zoomMin: 60 * 1000,
-          min,
-          max,
-          start: min,
-          end: max
-        });
-        timeline.on('select', ({ items }) => {
-          if (items.length > 0) {
-            const entry = dataset.find(_ => _.id === items[0]);
-            const timestamp = entry && entry.date.valueOf();
-            timestamp && this.props.navigateToSnapshot(timestamp);
-          } else {
-            this.props.navigateToLiveBoard();
-          }
-        });
-        if (selectedTimestamp) {
-          const id = dataset.find(_ => _.date.valueOf() === selectedTimestamp);
-          id && timeline.setSelection([id.id]);
+    if (!this.timeline) {
+      const timeline = new vis.Timeline(container, dataset, {
+        height: 75,
+        type: 'point',
+        stack: false,
+        zoomMin: 60 * 1000,
+        start,
+        end
+      });
+      timeline.on('select', ({ items }) => {
+        if (items.length > 0) {
+          const entry = dataset.find(_ => _.id === items[0]);
+          const timestamp = entry && entry.date.valueOf();
+          timestamp && this.props.navigateToSnapshot(timestamp);
+        } else {
+          this.props.navigateToLiveBoard();
         }
-        this.timeline = timeline;
-      } else {
-        render(
-          <div className="info">
-            {
-              Object.keys(history).length > 0 ?
-              <div>No warnings or errors in this period</div> :
-              <div>No data available</div>
-            }
-          </div>,
-          container
-        );
-      }
+      });
+      this.timeline = timeline;
+    } else {
+      this.timeline.setWindow(start.valueOf(), end.valueOf());
+      this.timeline.setItems(dataset);
+    }
+
+    if (dataset.length == 0) {
+      render(
+        <div className="no-data">
+          {
+            Object.keys(history).length > 0 ?
+            <div>No warnings or errors in this period</div> :
+            <div>No data available</div>
+          }
+        </div>,
+        container.querySelector('#message')
+      );
+    } else {
+      render(
+        <div></div>,
+        container.querySelector('#message')
+      );
+    }
+    if (selectedTimestamp) {
+      const id = dataset.find(_ => _.date.valueOf() === selectedTimestamp);
+      id && this.timeline.setSelection([id.id]);
     }
   }
 }
