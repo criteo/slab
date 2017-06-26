@@ -1,6 +1,6 @@
 lazy val commonSettings = Seq(
   organization := "com.criteo",
-  version := "0.3.0",
+  version := "0.3.1",
   scalaVersion := "2.12.2",
   crossScalaVersions := Seq("2.11.8", "2.12.2"),
   credentials += Credentials(
