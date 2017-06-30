@@ -1,5 +1,5 @@
 package com.criteo
 
-/** API doc for Slab
+/** Slab API documentation
   */
 package object slab

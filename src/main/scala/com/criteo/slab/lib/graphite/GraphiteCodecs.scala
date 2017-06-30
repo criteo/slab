@@ -13,7 +13,7 @@ import scala.util.Try
   */
 object GraphiteCodecs {
 
-  implicit def latencyCodec = new Codec[Latency, Repr] {
+  implicit val latencyCodec = new Codec[Latency, Repr] {
     override def encode(v: Latency): Repr = Map(
       "latency" -> v.underlying
     )
@@ -23,7 +23,7 @@ object GraphiteCodecs {
     }
   }
 
-  implicit def version = new Codec[Version, Repr] {
+  implicit val version = new Codec[Version, Repr] {
     override def encode(v: Version): Repr = Map(
       "version" -> v.underlying
     )
@@ -33,7 +33,7 @@ object GraphiteCodecs {
     )
   }
 
-  implicit def instant = new Codec[Instant, Repr] {
+  implicit val instant = new Codec[Instant, Repr] {
     override def encode(v: Instant): Repr = Map(
       "datetime" -> v.toEpochMilli
     )

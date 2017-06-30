@@ -8,7 +8,7 @@ import scala.concurrent.Future
   * @param title   The title of the check
   * @param apply   A function when called, should return a future of target value
   * @param display A function that takes a checked value and a [[com.criteo.slab.core.Context Context]]
-  * @tparam T A type parameter which corresponds to the type of the checked value
+  * @tparam T The type of values to be checked
   */
 case class Check[T](
                      id: String,
