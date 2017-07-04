@@ -70,7 +70,7 @@ class GraphiteStore(
   }
 
 
-  override def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Repr]): Future[T] = {
+  override def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Repr]): Future[Option[T]] = {
     val query = HttpUtils.makeQuery(Map(
       "target" -> s"${getPrefix(id)}.*",
       "from" -> s"${DateFormatter.format(context.when)}",
@@ -82,10 +82,10 @@ class GraphiteStore(
         case Success(metrics) =>
           val pairs = transformMetrics(s"${getPrefix(id)}", metrics)
           if (pairs.isEmpty)
-            Future.failed(MissingValueException(s"cannot fetch metric for ${getPrefix(id)}"))
+            Future.successful(None)
           else
             codec.decode(pairs) match {
-              case Success(v) => Future.successful(v)
+              case Success(v) => Future.successful(Some(v))
               case Failure(e) => Future.failed(e)
             }
         case Failure(e) => Future.failed(e)

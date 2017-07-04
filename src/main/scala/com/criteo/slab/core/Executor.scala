@@ -109,7 +109,10 @@ private[slab] object Executor {
   ) = {
     store
       .fetch(check.id, context)
-      .map(check.display(_, context))
+      .flatMap {
+        case Some(v) => Future.successful(check.display(v, context))
+        case None => Future.failed(new NoSuchElementException(s"value of ${check.id} at ${context.when.toEpochMilli} is missing"))
+      }
       .recover {
         case e =>
           logger.error(e.getMessage, e)
@@ -165,16 +168,15 @@ private[slab] object Executor {
     Future.sequence {
       box.checks.map(fetchCheckHistory(_, from, until))
     } map { checks =>
-      box -> checks
-        .flatMap { case (check, checkViews) =>
-          checkViews.map { case (ts, view) =>
-            (ts, (check, view))
-          }.groupBy(_._1).map { case (ts, xs) =>
-            val checkViews = xs.map(_._2)
-            val aggView = box.aggregate(checkViews.toMap[Check[T], CheckView].mapValues(_.toView), Context(Instant.ofEpochMilli(ts)))
-            (ts, BoxView(box.title, aggView.status, aggView.message, checkViews.map(_._2)))
-          }
+      box -> checks.flatMap { case (check, checkViews) =>
+        checkViews.map { case (ts, view) =>
+          (ts, (check, view))
+        }.groupBy(_._1).map { case (ts, xs) =>
+          val checkViews = xs.map(_._2)
+          val aggView = box.aggregate(checkViews.toMap[Check[T], CheckView].mapValues(_.toView), Context(Instant.ofEpochMilli(ts)))
+          (ts, BoxView(box.title, aggView.status, aggView.message, checkViews.map(_._2)))
         }
+      }
     }
   }
 

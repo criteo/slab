@@ -68,7 +68,7 @@ package object core {
   implicit def store = new Store[String] {
     override def upload[T](id: String, context: Context, v: T)(implicit ev: Codec[T, String]): Future[Unit] = Future.successful(())
 
-    override def fetch[T](id: String, context: Context)(implicit ev: Codec[T, String]): Future[T] = Future.successful(ev.decode("100").get)
+    override def fetch[T](id: String, context: Context)(implicit ev: Codec[T, String]): Future[Option[T]] = Future.successful(ev.decode("100").toOption)
 
     override def fetchHistory[T](id: String, from: Instant, until: Instant)(implicit ev: Codec[T, String]): Future[Seq[(Long, T)]] = Future.successful(List.empty)
   }
