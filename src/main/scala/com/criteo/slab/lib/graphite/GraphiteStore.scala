@@ -26,7 +26,6 @@ import scala.util.{Failure, Success, Try}
   * @param checkInterval     Check interval in [[java.time.Duration Duration]]
   * @param group             The group name of Graphite metrics
   * @param serverTimeZone    The timezone of the server
-  * @param connectionTimeout Connection timeout
   * @param requestTimeout    Request timeout
   * @param maxConnections    Max connections of the Http client
   * @param ec                The execution context
@@ -38,9 +37,8 @@ class GraphiteStore(
                      checkInterval: Duration,
                      group: Option[String] = None,
                      serverTimeZone: ZoneId = ZoneId.systemDefault(),
-                     connectionTimeout: FiniteDuration = CDuration.create(30, SECONDS),
                      requestTimeout: FiniteDuration = CDuration.create(60, SECONDS),
-                     maxConnections: Int = 32
+                     maxConnections: Int = 128
                    )(implicit ec: ExecutionContext) extends Store[Repr] {
 
   import GraphiteStore._
@@ -53,7 +51,7 @@ class GraphiteStore(
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
 
-  private val Get = HttpUtils.makeGet(new URL(webHost), connectionTimeout = connectionTimeout, maxConnections = maxConnections)
+  private val Get = HttpUtils.makeGet(new URL(webHost), maxConnections)
 
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id
