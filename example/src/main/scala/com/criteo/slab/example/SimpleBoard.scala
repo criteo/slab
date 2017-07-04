@@ -7,7 +7,6 @@ import java.text.DecimalFormat
 
 import com.criteo.slab.core._
 import com.criteo.slab.lib.Values.{Latency, Version}
-import shapeless.HNil
 
 import scala.concurrent.Future
 import scala.util.Random
@@ -19,59 +18,66 @@ object SimpleBoard {
   lazy val webService = Box(
     "Webservice alpha",
     // The list of checks concerned in this box
-    makeVersionCheck("web.service.version", "Version", 1.2, Status.Success, Some("V1.2")) ::
-    makeRandomLatencyCheck("web.service.latency", "Latency") :: HNil,
+    makeVersionCheck("web.service.version", "Version", 1.2, Status.Success, Some("V1.2")) :: Nil,
     // A function that aggregates the views of the children checks
-    takeMostCritical[Check],
+    takeMostCritical[Version],
     // You can write a description for the box (supports Markdown)
     Some(
-    """
-      |# Doc for web server (markdown)
-      |<br/>
-      |## URL
-      |- http://example.io
-      |- http://10.0.0.1
-    """.stripMargin)
+      """
+        |# Doc for web server (markdown)
+        |<br/>
+        |## URL
+        |- http://example.io
+        |- http://10.0.0.1
+      """.stripMargin)
   )
 
   lazy val gateway = Box(
     "Gateway Beta",
-    makeRandomLatencyCheck("gateway.beta.eu", "EU Gateway latency") ::
-    makeRandomLatencyCheck("gateway.beta.us", "US Gateway latency") :: HNil,
-    takeMostCritical[Check]
+    List(
+      makeRandomLatencyCheck("gateway.beta.eu", "EU Gateway latency"),
+      makeRandomLatencyCheck("gateway.beta.us", "US Gateway latency")
+    ),
+    takeMostCritical[Latency]
   )
 
   lazy val pipelineZeta = Box(
     "Pipeline Zeta",
-    makeRandomLatencyCheck("pipeline.zeta.a", "Job A latency") ::
-    makeRandomLatencyCheck("pipeline.zeta.b", "Job B latency") ::
-    makeRandomLatencyCheck("pipeline.zeta.c", "Job C latency") :: HNil,
-    takeMostCritical[Check]
+    List(
+      makeRandomLatencyCheck("pipeline.zeta.a", "Job A latency"),
+      makeRandomLatencyCheck("pipeline.zeta.b", "Job B latency"),
+      makeRandomLatencyCheck("pipeline.zeta.c", "Job C latency")
+    ),
+    takeMostCritical[Latency]
   )
 
   lazy val pipelineOmega = Box(
     "Pipeline Omega",
-    makeRandomLatencyCheck("pipeline.omega.a", "Job A latency") ::
-    makeRandomLatencyCheck("pipeline.omega.b", "Job B latency") ::
-    makeRandomLatencyCheck("pipeline.omega.c", "Job C latency") ::
-    makeRandomLatencyCheck("pipeline.omega.d", "Job D latency") ::
-    makeRandomLatencyCheck("pipeline.omega.e", "Job E latency") :: HNil,
-    takeMostCritical[Check],
+    List(
+      makeRandomLatencyCheck("pipeline.omega.a", "Job A latency"),
+      makeRandomLatencyCheck("pipeline.omega.b", "Job B latency"),
+      makeRandomLatencyCheck("pipeline.omega.c", "Job C latency"),
+      makeRandomLatencyCheck("pipeline.omega.d", "Job D latency"),
+      makeRandomLatencyCheck("pipeline.omega.e", "Job E latency")
+    ),
+    takeMostCritical[Latency],
     // Limit the number of labels shown on the box
     labelLimit = Some(3)
   )
 
   lazy val databaseKappa = Box(
     "Database Kappa",
-    makeRandomLatencyCheck("database.kappa.dc1", "DC1 Latency") ::
-    makeRandomLatencyCheck("database.kappa.dc2", "DC2 Latency") :: HNil,
-    takeMostCritical[Check]
+    List(
+      makeRandomLatencyCheck("database.kappa.dc1", "DC1 Latency"),
+      makeRandomLatencyCheck("database.kappa.dc2", "DC2 Latency")
+    ),
+    takeMostCritical[Latency]
   )
 
   lazy val ui = Box(
     "User interface",
-    makeVersionCheck("ui.version", "Version 1000", 1000, Status.Success)::HNil,
-    takeMostCritical[Check],
+    makeVersionCheck("ui.version", "Version 1000", 1000, Status.Success) :: Nil,
+    takeMostCritical[Version],
     labelLimit = Some(0)
   )
 
@@ -100,7 +106,7 @@ object SimpleBoard {
   // Create a board
   lazy val board = Board(
     "Simple board",
-    webService::gateway::pipelineZeta::pipelineZeta::pipelineOmega::databaseKappa::ui::HNil,
+    webService :: gateway :: pipelineZeta :: pipelineZeta :: pipelineOmega :: databaseKappa :: ui :: HNil,
     (views, _) => views.maxBy(_._2)._2,
     layout,
     // Declare the links between boxes, which be shown in the UI
@@ -108,9 +114,10 @@ object SimpleBoard {
   )
 
   // A function that aggregates the views of the children checks
-  def takeMostCritical[C[_]](views: Map[C[_], View], ctx: Context) = views.maxBy(_._2)._2
+  def takeMostCritical[T](views: Map[Check[T], View], ctx: Context) = views.maxBy(_._2)._2
 
   val versionFormatter = new DecimalFormat("##.###")
+
   // A mock check generator for version values
   def makeVersionCheck(id: String, title: String, value: Double, status: Status, label: Option[String] = None) = Check[Version](
     id,

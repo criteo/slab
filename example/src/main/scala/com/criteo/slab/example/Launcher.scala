@@ -14,7 +14,7 @@ object Launcher {
   import scala.concurrent.ExecutionContext.Implicits.global
 
   // You should provide codec for checked value types for values to be persistent in a store
-  import InMemoryStore._
+  import InMemoryStore.codec
 
   def main(args: Array[String]): Unit = {
     // Define a value store for uploading and restoring history

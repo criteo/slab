@@ -3,16 +3,16 @@ package com.criteo.slab.example
 import java.time.Duration
 
 import com.criteo.slab.app.WebServer
-import com.criteo.slab.lib.graphite.GraphiteStore
+import com.criteo.slab.lib.graphite.{GraphiteStore, GraphiteCodecs}
 import org.slf4j.LoggerFactory
-import com.criteo.slab.lib.graphite.GraphiteCodecs
 
 object GraphiteLauncher {
-  val logger = LoggerFactory.getLogger(this.getClass)
 
   import scala.concurrent.ExecutionContext.Implicits.global
   import SimpleBoard._
   import GraphiteCodecs._
+
+  val logger = LoggerFactory.getLogger(this.getClass)
 
   def main(args: Array[String]): Unit = {
     val maybeStore = for {

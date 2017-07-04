@@ -1,6 +1,6 @@
 package com.criteo.slab.core
 
-import shapeless.{HList, HNil, LUBConstraint}
+import shapeless.{HList, UnaryTCConstraint}
 
 /** Top level component
   *
@@ -12,10 +12,10 @@ import shapeless.{HList, HNil, LUBConstraint}
   */
 case class Board[B <: HList](
                               title: String,
-                              boxes: B = HNil,
+                              boxes: B,
                               aggregate: (Map[Box[_], View], Context) => View,
                               layout: Layout,
                               links: Seq[(Box[_], Box[_])] = Seq.empty
                             )(
-                              implicit constraint: LUBConstraint[B, Box[_]]
+                              implicit constraint: UnaryTCConstraint[B, Box]
                             )
