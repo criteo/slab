@@ -28,8 +28,7 @@ object HttpUtils {
   def get[A: ContentDecoder](
                               url: URL,
                               headers: Map[HttpString, HttpString] = Map.empty,
-                              timeout: FiniteDuration = Duration.create(60, SECONDS),
-                              connectionTimeout: FiniteDuration = Duration.create(5, SECONDS)
+                              timeout: FiniteDuration = Duration.create(60, SECONDS)
                             )(implicit ec: ExecutionContext): Future[A] = {
     val defaultHeaders = Map(
       HttpString("Host") -> HttpString(url.getHost)
@@ -41,7 +40,7 @@ object HttpUtils {
     logger.info(s"Requesting $fullURL")
     val start = Instant.now
     Client(url.getHost, port, url.getProtocol) runAndStop { client =>
-      client.run(request) { res =>
+      client.run(request, timeout = timeout) { res =>
         logger.info(s"Response from $fullURL, status: ${res.status}, ${Instant.now.toEpochMilli - start.toEpochMilli}ms")
         handleResponse(res, fullURL)
       } recoverWith handleError(fullURL)
@@ -56,9 +55,9 @@ object HttpUtils {
     * @param ec  The [[ExecutionContext]]
     * @return The client with which a GET request can be sent
     */
-  def makeGet(url: URL, connectionTimeout: FiniteDuration = Duration.create(5, SECONDS), maxConnections: Int = 10)(implicit ec: ExecutionContext): SafeHTTPGet = {
+  def makeGet(url: URL, maxConnections: Int = 10)(implicit ec: ExecutionContext): SafeHTTPGet = {
     val port = if (url.getPort > 0) url.getPort else url.getDefaultPort
-    val client = Client(url.getHost, port, url.getProtocol, connectionTimeout = connectionTimeout, maxConnections = 10)
+    val client = Client(url.getHost, port, url.getProtocol, maxConnections = 10)
     SafeHTTPGet(client, Map(
       HttpString("Host") -> HttpString(s"${url.getHost}:$port")
     ))
@@ -120,7 +119,7 @@ object HttpUtils {
       val request = Get(path).addHeaders(defaultHeaders ++ headers)
       logger.info(s"Requesting $fullURL")
       val start = Instant.now
-      client.run(request) { res: Response =>
+      client.run(request, timeout = timeout) { res: Response =>
         logger.info(s"Response from $fullURL, status: ${res.status}, ${Instant.now.toEpochMilli - start.toEpochMilli}ms")
         handleResponse(res, fullURL)
       } recoverWith handleError(fullURL)
