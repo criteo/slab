@@ -98,7 +98,7 @@ private[slab] object Executor {
           logger.error(e.getMessage, e)
           View(Status.Unknown, e.getMessage)
       }
-      .map(view => (check, CheckView(check.title, view.status, view.message)))
+      .map(view => (check, CheckView(check.title, view.status, view.message, view.label)))
   }
 
   def replayCheck[T, Repr](check: Check[T], context: Context)(
