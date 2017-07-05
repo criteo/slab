@@ -106,7 +106,7 @@ object SimpleBoard {
   // Create a board
   lazy val board = Board(
     "Simple board",
-    webService :: gateway :: pipelineZeta :: pipelineZeta :: pipelineOmega :: databaseKappa :: ui :: HNil,
+    webService :: gateway :: pipelineZeta :: pipelineOmega :: databaseKappa :: ui :: HNil,
     (views, _) => views.maxBy(_._2)._2,
     layout,
     // Declare the links between boxes, which be shown in the UI
