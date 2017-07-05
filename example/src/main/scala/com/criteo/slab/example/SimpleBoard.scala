@@ -84,23 +84,21 @@ object SimpleBoard {
   // Define the layout of the board
   lazy val layout = Layout(
     // Define 3 columns, each takes 33.3% of the width of the board
-    Seq(Column(
+    Column(
       33.3,
       // We put the web server box in this row
-      Seq(Row("Tier 1", 100, Seq(webService)))
-    ), Column(
+      Row("Tier 1", 100, Seq(webService))
+    ),
+    Column(
       33.3,
       // Define two rows, each row takes 50% of the height of the column
-      Seq(
-        Row("Tier 2 - 1", 50, Seq(gateway)),
-        Row("Tier 2 - 2", 50, Seq(pipelineZeta, pipelineOmega))
-      )
-    ), Column(
+      Row("Tier 2 - 1", 50, Seq(gateway)),
+      Row("Tier 2 - 2", 50, Seq(pipelineZeta, pipelineOmega))
+    ),
+    Column(
       33.3,
-      Seq(
-        Row("Tier 3", 100, Seq(databaseKappa, ui))
-      )
-    ))
+      Row("Tier 3", 100, Seq(databaseKappa, ui))
+    )
   )
 
   // Create a board

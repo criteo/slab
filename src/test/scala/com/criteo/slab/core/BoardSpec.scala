@@ -18,10 +18,10 @@ class BoardSpec extends FlatSpec with Matchers with MockitoSugar {
         box1 :: HNil,
         (views, _) => views.values.head,
         Layout(
-          Seq(Column(
+          Column(
             100,
-            Seq(Row("row", 10, box2 :: Nil))
-          ))
+            Row("row", 10, box2 :: Nil)
+          )
         )
       )
     }
@@ -31,10 +31,10 @@ class BoardSpec extends FlatSpec with Matchers with MockitoSugar {
         box1 :: box2 :: HNil,
         (views, _) => views.values.head,
         Layout(
-          Seq(Column(
+          Column(
             100,
-            Seq(Row("row", 10, List.empty))
-          ))
+            Row("row", 10, List.empty)
+          )
         )
       )
     }
