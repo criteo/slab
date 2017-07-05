@@ -54,7 +54,7 @@ object SimpleBoard {
   lazy val pipelineOmega = Box(
     "Pipeline Omega",
     List(
-      makeRandomLatencyCheck("pipeline.omega.a", "Job A latency"),
+      makeRandomLatencyCheck("pipeline.omega.a", "Job A latency", Some("Top Job")),
       makeRandomLatencyCheck("pipeline.omega.b", "Job B latency"),
       makeRandomLatencyCheck("pipeline.omega.c", "Job C latency"),
       makeRandomLatencyCheck("pipeline.omega.d", "Job D latency"),
