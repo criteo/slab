@@ -48,13 +48,13 @@ package object core {
     box1 :: box2 :: HNil,
     (_, _) => View(Status.Unknown, "board message"),
     Layout(
-      List(
-        Column(50, List(
-          Row("r1", 100, List(box1))
-        )),
-        Column(50, List(
-          Row("r2", 100, List(box2))
-        ))
+      Column(
+        50,
+        Row("r1", 100, List(box1))
+      ),
+      Column(
+        50,
+        Row("r2", 100, List(box2))
       )
     )
   )

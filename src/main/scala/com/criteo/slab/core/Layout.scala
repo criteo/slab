@@ -8,7 +8,7 @@ import org.json4s.Serializer
   * @param percentage The percentage it takes as width
   * @param rows The rows in the column
   */
-case class Column(percentage: Double, rows: Seq[Row])
+case class Column(percentage: Double, rows: Row*)
 
 /** Represents a row inside a column
   *
@@ -22,7 +22,7 @@ case class Row(title: String, percentage: Double = 100, boxes: Seq[Box[_]])
   *
   * @param columns List of [[Column]]
   */
-case class Layout(columns: Seq[Column])
+case class Layout(columns: Column*)
 
 object Layout {
 
