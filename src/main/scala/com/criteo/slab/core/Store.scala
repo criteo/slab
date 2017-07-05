@@ -11,7 +11,7 @@ import scala.concurrent.Future
 trait Store[Repr] {
   def upload[T](id: String, context: Context, v: T)(implicit codec: Codec[T, Repr]): Future[Unit]
 
-  def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Repr]): Future[T]
+  def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Repr]): Future[Option[T]]
 
   def fetchHistory[T](id: String, from: Instant, until: Instant)(implicit codec: Codec[T, Repr]): Future[Seq[(Long, T)]]
 }

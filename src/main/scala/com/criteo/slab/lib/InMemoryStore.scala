@@ -41,12 +41,11 @@ class InMemoryStore(
     }
   }
 
-  override def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Any]): Future[T] = {
+  override def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Any]): Future[Option[T]] = {
     logger.debug(s"Fetching $id")
     Future.successful {
-      cache.get((id, context.when.toEpochMilli)) match {
-        case Some(v) => codec.decode(v).get
-        case None => throw new NoSuchElementException(s"$id:${context.when.toEpochMilli * 1000} does not exist")
+      cache.get((id, context.when.toEpochMilli)) map { v =>
+        codec.decode(v).get
       }
     }
   }
