@@ -119,14 +119,14 @@
         <span class="kind">package</span>
       </span>
       <span class="symbol">
-        <a title="API doc for Slab
+        <a title="Slab API documentation
 " href="../../index.html">
               <span class="name">slab</span>
             </a>
       </span>
       
-      <p class="shortcomment cmt">API doc for Slab
-</p><div class="fullcomment"><div class="comment cmt"><p>API doc for Slab
+      <p class="shortcomment cmt">Slab API documentation
+</p><div class="fullcomment"><div class="comment cmt"><p>Slab API documentation
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../index.html" class="extype" name="com.criteo">criteo</a></dd></dl></div>
     </li><li name="com.criteo.slab.lib" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="lib"></a><a id="lib:lib"></a>
@@ -262,9 +262,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.lib.graphite.GraphiteStore#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:java.time.Duration,group:Option[String],serverTimeZone:java.time.ZoneId,connectionTimeout:scala.concurrent.duration.FiniteDuration,requestTimeout:scala.concurrent.duration.FiniteDuration,maxConnections:Int)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.graphite.GraphiteStore"></a><a id="&lt;init&gt;:GraphiteStore"></a>
+      <a id="&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:java.time.Duration,group:Option[String],serverTimeZone:java.time.ZoneId,requestTimeout:scala.concurrent.duration.FiniteDuration,maxConnections:Int)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.graphite.GraphiteStore"></a><a id="&lt;init&gt;:GraphiteStore"></a>
       <span class="permalink">
-      <a href="../../../../../com/criteo/slab/lib/graphite/GraphiteStore.html#&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:java.time.Duration,group:Option[String],serverTimeZone:java.time.ZoneId,connectionTimeout:scala.concurrent.duration.FiniteDuration,requestTimeout:scala.concurrent.duration.FiniteDuration,maxConnections:Int)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.graphite.GraphiteStore" title="Permalink">
+      <a href="../../../../../com/criteo/slab/lib/graphite/GraphiteStore.html#&lt;init&gt;(host:String,port:Int,webHost:String,checkInterval:java.time.Duration,group:Option[String],serverTimeZone:java.time.ZoneId,requestTimeout:scala.concurrent.duration.FiniteDuration,maxConnections:Int)(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.lib.graphite.GraphiteStore" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -273,10 +273,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">GraphiteStore</span><span class="params">(<span name="host">host: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="port">port: <span class="extype" name="scala.Int">Int</span></span>, <span name="webHost">webHost: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkInterval">checkInterval: <span class="extype" name="java.time.Duration">Duration</span></span>, <span name="group">group: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="serverTimeZone">serverTimeZone: <span class="extype" name="java.time.ZoneId">ZoneId</span> = <span class="symbol">ZoneId.systemDefault()</span></span>, <span name="connectionTimeout">connectionTimeout: <span class="extype" name="scala.concurrent.duration.FiniteDuration">FiniteDuration</span> = <span class="symbol">CDuration.create(30, SECONDS)</span></span>, <span name="requestTimeout">requestTimeout: <span class="extype" name="scala.concurrent.duration.FiniteDuration">FiniteDuration</span> = <span class="symbol">CDuration.create(60, SECONDS)</span></span>, <span name="maxConnections">maxConnections: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">32</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
+        <span class="name">GraphiteStore</span><span class="params">(<span name="host">host: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="port">port: <span class="extype" name="scala.Int">Int</span></span>, <span name="webHost">webHost: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkInterval">checkInterval: <span class="extype" name="java.time.Duration">Duration</span></span>, <span name="group">group: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="serverTimeZone">serverTimeZone: <span class="extype" name="java.time.ZoneId">ZoneId</span> = <span class="symbol">ZoneId.systemDefault()</span></span>, <span name="requestTimeout">requestTimeout: <span class="extype" name="scala.concurrent.duration.FiniteDuration">FiniteDuration</span> = <span class="symbol">CDuration.create(60, SECONDS)</span></span>, <span name="maxConnections">maxConnections: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">128</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">host</dt><dd class="cmt"><p>The host of the writing endpoint</p></dd><dt class="param">port</dt><dd class="cmt"><p>The port of the writing endpoint</p></dd><dt class="param">webHost</dt><dd class="cmt"><p>The URL of the Web host for reading</p></dd><dt class="param">checkInterval</dt><dd class="cmt"><p>Check interval in <span class="extype" name="java.time.Duration">Duration</span></p></dd><dt class="param">group</dt><dd class="cmt"><p>The group name of Graphite metrics</p></dd><dt class="param">serverTimeZone</dt><dd class="cmt"><p>The timezone of the server</p></dd><dt class="param">connectionTimeout</dt><dd class="cmt"><p>Connection timeout</p></dd><dt class="param">requestTimeout</dt><dd class="cmt"><p>Request timeout</p></dd><dt class="param">maxConnections</dt><dd class="cmt"><p>Max connections of the Http client</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">host</dt><dd class="cmt"><p>The host of the writing endpoint</p></dd><dt class="param">port</dt><dd class="cmt"><p>The port of the writing endpoint</p></dd><dt class="param">webHost</dt><dd class="cmt"><p>The URL of the Web host for reading</p></dd><dt class="param">checkInterval</dt><dd class="cmt"><p>Check interval in <span class="extype" name="java.time.Duration">Duration</span></p></dd><dt class="param">group</dt><dd class="cmt"><p>The group name of Graphite metrics</p></dd><dt class="param">serverTimeZone</dt><dd class="cmt"><p>The timezone of the server</p></dd><dt class="param">requestTimeout</dt><dd class="cmt"><p>Request timeout</p></dd><dt class="param">maxConnections</dt><dd class="cmt"><p>Max connections of the Http client</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -406,9 +406,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.criteo.slab.lib.graphite.GraphiteStore#fetch" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,com.criteo.slab.lib.graphite.GraphiteStore.Repr]):scala.concurrent.Future[T]"></a><a id="fetch[T](String,Context)(Codec[T,Repr]):Future[T]"></a>
+      <a id="fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,com.criteo.slab.lib.graphite.GraphiteStore.Repr]):scala.concurrent.Future[Option[T]]"></a><a id="fetch[T](String,Context)(Codec[T,Repr]):Future[Option[T]]"></a>
       <span class="permalink">
-      <a href="../../../../../com/criteo/slab/lib/graphite/GraphiteStore.html#fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,com.criteo.slab.lib.graphite.GraphiteStore.Repr]):scala.concurrent.Future[T]" title="Permalink">
+      <a href="../../../../../com/criteo/slab/lib/graphite/GraphiteStore.html#fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,com.criteo.slab.lib.graphite.GraphiteStore.Repr]):scala.concurrent.Future[Option[T]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -417,7 +417,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fetch</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="context">context: <a href="../../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="codec">codec: <a href="../../core/Codec.html" class="extype" name="com.criteo.slab.core.Codec">Codec</a>[<span class="extype" name="com.criteo.slab.lib.graphite.GraphiteStore.fetch.T">T</span>, <a href="GraphiteStore$.html#Repr=Map[String,Double]" class="extmbr" name="com.criteo.slab.lib.graphite.GraphiteStore.Repr">Repr</a>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.lib.graphite.GraphiteStore.fetch.T">T</span>]</span>
+        <span class="name">fetch</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="context">context: <a href="../../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="codec">codec: <a href="../../core/Codec.html" class="extype" name="com.criteo.slab.core.Codec">Codec</a>[<span class="extype" name="com.criteo.slab.lib.graphite.GraphiteStore.fetch.T">T</span>, <a href="GraphiteStore$.html#Repr=Map[String,Double]" class="extmbr" name="com.criteo.slab.lib.graphite.GraphiteStore.Repr">Repr</a>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.criteo.slab.lib.graphite.GraphiteStore.fetch.T">T</span>]]</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.graphite.GraphiteStore">GraphiteStore</a> → <a href="../../core/Store.html" class="extype" name="com.criteo.slab.core.Store">Store</a></dd></dl></div>

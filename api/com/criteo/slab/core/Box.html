@@ -119,14 +119,14 @@
         <span class="kind">package</span>
       </span>
       <span class="symbol">
-        <a title="API doc for Slab
+        <a title="Slab API documentation
 " href="../index.html">
               <span class="name">slab</span>
             </a>
       </span>
       
-      <p class="shortcomment cmt">API doc for Slab
-</p><div class="fullcomment"><div class="comment cmt"><p>API doc for Slab
+      <p class="shortcomment cmt">Slab API documentation
+</p><div class="fullcomment"><div class="comment cmt"><p>Slab API documentation
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.criteo">criteo</a></dd></dl></div>
     </li><li name="com.criteo.slab.core" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="core"></a><a id="core:core"></a>
@@ -257,13 +257,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Box</span><span class="tparams">[<span name="C">C &lt;: <span class="extype" name="shapeless.HList">HList</span></span>]</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checks">checks: <span class="extype" name="com.criteo.slab.core.Box.C">C</span></span>, <span name="aggregate">aggregate: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[_], <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a>], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="description">description: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="labelLimit">labelLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">None</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="constraints">constraints: <span class="extype" name="shapeless.LUBConstraint">LUBConstraint</span>[<span class="extype" name="com.criteo.slab.core.Box.C">C</span>, <a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[_]]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Box</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checks">checks: <span class="extype" name="scala.Seq">Seq</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>]]</span>, <span name="aggregate">aggregate: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>], <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a>], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="description">description: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="labelLimit">labelLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A box that groups checks
-</p></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">checks</dt><dd class="cmt"><p>The checks</p></dd><dt class="param">aggregate</dt><dd class="cmt"><p>Aggregates the views of its checks, return a view</p></dd><dt class="param">description</dt><dd class="cmt"><p>The description of the box in markdown syntax</p></dd><dt class="param">labelLimit</dt><dd class="cmt"><p>The limit of visible check labels shown on the box</p></dd></dl><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The type bound to the checks</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">checks</dt><dd class="cmt"><p>The checks</p></dd><dt class="param">aggregate</dt><dd class="cmt"><p>Aggregates the views of its checks, return a view</p></dd><dt class="param">description</dt><dd class="cmt"><p>The description of the box in markdown syntax</p></dd><dt class="param">labelLimit</dt><dd class="cmt"><p>The limit of visible check labels shown on the box</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -314,9 +314,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.core.Box#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(title:String,checks:C,aggregate:(Map[com.criteo.slab.core.Check[_],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View,description:Option[String],labelLimit:Option[Int])(implicitconstraints:shapeless.LUBConstraint[C,com.criteo.slab.core.Check[_]]):com.criteo.slab.core.Box[C]"></a><a id="&lt;init&gt;:Box[C]"></a>
+      <a id="&lt;init&gt;(title:String,checks:Seq[com.criteo.slab.core.Check[T]],aggregate:(Map[com.criteo.slab.core.Check[T],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View,description:Option[String],labelLimit:Option[Int]):com.criteo.slab.core.Box[T]"></a><a id="&lt;init&gt;:Box[T]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Box.html#&lt;init&gt;(title:String,checks:C,aggregate:(Map[com.criteo.slab.core.Check[_],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View,description:Option[String],labelLimit:Option[Int])(implicitconstraints:shapeless.LUBConstraint[C,com.criteo.slab.core.Check[_]]):com.criteo.slab.core.Box[C]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Box.html#&lt;init&gt;(title:String,checks:Seq[com.criteo.slab.core.Check[T]],aggregate:(Map[com.criteo.slab.core.Check[T],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View,description:Option[String],labelLimit:Option[Int]):com.criteo.slab.core.Box[T]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -325,7 +325,7 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Box</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checks">checks: <span class="extype" name="com.criteo.slab.core.Box.C">C</span></span>, <span name="aggregate">aggregate: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[_], <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a>], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="description">description: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="labelLimit">labelLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">None</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="constraints">constraints: <span class="extype" name="shapeless.LUBConstraint">LUBConstraint</span>[<span class="extype" name="com.criteo.slab.core.Box.C">C</span>, <a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[_]]</span>)</span>
+        <span class="name">Box</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checks">checks: <span class="extype" name="scala.Seq">Seq</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>]]</span>, <span name="aggregate">aggregate: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>], <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a>], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="description">description: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="labelLimit">labelLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">None</span></span>)</span>
       </span>
       
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">title</dt><dd class="cmt"><p>The title</p></dd><dt class="param">checks</dt><dd class="cmt"><p>The checks</p></dd><dt class="param">aggregate</dt><dd class="cmt"><p>Aggregates the views of its checks, return a view</p></dd><dt class="param">description</dt><dd class="cmt"><p>The description of the box in markdown syntax</p></dd><dt class="param">labelLimit</dt><dd class="cmt"><p>The limit of visible check labels shown on the box</p></dd></dl></div>
@@ -388,9 +388,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.criteo.slab.core.Box#aggregate" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="aggregate:(Map[com.criteo.slab.core.Check[_],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View"></a><a id="aggregate:(Map[Check[_],View],Context)⇒View"></a>
+      <a id="aggregate:(Map[com.criteo.slab.core.Check[T],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View"></a><a id="aggregate:(Map[Check[T],View],Context)⇒View"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Box.html#aggregate:(Map[com.criteo.slab.core.Check[_],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Box.html#aggregate:(Map[com.criteo.slab.core.Check[T],com.criteo.slab.core.View],com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -399,7 +399,7 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">aggregate</span><span class="result">: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[_], <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a>], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>
+        <span class="name">aggregate</span><span class="result">: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>], <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a>], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>
       </span>
       
       
@@ -420,9 +420,9 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="com.criteo.slab.core.Box#checks" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="checks:C"></a>
+      <a id="checks:Seq[com.criteo.slab.core.Check[T]]"></a><a id="checks:Seq[Check[T]]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Box.html#checks:C" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Box.html#checks:Seq[com.criteo.slab.core.Check[T]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -431,7 +431,7 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">checks</span><span class="result">: <span class="extype" name="com.criteo.slab.core.Box.C">C</span></span>
+        <span class="name">checks</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>]]</span>
       </span>
       
       

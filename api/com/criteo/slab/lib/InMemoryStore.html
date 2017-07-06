@@ -119,14 +119,14 @@
         <span class="kind">package</span>
       </span>
       <span class="symbol">
-        <a title="API doc for Slab
+        <a title="Slab API documentation
 " href="../index.html">
               <span class="name">slab</span>
             </a>
       </span>
       
-      <p class="shortcomment cmt">API doc for Slab
-</p><div class="fullcomment"><div class="comment cmt"><p>API doc for Slab
+      <p class="shortcomment cmt">Slab API documentation
+</p><div class="fullcomment"><div class="comment cmt"><p>Slab API documentation
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.criteo">criteo</a></dd></dl></div>
     </li><li name="com.criteo.slab.lib" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="lib"></a><a id="lib:lib"></a>
@@ -166,10 +166,8 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="index.html" class="extype" name="com.criteo.slab.lib">lib</a></dd></dl></div>
     </li><li class="current-entities indented4">
                         <a class="object" href="InMemoryStore$.html" title=""></a>
-                        <a class="class" href="" title="In memory store
-"></a>
-                        <a href="" title="In memory store
-">
+                        <a class="class" href="" title="In memory store"></a>
+                        <a href="" title="In memory store">
                           InMemoryStore
                         </a>
                       </li><li class="current-entities indented4">
@@ -210,7 +208,7 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>In memory store
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>In memory store</p><p>Entries are kept in memory, the store checks and removes expired entries periodically
 </p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
@@ -261,10 +259,10 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.criteo.slab.lib.InMemoryStore#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;():com.criteo.slab.lib.InMemoryStore"></a><a id="&lt;init&gt;:InMemoryStore"></a>
+              <ol><li name="com.criteo.slab.lib.InMemoryStore#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(expiryDays:Int):com.criteo.slab.lib.InMemoryStore"></a><a id="&lt;init&gt;:InMemoryStore"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/InMemoryStore.html#&lt;init&gt;():com.criteo.slab.lib.InMemoryStore" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/InMemoryStore.html#&lt;init&gt;(expiryDays:Int):com.criteo.slab.lib.InMemoryStore" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -273,10 +271,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">InMemoryStore</span><span class="params">()</span>
+        <span class="name">InMemoryStore</span><span class="params">(<span name="expiryDays">expiryDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">30</span></span>)</span>
       </span>
       
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">expiryDays</dt><dd class="cmt"><p>The number of days for entries to be kept in the store since inserted, expired entries will be removed</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -405,10 +403,26 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.criteo.slab.lib.InMemoryStore#fetch" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,Any]):scala.concurrent.Future[T]"></a><a id="fetch[T](String,Context)(Codec[T,Any]):Future[T]"></a>
+    </li><li name="com.criteo.slab.lib.InMemoryStore#expiryDays" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="expiryDays:Int"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/lib/InMemoryStore.html#fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,Any]):scala.concurrent.Future[T]" title="Permalink">
+      <a href="../../../../com/criteo/slab/lib/InMemoryStore.html#expiryDays:Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">expiryDays</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      
+    </li><li name="com.criteo.slab.lib.InMemoryStore#fetch" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,Any]):scala.concurrent.Future[Option[T]]"></a><a id="fetch[T](String,Context)(Codec[T,Any]):Future[Option[T]]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/InMemoryStore.html#fetch[T](id:String,context:com.criteo.slab.core.Context)(implicitcodec:com.criteo.slab.core.Codec[T,Any]):scala.concurrent.Future[Option[T]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -417,7 +431,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">fetch</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="context">context: <a href="../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="codec">codec: <a href="../core/Codec.html" class="extype" name="com.criteo.slab.core.Codec">Codec</a>[<span class="extype" name="com.criteo.slab.lib.InMemoryStore.fetch.T">T</span>, <span class="extype" name="scala.Any">Any</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.lib.InMemoryStore.fetch.T">T</span>]</span>
+        <span class="name">fetch</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="context">context: <a href="../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="codec">codec: <a href="../core/Codec.html" class="extype" name="com.criteo.slab.core.Codec">Codec</a>[<span class="extype" name="com.criteo.slab.lib.InMemoryStore.fetch.T">T</span>, <span class="extype" name="scala.Any">Any</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.criteo.slab.lib.InMemoryStore.fetch.T">T</span>]]</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.InMemoryStore">InMemoryStore</a> → <a href="../core/Store.html" class="extype" name="com.criteo.slab.core.Store">Store</a></dd></dl></div>

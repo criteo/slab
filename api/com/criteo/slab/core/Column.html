@@ -119,14 +119,14 @@
         <span class="kind">package</span>
       </span>
       <span class="symbol">
-        <a title="API doc for Slab
+        <a title="Slab API documentation
 " href="../index.html">
               <span class="name">slab</span>
             </a>
       </span>
       
-      <p class="shortcomment cmt">API doc for Slab
-</p><div class="fullcomment"><div class="comment cmt"><p>API doc for Slab
+      <p class="shortcomment cmt">Slab API documentation
+</p><div class="fullcomment"><div class="comment cmt"><p>Slab API documentation
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.criteo">criteo</a></dd></dl></div>
     </li><li name="com.criteo.slab.core" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="core"></a><a id="core:core"></a>
@@ -255,7 +255,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Column</span><span class="params">(<span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span></span>, <span name="rows">rows: <span class="extype" name="scala.Seq">Seq</span>[<a href="Row.html" class="extype" name="com.criteo.slab.core.Row">Row</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Column</span><span class="params">(<span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span></span>, <span name="rows">rows: <a href="Row.html" class="extype" name="com.criteo.slab.core.Row">Row</a>*</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
@@ -312,9 +312,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.core.Column#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(percentage:Double,rows:Seq[com.criteo.slab.core.Row]):com.criteo.slab.core.Column"></a><a id="&lt;init&gt;:Column"></a>
+      <a id="&lt;init&gt;(percentage:Double,rows:com.criteo.slab.core.Row*):com.criteo.slab.core.Column"></a><a id="&lt;init&gt;:Column"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Column.html#&lt;init&gt;(percentage:Double,rows:Seq[com.criteo.slab.core.Row]):com.criteo.slab.core.Column" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Column.html#&lt;init&gt;(percentage:Double,rows:com.criteo.slab.core.Row*):com.criteo.slab.core.Column" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -323,7 +323,7 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Column</span><span class="params">(<span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span></span>, <span name="rows">rows: <span class="extype" name="scala.Seq">Seq</span>[<a href="Row.html" class="extype" name="com.criteo.slab.core.Row">Row</a>]</span>)</span>
+        <span class="name">Column</span><span class="params">(<span name="percentage">percentage: <span class="extype" name="scala.Double">Double</span></span>, <span name="rows">rows: <a href="Row.html" class="extype" name="com.criteo.slab.core.Row">Row</a>*</span>)</span>
       </span>
       
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">percentage</dt><dd class="cmt"><p>The percentage it takes as width</p></dd><dt class="param">rows</dt><dd class="cmt"><p>The rows in the column</p></dd></dl></div>
@@ -558,9 +558,9 @@
       
       
     </li><li name="com.criteo.slab.core.Column#rows" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="rows:Seq[com.criteo.slab.core.Row]"></a><a id="rows:Seq[Row]"></a>
+      <a id="rows:com.criteo.slab.core.Row*"></a><a id="rows:Row*"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Column.html#rows:Seq[com.criteo.slab.core.Row]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/Column.html#rows:com.criteo.slab.core.Row*" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -569,7 +569,7 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">rows</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="Row.html" class="extype" name="com.criteo.slab.core.Row">Row</a>]</span>
+        <span class="name">rows</span><span class="result">: <a href="Row.html" class="extype" name="com.criteo.slab.core.Row">Row</a>*</span>
       </span>
       
       
