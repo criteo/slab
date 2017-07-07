@@ -34,13 +34,13 @@ package object core {
   val box1 = Box[String](
     "box 1",
     List(spiedCheck1, spiedCheck2),
-    (views, _) => views.get(spiedCheck2).getOrElse(View(Status.Unknown, "unknown")).copy(message = "box 1 message")
+    (views, _) => views.get(spiedCheck2).map(_.view.copy(message = "box 1 message")).getOrElse(View(Status.Unknown, "unknown"))
   )
 
   val box2 = Box[Int](
     "box 2",
     List(spiedCheck3),
-    (views, _) => views.values.head.copy(message = "box 2 message")
+    (views, _) => views.values.head.view.copy(message = "box 2 message")
   )
 
   val board = Board(
