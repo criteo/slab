@@ -13,7 +13,6 @@ import scala.util.Random
 
 object SimpleBoard {
 
-
   // A box for the web service, which contains latency checks
   lazy val webService = Box(
     "Webservice alpha",
@@ -112,7 +111,7 @@ object SimpleBoard {
   )
 
   // A function that aggregates the views of the children checks
-  def takeMostCritical[T](views: Map[Check[T], View], ctx: Context) = views.maxBy(_._2)._2
+  def takeMostCritical[T](views: Map[Check[T], CheckResult[T]], ctx: Context): View = views.maxBy(_._2.view)._2.view
 
   val versionFormatter = new DecimalFormat("##.###")
 

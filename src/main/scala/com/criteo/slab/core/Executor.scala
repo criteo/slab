@@ -67,9 +67,11 @@ private[slab] object Executor {
           else
             box.checks.map(runCheck(_, context))
         } map { pairs =>
-          val cv = pairs.toMap
-          val aggView = box.aggregate(cv.mapValues(_.toView), context)
-          (box, BoxView(box.title, aggView.status, aggView.message, cv.values.toList))
+          val aggView = box.aggregate(
+            pairs.map { case (check, (checkView, value)) => check -> CheckResult(checkView.toView, value) }.toMap,
+            context
+          )
+          (box, BoxView(box.title, aggView.status, aggView.message, pairs.map(_._2._1).toList))
         }
       }
   }
@@ -86,19 +88,19 @@ private[slab] object Executor {
         store
           .upload(check.id, context, value)
           .map(_ => value)
-          .recover {
-            case e =>
-              logger.error(e.getMessage, e)
-              value
+          .recover { case e =>
+            logger.error(e.getMessage, e)
+            value
           }
       )
-      .map(check.display(_, context))
-      .recover {
-        case e =>
-          logger.error(e.getMessage, e)
-          View(Status.Unknown, e.getMessage)
+      .map(value => check.display(value, context) -> Some(value))
+      .recover { case e =>
+        logger.error(e.getMessage, e)
+        View(Status.Unknown, e.getMessage) -> None
       }
-      .map(view => (check, CheckView(check.title, view.status, view.message, view.label)))
+      .map { case (view, maybeValue) =>
+        (check, (CheckView(check.title, view.status, view.message, view.label), maybeValue))
+      }
   }
 
   def replayCheck[T, Repr](check: Check[T], context: Context)(
@@ -110,15 +112,16 @@ private[slab] object Executor {
     store
       .fetch(check.id, context)
       .flatMap {
-        case Some(v) => Future.successful(check.display(v, context))
+        case Some(v) => Future.successful(check.display(v, context) -> Some(v))
         case None => Future.failed(new NoSuchElementException(s"value of ${check.id} at ${context.when.toEpochMilli} is missing"))
       }
-      .recover {
-        case e =>
-          logger.error(e.getMessage, e)
-          View(Status.Unknown, e.getMessage)
+      .recover { case e =>
+        logger.error(e.getMessage, e)
+        View(Status.Unknown, e.getMessage) -> None
       }
-      .map(view => (check, CheckView(check.title, view.status, view.message)))
+      .map { case (view, maybeValue) =>
+        (check, (CheckView(check.title, view.status, view.message, view.label), maybeValue))
+      }
   }
 
   // History
@@ -140,7 +143,10 @@ private[slab] object Executor {
             }
           }.groupBy(_._1).map { case (ts, xs) =>
             val boxViews = xs.map { case (_, box, boxView) => (box, boxView) }
-            val aggView = board.aggregate(boxViews.toMap[Box[_], BoxView].mapValues(_.toView), Context(Instant.ofEpochMilli(ts)))
+            val aggView = board.aggregate(
+              boxViews.map { case (box, boxView) => box -> boxView.toView }.toMap,
+              Context(Instant.ofEpochMilli(ts))
+            )
             (ts, BoardView(board.title, aggView.status, aggView.message, boxViews.map(_._2)))
           }.toList
         }
@@ -169,12 +175,15 @@ private[slab] object Executor {
       box.checks.map(fetchCheckHistory(_, from, until))
     } map { checks =>
       box -> checks.flatMap { case (check, checkViews) =>
-        checkViews.map { case (ts, view) =>
-          (ts, (check, view))
-        }.groupBy(_._1).map { case (ts, xs) =>
-          val checkViews = xs.map(_._2)
-          val aggView = box.aggregate(checkViews.toMap[Check[T], CheckView].mapValues(_.toView), Context(Instant.ofEpochMilli(ts)))
-          (ts, BoxView(box.title, aggView.status, aggView.message, checkViews.map(_._2)))
+        checkViews.map { case (ts, (view, value)) =>
+          (ts, (check, view -> Some(value)))
+        }.groupBy(_._1).map { case (ts, tuples) =>
+          val checkViews = tuples.map(_._2)
+          val aggView = box.aggregate(
+            checkViews.map { case (check, (checkView, value)) => check -> CheckResult(checkView.toView, value) }.toMap,
+            Context(Instant.ofEpochMilli(ts))
+          )
+          (ts, BoxView(box.title, aggView.status, aggView.message, checkViews.map(_._2._1)))
         }
       }
     }
@@ -191,7 +200,7 @@ private[slab] object Executor {
       .map(series =>
         check -> series.map { case (ts, value) =>
           val view = check.display(value, Context(Instant.ofEpochMilli(ts)))
-          (ts, CheckView(check.title, view.status, view.message, view.label))
+          (ts, CheckView(check.title, view.status, view.message, view.label) -> value)
         }
       )
   }

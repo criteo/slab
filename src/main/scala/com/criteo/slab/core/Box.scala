@@ -16,7 +16,7 @@ import org.json4s.JsonDSL._
 case class Box[T](
                    title: String,
                    checks: Seq[Check[T]],
-                   aggregate: (Map[Check[T], View], Context) => View,
+                   aggregate: (Map[Check[T], CheckResult[T]], Context) => View,
                    description: Option[String] = None,
                    labelLimit: Option[Int] = None
                  )
