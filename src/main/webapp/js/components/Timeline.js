@@ -26,11 +26,13 @@ class Timeline extends Component {
   };
 
   timeline: any;
+  dataset: any;
   static DATE_FORMAT = 'YYYY-MM-DD HH:mm';
 
   constructor(props: Props) {
     super(props);
     this.timeline = null;
+    this.dataset = null;
     this.state = {
       hasFocus: false
     };
@@ -84,19 +86,13 @@ class Timeline extends Component {
       return;
 
     if (!isLoading) {
+      this.updateDataset();
       this.renderTimeline();
     }
   }
 
-  renderTimeline() {
-    const node = findDOMNode(this);
-    const container = node.querySelector('#container');
-    const { history, selectedTimestamp, selectedDate } = this.props;
-
-    // if selectedDate is not defined, defaults to last 24 hours
-    const start = selectedDate ? moment(selectedDate) : moment().subtract(24, 'hour');
-    const end = selectedDate ? moment(selectedDate).add(24, 'hour') : moment();
-    const dataset = Object.entries(history)
+  updateDataset() {
+    this.dataset = Object.entries(this.props.history)
         .filter(
           ([_, status]: [string, any]) =>
             status === 'ERROR' || status === 'WARNING'
@@ -113,8 +109,17 @@ class Timeline extends Component {
           };
         })
         .sort((a, b) => a.start.localeCompare(b.start));
+  }
+
+  renderTimeline() {
+    const node = findDOMNode(this);
+    const container = node.querySelector('#container');
+    const { history, selectedTimestamp, selectedDate } = this.props;
+    // if selectedDate is not defined, defaults to last 24 hours
+    const start = selectedDate ? moment(selectedDate) : moment().subtract(24, 'hour');
+    const end = selectedDate ? moment(selectedDate).add(24, 'hour') : moment();
     if (!this.timeline) {
-      const timeline = new vis.Timeline(container, dataset, {
+      const timeline = new vis.Timeline(container, this.dataset, {
         height: 75,
         type: 'point',
         stack: false,
@@ -124,7 +129,7 @@ class Timeline extends Component {
       });
       timeline.on('select', ({ items }) => {
         if (items.length > 0) {
-          const entry = dataset.find(_ => _.id === items[0]);
+          const entry = this.dataset.find(_ => _.id === items[0]);
           const timestamp = entry && entry.date.valueOf();
           timestamp && this.props.navigateToSnapshot(timestamp);
         } else {
@@ -134,10 +139,10 @@ class Timeline extends Component {
       this.timeline = timeline;
     } else {
       this.timeline.setWindow(start.valueOf(), end.valueOf());
-      this.timeline.setItems(dataset);
+      this.timeline.setItems(this.dataset);
     }
 
-    if (dataset.length == 0) {
+    if (this.dataset && this.dataset.length == 0) {
       render(
         <div className="no-data">
           {
@@ -155,7 +160,7 @@ class Timeline extends Component {
       );
     }
     if (selectedTimestamp) {
-      const id = dataset.find(_ => _.date.valueOf() === selectedTimestamp);
+      const id = this.dataset.find(_ => _.date.valueOf() === selectedTimestamp);
       id && this.timeline.setSelection([id.id]);
     }
   }
