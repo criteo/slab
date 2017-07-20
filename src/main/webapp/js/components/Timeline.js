@@ -59,7 +59,7 @@ class Timeline extends Component {
   }
 
   componentDidMount() {
-    this.renderTimeline();
+    this.updateAndRender();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -86,9 +86,13 @@ class Timeline extends Component {
       return;
 
     if (!isLoading) {
-      this.updateDataset();
-      this.renderTimeline();
+      this.updateAndRender();
     }
+  }
+
+  updateAndRender() {
+    this.updateDataset();
+    this.renderTimeline();
   }
 
   updateDataset() {
