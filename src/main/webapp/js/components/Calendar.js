@@ -54,16 +54,19 @@ class Calendar extends PureComponent {
         <div>{day.getDate()}</div>
         { stats &&
           <div style={ { 'fontSize': '10px'} } >
-            {
-              // rate of successes + warnings
-              (100 * (stats.successes + stats.warnings) / stats.total).toFixed(2) + '%'
-            }
+            { showStatsPercentage(stats) }
           </div>
         }
       </div>
     );
   };
 }
+
+const showStatsPercentage = (stats: Stats): string =>
+  // rate of known non-errors
+  stats.total - stats.unknown === 0 ?
+  'N/A' :
+  (100 - 100 * stats.errors / (stats.total - stats.unknown)).toFixed(2) + '%';
 
 const select = (state: State) => ({
   stats: state.stats.data,
