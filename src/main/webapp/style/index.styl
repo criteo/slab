@@ -9,18 +9,9 @@
 @import 'components/Timeline'
 @import 'components/BoardList'
 @import 'components/BoxModal'
+@import 'components/Box'
+@import './global'
 
-$green = #2ebd59
-$red = #e7624f
-$orange = #fdb843
-$black = #2b3238
-$white = #ffffff
-$gray = #e0e0e0
-$darkgray = #bababa
-$blue = #2196f3
-
-$checkHeight = 25px
-$checkMarginTop = 5px
 html, body {
   height: 100%
 }
@@ -58,15 +49,15 @@ body {
       }
 
       header {
-        height: 75px
+        height: 7.5vh
         z-index: 10
         h1 {
           flex: 1
           color: $white
-          font-size: 30px
+          font-size: 4vh
           text-align: center
           font-weight: 400
-          line-height: 50px
+          margin-top: 1vh
         }
 
         p {
@@ -74,7 +65,7 @@ body {
           color: #fff
           text-align: center
           font-weight: 400
-          font-size: 16px
+          font-size: 2vh
         }
       }
 
@@ -114,24 +105,13 @@ body {
             border: none
           }
 
-          h2 {
-            font-size: 16px
-            text-align: center
-            font-weight: 300
-            color: $gray
-            position: absolute
-            top: 20px
-            left: 0
-            right: 0
-          }
-
           section.row {
             display: flex
             flex-direction: column
             justify-content: center
             align-items: center
             position: relative
-            padding-top: 50px
+            padding-top: 1.5vh
             flex: 1
             border-top: 1px dotted rgba(255,255,255,.35)
 
@@ -140,88 +120,14 @@ body {
             }
 
             h2 {
-              font-size: 16px
+              font-size: 1.5vh
               text-align: center
               font-weight: 300
               color: $gray
               position: absolute
-              top: 20px
+              top: .5vh
               left: 0
               right: 0
-            }
-
-            div.box {
-              display: flex
-              flex-direction: column
-              justify-content: center
-
-              width: 70%
-              margin-left: 10%
-              margin-right: 10%
-              margin-bottom: 2em
-              border-radius: 3px
-              box-shadow: 0 0 24px rgba(0,0,0,.5)
-              display: flex
-              flex-direction: column
-              justify-content: center
-              padding: 1em
-              box-sizing: border-box
-              cursor: pointer
-              transition: .25s
-              overflow: hidden
-
-              &:hover {
-                transform: scale(1.1)
-                box-shadow: 0 0 36px rgba(0,0,0,.75)
-              }
-
-              div.checks {
-                display: flex
-                flex-wrap: wrap
-                .check {
-                  border: 1px solid rgba(255,255,255,.5)
-                  margin: 0px 3px 0 0
-                  padding: .25em .5em
-                  border-radius: 2px
-                  color: white
-                  box-sizing: border-box
-                  margin-top: $checkMarginTop
-                  height: $checkHeight
-
-                  overflow: hidden
-                  white-space: nowrap
-                  text-overflow: ellipsis
-
-                  display: flex
-                  align-items: center
-                }
-
-              }
-
-              h3 {
-                font-size: 18px
-                color: $white
-                font-weight: 500
-                float: none
-                margin-bottom: .2em
-              }
-
-              strong {
-                float: left
-                font-size: 14px
-                display: block
-                margin: .25em 0
-                font-weight: 400
-                color: $white
-              }
-
-              #more {
-                text-align: center
-                color: white
-                font-weight: bolder
-                font-size: 1.5em
-                line-height: .25em
-              }
             }
           }
         }
