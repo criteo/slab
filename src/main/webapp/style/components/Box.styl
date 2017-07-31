@@ -1,0 +1,73 @@
+@import '../global'
+
+div.box {
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+  width: 80%
+  margin-top: auto
+  margin-bottom: auto
+  border-radius: 3px
+  box-shadow: 0 0 24px rgba(0,0,0,.5)
+  display: flex
+  flex-direction: column
+  justify-content: center
+  padding: 1vh 1.25vh
+  box-sizing: border-box
+  cursor: pointer
+  transition: .25s
+  overflow: hidden
+
+  &:hover {
+    transform: scale(1.1)
+    box-shadow: 0 0 36px rgba(0,0,0,.75)
+  }
+
+  div.checks {
+    display: flex
+    flex-wrap: wrap
+    > .check {
+      border: 1px solid rgba(255,255,255,.5)
+      margin: 0px 3px 0 0
+      padding: .25em .5em
+      border-radius: 2px
+      color: white
+      box-sizing: border-box
+      margin-top: .25vh
+      height: 2vh
+      font-size: 1.25vh
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+
+      display: flex
+      align-items: center
+    }
+  }
+
+  h3 {
+    float: none
+    margin-bottom: .5vh
+    font-size: 1.5vmin
+    font-weight: 500
+    color: $white
+  }
+
+  strong {
+    float: left
+    display: block
+    margin-bottom: .5vh
+    font-size: 1.4vmin
+    font-weight: 400
+    color: $white
+  }
+
+  #more {
+    text-align: center
+    color: white
+    font-weight: bolder
+    font-size: 2vh
+    line-height: .25em
+  }
+}
