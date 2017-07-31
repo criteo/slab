@@ -50,6 +50,7 @@ export type Stats = {
   successes: number,
   warnings: number,
   errors: number,
+  unknown: number,
   total: number
 };
 

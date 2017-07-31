@@ -87,18 +87,19 @@ object StateService {
         ts - ts % 86400000 // normalize to the start of the day
       }
       .mapValues { entries =>
-        val (successes, warnings, errors, total) = entries.foldLeft((0, 0, 0, 0)) { case ((successes, warnings, errors, total), (_, view)) =>
+        val (successes, warnings, errors, unknown, total) = entries.foldLeft((0, 0, 0, 0, 0)) { case ((successes, warnings, errors, unknown, total), (_, view)) =>
           view.status match {
-            case Status.Success => (successes + 1, warnings, errors, total + 1)
-            case Status.Warning => (successes, warnings + 1, errors, total + 1)
-            case Status.Error => (successes, warnings, errors + 1, total + 1)
-            case Status.Unknown => (successes, warnings, errors, total + 1)
+            case Status.Success => (successes + 1, warnings, errors, unknown, total + 1)
+            case Status.Warning => (successes, warnings + 1, errors, unknown, total + 1)
+            case Status.Error => (successes, warnings, errors + 1, unknown, total + 1)
+            case Status.Unknown => (successes, warnings, errors, unknown + 1, total + 1)
           }
         }
         Stats(
           successes,
           warnings,
           errors,
+          unknown,
           total
         )
       }
