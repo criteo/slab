@@ -1,7 +1,8 @@
-import { combineViewAndLayout } from 'src/utils';
+import { combineViewAndLayout, aggregateStatsByDay } from 'src/utils';
+import moment from 'moment';
 
-describe('utils specs', () => {
-  describe('combineLayout', () => {
+describe('api utils specs', () => {
+  describe('combineLayoutAndView', () => {
     const view = {
       title: 'Board1',
       status: 'SUCCESS',
@@ -112,6 +113,60 @@ describe('utils specs', () => {
         ],
         links
       });
+    });
+  });
+
+  describe('aggregateStatsByDay', () => {
+    it('takes hourly stats and aggregate them into daily buckets', () => {
+      const stats = {
+        [moment('2000-01-01 00:00').valueOf()]: {
+          successes: 1,
+          warnings: 1,
+          errors: 1,
+          unknown: 0,
+          total: 3
+        },
+        [moment('2000-01-01 23:00').valueOf()]: {
+          successes: 1,
+          warnings: 1,
+          errors: 1,
+          unknown: 0,
+          total: 3
+        },
+        [moment('2000-01-02 00:00').valueOf()]: {
+          successes: 3,
+          warnings: 2,
+          errors: 1,
+          unknown: 0,
+          total: 6
+        },
+        [moment('2000-01-02 23:59').valueOf()]: {
+          successes: 0,
+          warnings: 0,
+          errors: 0,
+          unknown: 3,
+          total: 3
+        },
+      };
+      const res = aggregateStatsByDay(stats);
+      expect(res).to.deep.equal(
+        {
+          [moment('2000-01-01 00:00').valueOf()]: {
+            successes: 2,
+            warnings: 2,
+            errors: 2,
+            unknown: 0,
+            total: 6
+          },
+          [moment('2000-01-02 00:00').valueOf()]: {
+            successes: 3,
+            warnings: 2,
+            errors: 1,
+            unknown: 3,
+            total: 9
+          },
+        }
+      );
     });
   });
 });
