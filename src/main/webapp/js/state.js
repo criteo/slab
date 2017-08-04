@@ -46,12 +46,16 @@ export type BoardConfig = {
   links: Array<Link>
 };
 
-export type Stats = {
+export type StatsEntry = {
   successes: number,
   warnings: number,
   errors: number,
   unknown: number,
   total: number
+};
+
+export type Stats = {
+  [k: ?number]: StatsEntry
 };
 
 export type Route = {

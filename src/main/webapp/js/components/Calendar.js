@@ -4,17 +4,16 @@ import DayPicker from 'react-day-picker';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import type { Stats, State } from '../state';
+import type { Stats, StatsEntry, State } from '../state';
 import { fetchStats } from '../actions';
+import { aggregateStatsByDay } from '../utils';
 
 type Props = {
   boardName: string,
   isOpen: boolean,
   selectedDay: Date,
   onDayClick: Function,
-  stats: {
-    [k: ?number]: Stats
-  },
+  stats: Stats,
   fetchStats: Function
 };
 
@@ -26,7 +25,7 @@ class Calendar extends PureComponent {
   }
 
   render() {
-    const { isOpen, selectedDay, onDayClick } = this.props;
+    const { isOpen, selectedDay, onDayClick, stats } = this.props;
     return (
       <DayPicker
         className={isOpen ? '' : 'hidden'}
@@ -35,7 +34,7 @@ class Calendar extends PureComponent {
           after: moment().startOf('day').toDate()
         }}
         onDayClick={ onDayClick }
-        renderDay={ this.renderDay }
+        renderDay={ this.renderDay(aggregateStatsByDay(stats)) }
       />
     );
   }
@@ -46,15 +45,15 @@ class Calendar extends PureComponent {
     }
   }
 
-  renderDay = (day: Date) => {
-    const normalized = day.valueOf() - day.valueOf() % 86400000;
-    const stats = this.props.stats && this.props.stats[normalized];
+  renderDay = (stats: Stats) => (day: Date) => {
+    const normalized = moment(day).startOf('day').valueOf();
+    const statsOfDay = stats && stats[normalized];
     return (
       <div>
         <div>{day.getDate()}</div>
-        { stats &&
+        { statsOfDay &&
           <div style={ { 'fontSize': '10px'} } >
-            { showStatsPercentage(stats) }
+            { showStatsPercentage(statsOfDay) }
           </div>
         }
       </div>
@@ -62,7 +61,7 @@ class Calendar extends PureComponent {
   };
 }
 
-const showStatsPercentage = (stats: Stats): string =>
+export const showStatsPercentage = (stats: StatsEntry): string =>
   // rate of known non-errors
   stats.total - stats.unknown === 0 ?
   'N/A' :
