@@ -46,9 +46,9 @@ lazy val root = (project in file("."))
       "org.scalatest" %% "scalatest" % "3.0.1" % Test,
       "org.mockito" % "mockito-core" % "2.7.0" % Test,
       "org.slf4j" % "slf4j-api" % "1.7.25",
-      "com.criteo.lolhttp" %% "lolhttp" % "0.5.1",
-      "com.github.cb372" %% "scalacache-core" % "0.9.3",
-      "com.github.cb372" %% "scalacache-caffeine" % "0.9.3",
+      "com.criteo.lolhttp" %% "lolhttp" % "0.6.1",
+      "com.github.cb372" %% "scalacache-core" % "0.9.4",
+      "com.github.cb372" %% "scalacache-caffeine" % "0.9.4",
       "com.chuusai" %% "shapeless" % "2.3.2"
     )
   )
