@@ -22,14 +22,14 @@ import scala.util.control.NonFatal
   *
   * @param pollingInterval The polling interval in seconds
   * @param statsDays       Specifies how many last days of statistics to be retained
-  * @param customRoutes    Defines custom routes (should starts with "/api")
+  * @param routeGenerator  A function that generates custom routes (should starts with "/api")
   * @param executors       The executors of the boards
   * @param ec              The execution context for the web server
   */
 case class WebServer(
                       val pollingInterval: Int = 60,
                       val statsDays: Int = 7,
-                      private val customRoutes: PartialFunction[Request, Future[Response]] = PartialFunction.empty,
+                      private val routeGenerator: StateService => PartialFunction[Request, Future[Response]] = _ => PartialFunction.empty,
                       private val executors: List[Executor[_]] = List.empty
                     )(implicit ec: ExecutionContext) {
   /**
@@ -56,13 +56,20 @@ case class WebServer(
     logger.info(s"Starting server at port: $port")
     stateService.start()
 
-    Server.listen(port)(routeLogger(routes orElse customRoutes orElse notFound))
+    Server.listen(port)(routeLogger(routes orElse routeGenerator(stateService) orElse notFound))
     logger.info(s"Listening to $port")
 
     sys.addShutdownHook {
       logger.info("Shutting down WebServer")
     }
   }
+
+  /**
+    *
+    * @param generator A function that takes StateService and returns routes
+    * @return Web server with the created routes
+    */
+  def withRoutes(generator: StateService => PartialFunction[Request, Future[Response]]) = this.copy(routeGenerator = generator)
 
   private val logger = LoggerFactory.getLogger(this.getClass)
 

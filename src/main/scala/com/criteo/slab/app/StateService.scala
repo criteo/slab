@@ -38,6 +38,12 @@ private[slab] class StateService(
     case None => Future.failed(NotFoundError(s"$board does not exist"))
   }
 
+  // All available board views
+  def all(): Future[Seq[BoardView]] =
+    Future
+      .sequence(executors.map { e => get[BoardView, NoSerialization](e.board.title) })
+      .map(_.collect { case Some(boardView) => boardView })
+
   // History of last 24 hours
   def history(board: String): Future[Map[Long, String]] = memoize(Duration.create(10, TimeUnit.MINUTES)) {
     logger.info(s"Updating history of $board")
