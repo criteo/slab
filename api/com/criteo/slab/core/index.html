@@ -188,6 +188,14 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
+                        <a class="class" href="CheckResult.html" title="Represents the result of a check
+"></a>
+                        <a href="CheckResult.html" title="Represents the result of a check
+">
+                          CheckResult
+                        </a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
                         <a class="trait" href="Codec.html" title="Codec for values to be put in a store"></a>
                         <a href="Codec.html" title="Codec for values to be put in a store">
                           Codec
@@ -400,7 +408,7 @@
         <a title="A box that groups checks
 " href="Box.html">
               <span class="name">Box</span>
-            </a><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checks">checks: <span class="extype" name="scala.Seq">Seq</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>]]</span>, <span name="aggregate">aggregate: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>], <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a>], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="description">description: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="labelLimit">labelLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+            </a><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checks">checks: <span class="extype" name="scala.Seq">Seq</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>]]</span>, <span name="aggregate">aggregate: (<span class="extype" name="scala.Predef.Map">Map</span>[<a href="Check.html" class="extype" name="com.criteo.slab.core.Check">Check</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>], <a href="CheckResult.html" class="extype" name="com.criteo.slab.core.CheckResult">CheckResult</a>[<span class="extype" name="com.criteo.slab.core.Box.T">T</span>]], <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="description">description: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="labelLimit">labelLimit: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
       <p class="shortcomment cmt">A box that groups checks
@@ -427,6 +435,27 @@
       <p class="shortcomment cmt">Basic unit for declaring a metric to check
 </p><div class="fullcomment"><div class="comment cmt"><p>Basic unit for declaring a metric to check
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The type of values to be checked</p></dd><dt class="param">id</dt><dd class="cmt"><p>The identifier</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title of the check</p></dd><dt class="param">apply</dt><dd class="cmt"><p>A function when called, should return a future of target value</p></dd><dt class="param">display</dt><dd class="cmt"><p>A function that takes a checked value and a <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></p></dd></dl></div>
+    </li><li name="com.criteo.slab.core.CheckResult" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="CheckResult[T]extendsProductwithSerializable"></a><a id="CheckResult[T]:CheckResult[T]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/core/index.html#CheckResult[T]extendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="Represents the result of a check
+" href="CheckResult.html">
+              <span class="name">CheckResult</span>
+            </a><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="view">view: <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="value">value: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.criteo.slab.core.CheckResult.T">T</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Represents the result of a check
+</p><div class="fullcomment"><div class="comment cmt"><p>Represents the result of a check
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The checked value type</p></dd><dt class="param">view</dt><dd class="cmt"><p>The view of the check</p></dd><dt class="param">value</dt><dd class="cmt"><p>The value of the check</p></dd></dl></div>
     </li><li name="com.criteo.slab.core.Codec" visbl="pub" class="indented0 " data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="Codec[T,Repr]extendsAnyRef"></a><a id="Codec[T,Repr]:Codec[T,Repr]"></a>
       <span class="permalink">

@@ -185,13 +185,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">WebServer</span><span class="params">(<span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="customRoutes">customRoutes: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">PartialFunction.empty</span></span>, <span name="executors">executors: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.criteo.slab.core.Executor">Executor</span>[_]] = <span class="symbol">List.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">WebServer</span><span class="params">(<span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="routeGenerator">routeGenerator: (<span class="extype" name="com.criteo.slab.app.StateService">StateService</span>) ⇒ <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">_ =&gt; PartialFunction.empty</span></span>, <span name="executors">executors: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.criteo.slab.core.Executor">Executor</span>[_]] = <span class="symbol">List.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Slab Web server
-</p></div><dl class="paramcmts block"><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many last days of statistics to be retained</p></dd><dt class="param">customRoutes</dt><dd class="cmt"><p>Defines custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">executors</dt><dd class="cmt"><p>The executors of the boards</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many last days of statistics to be retained</p></dd><dt class="param">routeGenerator</dt><dd class="cmt"><p>A function that generates custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">executors</dt><dd class="cmt"><p>The executors of the boards</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -242,9 +242,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.app.WebServer#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(pollingInterval:Int,statsDays:Int,customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]],executors:List[com.criteo.slab.core.Executor[_]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer"></a><a id="&lt;init&gt;:WebServer"></a>
+      <a id="&lt;init&gt;(pollingInterval:Int,statsDays:Int,routeGenerator:com.criteo.slab.app.StateService=&gt;PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]],executors:List[com.criteo.slab.core.Executor[_]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer"></a><a id="&lt;init&gt;:WebServer"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/WebServer.html#&lt;init&gt;(pollingInterval:Int,statsDays:Int,customRoutes:PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]],executors:List[com.criteo.slab.core.Executor[_]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer" title="Permalink">
+      <a href="../../../../com/criteo/slab/app/WebServer.html#&lt;init&gt;(pollingInterval:Int,statsDays:Int,routeGenerator:com.criteo.slab.app.StateService=&gt;PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]],executors:List[com.criteo.slab.core.Executor[_]])(implicitec:scala.concurrent.ExecutionContext):com.criteo.slab.app.WebServer" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -253,10 +253,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">WebServer</span><span class="params">(<span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="customRoutes">customRoutes: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">PartialFunction.empty</span></span>, <span name="executors">executors: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.criteo.slab.core.Executor">Executor</span>[_]] = <span class="symbol">List.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
+        <span class="name">WebServer</span><span class="params">(<span name="pollingInterval">pollingInterval: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">60</span></span>, <span name="statsDays">statsDays: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">7</span></span>, <span name="routeGenerator">routeGenerator: (<span class="extype" name="com.criteo.slab.app.StateService">StateService</span>) ⇒ <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]] = <span class="symbol">_ =&gt; PartialFunction.empty</span></span>, <span name="executors">executors: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.criteo.slab.core.Executor">Executor</span>[_]] = <span class="symbol">List.empty</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ec">ec: <span class="extype" name="scala.concurrent.ExecutionContext">ExecutionContext</span></span>)</span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many last days of statistics to be retained</p></dd><dt class="param">customRoutes</dt><dd class="cmt"><p>Defines custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">executors</dt><dd class="cmt"><p>The executors of the boards</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">pollingInterval</dt><dd class="cmt"><p>The polling interval in seconds</p></dd><dt class="param">statsDays</dt><dd class="cmt"><p>Specifies how many last days of statistics to be retained</p></dd><dt class="param">routeGenerator</dt><dd class="cmt"><p>A function that generates custom routes (should starts with &quot;/api&quot;)</p></dd><dt class="param">executors</dt><dd class="cmt"><p>The executors of the boards</p></dd><dt class="param">ec</dt><dd class="cmt"><p>The execution context for the web server</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -621,6 +621,22 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.criteo.slab.app.WebServer#withRoutes" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="withRoutes(generator:com.criteo.slab.app.StateService=&gt;PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]]):com.criteo.slab.app.WebServer"></a><a id="withRoutes((StateService)⇒PartialFunction[Request,Future[Response]]):WebServer"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/app/WebServer.html#withRoutes(generator:com.criteo.slab.app.StateService=&gt;PartialFunction[lol.http.Request,scala.concurrent.Future[lol.http.Response]]):com.criteo.slab.app.WebServer" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withRoutes</span><span class="params">(<span name="generator">generator: (<span class="extype" name="com.criteo.slab.app.StateService">StateService</span>) ⇒ <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="lol.http.Request">Request</span>, <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="lol.http.Response">Response</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.criteo.slab.app.WebServer">WebServer</a></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">generator</dt><dd class="cmt"><p>A function that takes StateService and returns routes</p></dd><dt>returns</dt><dd class="cmt"><p>Web server with the created routes</p></dd></dl></div>
     </li>
               </ol>
             </div>

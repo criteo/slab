@@ -187,13 +187,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Stats</span><span class="params">(<span name="successes">successes: <span class="extype" name="scala.Int">Int</span></span>, <span name="warnings">warnings: <span class="extype" name="scala.Int">Int</span></span>, <span name="errors">errors: <span class="extype" name="scala.Int">Int</span></span>, <span name="total">total: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Stats</span><span class="params">(<span name="successes">successes: <span class="extype" name="scala.Int">Int</span></span>, <span name="warnings">warnings: <span class="extype" name="scala.Int">Int</span></span>, <span name="errors">errors: <span class="extype" name="scala.Int">Int</span></span>, <span name="unknown">unknown: <span class="extype" name="scala.Int">Int</span></span>, <span name="total">total: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Statistics of history
-</p></div><dl class="paramcmts block"><dt class="param">successes</dt><dd class="cmt"><p>Number of checks that are successful</p></dd><dt class="param">warnings</dt><dd class="cmt"><p>Number of checks that are in the warning state</p></dd><dt class="param">errors</dt><dd class="cmt"><p>Number of checks that are errors</p></dd><dt class="param">total</dt><dd class="cmt"><p>Total number of checks</p></dd></dl><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="param">successes</dt><dd class="cmt"><p>Number of checks that are successful</p></dd><dt class="param">warnings</dt><dd class="cmt"><p>Number of checks that are in the warning state</p></dd><dt class="param">errors</dt><dd class="cmt"><p>Number of checks that are errors</p></dd><dt class="param">unknown</dt><dd class="cmt"><p>Number of checks that are unknown</p></dd><dt class="param">total</dt><dd class="cmt"><p>Total number of checks</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -244,9 +244,9 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.criteo.slab.app.Stats#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(successes:Int,warnings:Int,errors:Int,total:Int):com.criteo.slab.app.Stats"></a><a id="&lt;init&gt;:Stats"></a>
+      <a id="&lt;init&gt;(successes:Int,warnings:Int,errors:Int,unknown:Int,total:Int):com.criteo.slab.app.Stats"></a><a id="&lt;init&gt;:Stats"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/app/Stats.html#&lt;init&gt;(successes:Int,warnings:Int,errors:Int,total:Int):com.criteo.slab.app.Stats" title="Permalink">
+      <a href="../../../../com/criteo/slab/app/Stats.html#&lt;init&gt;(successes:Int,warnings:Int,errors:Int,unknown:Int,total:Int):com.criteo.slab.app.Stats" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -255,10 +255,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Stats</span><span class="params">(<span name="successes">successes: <span class="extype" name="scala.Int">Int</span></span>, <span name="warnings">warnings: <span class="extype" name="scala.Int">Int</span></span>, <span name="errors">errors: <span class="extype" name="scala.Int">Int</span></span>, <span name="total">total: <span class="extype" name="scala.Int">Int</span></span>)</span>
+        <span class="name">Stats</span><span class="params">(<span name="successes">successes: <span class="extype" name="scala.Int">Int</span></span>, <span name="warnings">warnings: <span class="extype" name="scala.Int">Int</span></span>, <span name="errors">errors: <span class="extype" name="scala.Int">Int</span></span>, <span name="unknown">unknown: <span class="extype" name="scala.Int">Int</span></span>, <span name="total">total: <span class="extype" name="scala.Int">Int</span></span>)</span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">successes</dt><dd class="cmt"><p>Number of checks that are successful</p></dd><dt class="param">warnings</dt><dd class="cmt"><p>Number of checks that are in the warning state</p></dd><dt class="param">errors</dt><dd class="cmt"><p>Number of checks that are errors</p></dd><dt class="param">total</dt><dd class="cmt"><p>Total number of checks</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">successes</dt><dd class="cmt"><p>Number of checks that are successful</p></dd><dt class="param">warnings</dt><dd class="cmt"><p>Number of checks that are in the warning state</p></dd><dt class="param">errors</dt><dd class="cmt"><p>Number of checks that are errors</p></dd><dt class="param">unknown</dt><dd class="cmt"><p>Number of checks that are unknown</p></dd><dt class="param">total</dt><dd class="cmt"><p>Total number of checks</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -534,6 +534,22 @@
       </span>
       <span class="symbol">
         <span class="name">total</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      
+    </li><li name="com.criteo.slab.app.Stats#unknown" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="unknown:Int"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/app/Stats.html#unknown:Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unknown</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       
       

@@ -164,17 +164,17 @@
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="" title="Basic unit for declaring a metric to check
+                        <a class="class" href="Check.html" title="Basic unit for declaring a metric to check
 "></a>
-                        <a href="" title="Basic unit for declaring a metric to check
+                        <a href="Check.html" title="Basic unit for declaring a metric to check
 ">
                           Check
                         </a>
                       </li><li class="current-entities indented4">
                         <span class="separator"></span>
-                        <a class="class" href="CheckResult.html" title="Represents the result of a check
+                        <a class="class" href="" title="Represents the result of a check
 "></a>
-                        <a href="CheckResult.html" title="Represents the result of a check
+                        <a href="" title="Represents the result of a check
 ">
                           CheckResult
                         </a>
@@ -249,8 +249,8 @@
       <div id="definition">
         <div class="big-circle class">c</div>
         <p id="owner"><a href="../../../index.html" class="extype" name="com">com</a>.<a href="../../index.html" class="extype" name="com.criteo">criteo</a>.<a href="../index.html" class="extype" name="com.criteo.slab">slab</a>.<a href="index.html" class="extype" name="com.criteo.slab.core">core</a></p>
-        <h1>Check<span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html" title="Permalink">
+        <h1>CheckResult<span class="permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span></h1>
@@ -263,13 +263,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Check</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="apply">apply: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.T">T</span>]</span>, <span name="display">display: (<span class="extype" name="com.criteo.slab.core.Check.T">T</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">CheckResult</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="view">view: <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="value">value: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.criteo.slab.core.CheckResult.T">T</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Basic unit for declaring a metric to check
-</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The type of values to be checked</p></dd><dt class="param">id</dt><dd class="cmt"><p>The identifier</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title of the check</p></dd><dt class="param">apply</dt><dd class="cmt"><p>A function when called, should return a future of target value</p></dd><dt class="param">display</dt><dd class="cmt"><p>A function that takes a checked value and a <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></p></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Represents the result of a check
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The checked value type</p></dd><dt class="param">view</dt><dd class="cmt"><p>The view of the check</p></dd><dt class="param">value</dt><dd class="cmt"><p>The value of the check</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -299,7 +299,7 @@
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="com.criteo.slab.core.Check"><span>Check</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="com.criteo.slab.core.CheckResult"><span>CheckResult</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -319,10 +319,10 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.criteo.slab.core.Check#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(id:String,title:String,apply:()=&gt;scala.concurrent.Future[T],display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View):com.criteo.slab.core.Check[T]"></a><a id="&lt;init&gt;:Check[T]"></a>
+              <ol><li name="com.criteo.slab.core.CheckResult#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(view:com.criteo.slab.core.View,value:Option[T]):com.criteo.slab.core.CheckResult[T]"></a><a id="&lt;init&gt;:CheckResult[T]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#&lt;init&gt;(id:String,title:String,apply:()=&gt;scala.concurrent.Future[T],display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View):com.criteo.slab.core.Check[T]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#&lt;init&gt;(view:com.criteo.slab.core.View,value:Option[T]):com.criteo.slab.core.CheckResult[T]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -331,10 +331,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Check</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="title">title: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="apply">apply: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.T">T</span>]</span>, <span name="display">display: (<span class="extype" name="com.criteo.slab.core.Check.T">T</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>)</span>
+        <span class="name">CheckResult</span><span class="params">(<span name="view">view: <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>, <span name="value">value: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.criteo.slab.core.CheckResult.T">T</span>]</span>)</span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">id</dt><dd class="cmt"><p>The identifier</p></dd><dt class="param">title</dt><dd class="cmt"><p>The title of the check</p></dd><dt class="param">apply</dt><dd class="cmt"><p>A function when called, should return a future of target value</p></dd><dt class="param">display</dt><dd class="cmt"><p>A function that takes a checked value and a <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">view</dt><dd class="cmt"><p>The view of the check</p></dd><dt class="param">value</dt><dd class="cmt"><p>The value of the check</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -348,7 +348,7 @@
                 <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#!=(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#!=(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -364,7 +364,7 @@
     </li><li name="scala.AnyRef###" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="##():Int"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html###():Int" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html###():Int" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -380,7 +380,7 @@
     </li><li name="scala.AnyRef#==" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="==(x$1:Any):Boolean"></a><a id="==(Any):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#==(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#==(x$1:Any):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -393,26 +393,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.criteo.slab.core.Check#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply:()=&gt;scala.concurrent.Future[T]"></a><a id="apply:()⇒Future[T]"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#apply:()=&gt;scala.concurrent.Future[T]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">apply</span><span class="result">: () ⇒ <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="com.criteo.slab.core.Check.T">T</span>]</span>
-      </span>
-      
-      
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#asInstanceOf[T0]:T0" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#asInstanceOf[T0]:T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -428,7 +412,7 @@
     </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a><a id="clone():AnyRef"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#clone():Object" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#clone():Object" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -447,26 +431,10 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.criteo.slab.core.Check#display" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View"></a><a id="display:(T,Context)⇒View"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#display:(T,com.criteo.slab.core.Context)=&gt;com.criteo.slab.core.View" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">display</span><span class="result">: (<span class="extype" name="com.criteo.slab.core.Check.T">T</span>, <a href="Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a>) ⇒ <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>
-      </span>
-      
-      
     </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#eq(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#eq(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -482,7 +450,7 @@
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#finalize():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#finalize():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -504,7 +472,7 @@
     </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#getClass():Class[_]" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#getClass():Class[_]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -517,26 +485,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.criteo.slab.core.Check#id" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="id:String"></a>
-      <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#id:String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">id</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      
-      
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#isInstanceOf[T0]:Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#isInstanceOf[T0]:Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -552,7 +504,7 @@
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#ne(x$1:AnyRef):Boolean" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#ne(x$1:AnyRef):Boolean" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -568,7 +520,7 @@
     </li><li name="scala.AnyRef#notify" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#notify():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#notify():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -584,7 +536,7 @@
     </li><li name="scala.AnyRef#notifyAll" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notifyAll():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#notifyAll():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#notifyAll():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -600,7 +552,7 @@
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -613,10 +565,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.criteo.slab.core.Check#title" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="title:String"></a>
+    </li><li name="com.criteo.slab.core.CheckResult#value" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="value:Option[T]"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#title:String" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#value:Option[T]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -625,14 +577,30 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">title</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">value</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.criteo.slab.core.CheckResult.T">T</span>]</span>
+      </span>
+      
+      
+    </li><li name="com.criteo.slab.core.CheckResult#view" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="view:com.criteo.slab.core.View"></a><a id="view:View"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#view:com.criteo.slab.core.View" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">view</span><span class="result">: <a href="View.html" class="extype" name="com.criteo.slab.core.View">View</a></span>
       </span>
       
       
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#wait():Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#wait():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -654,7 +622,7 @@
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long,x$2:Int):Unit"></a><a id="wait(Long,Int):Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -676,7 +644,7 @@
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait(x$1:Long):Unit"></a><a id="wait(Long):Unit"></a>
       <span class="permalink">
-      <a href="../../../../com/criteo/slab/core/Check.html#wait(x$1:Long):Unit" title="Permalink">
+      <a href="../../../../com/criteo/slab/core/CheckResult.html#wait(x$1:Long):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
