@@ -177,15 +177,15 @@ private[slab] object Executor {
       box -> checks.flatMap { case (check, checkViews) =>
         checkViews.map { case (ts, (view, value)) =>
           (ts, (check, view -> Some(value)))
-        }.groupBy(_._1).map { case (ts, tuples) =>
-          val checkViews = tuples.map(_._2)
-          val aggView = box.aggregate(
-            checkViews.map { case (check, (checkView, value)) => check -> CheckResult(checkView.toView, value) }.toMap,
-            Context(Instant.ofEpochMilli(ts))
-          )
-          (ts, BoxView(box.title, aggView.status, aggView.message, checkViews.map(_._2._1)))
         }
-      }
+      }.groupBy(_._1).map { case (ts, tuples) =>
+        val checkViews = tuples.map(_._2)
+        val aggView = box.aggregate(
+          checkViews.map { case (check, (checkView, value)) => check -> CheckResult(checkView.toView, value) }.toMap,
+          Context(Instant.ofEpochMilli(ts))
+        )
+        (ts, BoxView(box.title, aggView.status, aggView.message, checkViews.map(_._2._1)))
+      }.toSeq
     }
   }
 
