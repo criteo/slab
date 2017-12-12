@@ -20,6 +20,8 @@ object Launcher {
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   def main(args: Array[String]): Unit = {
+    require(args.length == 1, "you must supply a port!")
+    val port = args(0).toInt
     // You should provide codec for checked value types for values to be persistent in a store
     import InMemoryStore.codec
     // Define a value store for uploading and restoring history
@@ -41,7 +43,7 @@ object Launcher {
       })
       // Attach a board to the server
       .attach(board)
-      // Launch the server at port 8080
-      .apply(8080)
+      // Launch the server at port
+      .apply(port)
   }
 }

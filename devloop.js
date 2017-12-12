@@ -18,7 +18,7 @@ let flow = run({
 let webpack = run({
   name: 'webpack',
   cwd: '.',
-  sh: './node_modules/.bin/webpack --bail --env.out=target/scala-2.11/classes/public',
+  sh: './node_modules/.bin/webpack --bail --env.out=target/scala-2.12/classes',
   watch: 'webpack.config.js'
 }).dependsOn(flow, installDependencies)
 
@@ -39,12 +39,11 @@ let compileServer = sbt.run({
 }).dependsOn(packageDependencies)
 
 let separator = platform == 'win32' ? ';': ':'
-let version = '0.1.0-SNAPSHOT'
 let server = runServer({
   name: 'server',
   httpPort,
   env: config.env,
-  sh: `java -cp "target/scala-2.11/slab-assembly-${version}-deps.jar${separator}target/scala-2.11/classes${separator}${config.extraClasspath || ''}" ${config.mainClass} -http.port=:${httpPort} -doc.root=public`
+  sh: `java -cp "target/scala-2.12/*${separator}target/scala-2.12/classes${separator}${config.extraClasspath || ''}" ${config.mainClass} ${httpPort}`
 }).dependsOn(compileServer)
 
 proxy(server, 8080).dependsOn(webpack)
