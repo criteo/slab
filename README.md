@@ -39,6 +39,14 @@ The easiest way to get started is to follow the guides:
 The documentation is also available:
 - [API documentation](https://criteo.github.com/slab/api/com/criteo/slab)
 
+## Running the example project
+
+Ensure you have sbt and npm installed and then:
+```
+$> npm install
+$> npm start
+```
+
 ## Contribution
 
 Please read the [contribution guide](/CONTRIBUTING.md)
