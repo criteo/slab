@@ -37,7 +37,7 @@ object SimpleBoard {
       makeRandomLatencyCheck("gateway.beta.eu", "EU Gateway latency"),
       makeRandomLatencyCheck("gateway.beta.us", "US Gateway latency")
     ),
-    takeMostCritical[Latency]
+    takeMaxLatency
   )
 
   lazy val pipelineZeta = Box(
@@ -47,7 +47,7 @@ object SimpleBoard {
       makeRandomLatencyCheck("pipeline.zeta.b", "Job B latency"),
       makeRandomLatencyCheck("pipeline.zeta.c", "Job C latency")
     ),
-    takeMostCritical[Latency]
+    takeMaxLatency
   )
 
   lazy val pipelineOmega = Box(
@@ -59,7 +59,7 @@ object SimpleBoard {
       makeRandomLatencyCheck("pipeline.omega.d", "Job D latency"),
       makeRandomLatencyCheck("pipeline.omega.e", "Job E latency")
     ),
-    takeMostCritical[Latency],
+    takeMaxLatency,
     // Limit the number of labels shown on the box
     labelLimit = Some(3)
   )
@@ -70,7 +70,7 @@ object SimpleBoard {
       makeRandomLatencyCheck("database.kappa.dc1", "DC1 Latency"),
       makeRandomLatencyCheck("database.kappa.dc2", "DC2 Latency")
     ),
-    takeMostCritical[Latency]
+    takeMaxLatency
   )
 
   lazy val ui = Box(
@@ -111,7 +111,16 @@ object SimpleBoard {
   )
 
   // A function that aggregates the views of the children checks
-  def takeMostCritical[T](views: Map[Check[T], CheckResult[T]], ctx: Context): View = views.maxBy(_._2.view)._2.view
+  def takeMostCritical[T](views: Map[Check[T], CheckResult[T]], ctx: Context): View = views.maxBy(_._2.view)._2.view.copy(message = "")
+
+  // Aggregate the latency values and display the max latency
+  def takeMaxLatency(views: Map[Check[Latency], CheckResult[Latency]], ctx: Context): View = {
+    val maxLatency = views.map(_._2.value.map(_.underlying)).flatten.foldLeft(0L)(Math.max)
+    View(
+      views.maxBy(_._2.view)._2.view.status,
+      s"max latency $maxLatency ms"
+    )
+  }
 
   val versionFormatter = new DecimalFormat("##.###")
 
@@ -136,8 +145,8 @@ object SimpleBoard {
       } else {
         Status.Success
       }
-      // A view represents the result of a check, such as status, message and label
-      View(status, s"latency ${l.underlying} ms", label)
+      // A view represents the result of a check, such as status, message and label, the message can be in Markdown
+      View(status, s"latency **${l.underlying}** ms", label)
     }
   )
 }

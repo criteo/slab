@@ -62,14 +62,14 @@ class BoxModal extends Component {
               box.message &&
               createFragment({
                 title: <h3><i className="fa fa-sticky-note-o"></i>Message</h3>,
-                content: <div className="message">{ box.message } </div>
+                content: <div className="message" dangerouslySetInnerHTML={{ __html: marked(box.message) }} />
               })
             }
             {
               box.description &&
               createFragment({
                 title: <h3><i className="fa fa-file-text-o"></i>Description</h3>,
-                content: <div className="description" dangerouslySetInnerHTML={ { __html: marked(box.description) } } />
+                content: <div className="description" dangerouslySetInnerHTML={{ __html: marked(box.description) }} />
               })
             }
             <h3><i className="fa fa-list-ol"></i>Checks</h3>

@@ -1,4 +1,5 @@
 // @flow
+import marked from 'marked';
 import type { Check } from '../state';
 
 type Props = {
@@ -12,7 +13,7 @@ const CheckList = ({ checks }: Props) => (
         <span className={`status background ${status}`} />
         <div className="content">
           <h4>{title}</h4>
-          {message}
+          <div dangerouslySetInnerHTML={ { __html: marked(message) } } />
         </div>
       </div>
     ))}
