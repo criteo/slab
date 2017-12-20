@@ -18,7 +18,8 @@ type Props = {
   selectedTimestamp: ?number,
   navigateToLiveBoard: () => void,
   fetchHistory: (date: ?string) => void,
-  isLoadingBoard: boolean
+  isLoadingBoard: boolean,
+  slo: number,
 };
 
 class TimelineController extends PureComponent {
@@ -43,7 +44,8 @@ class TimelineController extends PureComponent {
       selectedTimestamp,
       isLoading,
       error,
-      isLoadingBoard
+      isLoadingBoard,
+      slo
     } = this.props;
     const { isCalendarOpen, selectedDay } = this.state;
     return (
@@ -76,6 +78,8 @@ class TimelineController extends PureComponent {
           isOpen={isCalendarOpen}
           selectedDay={selectedDay}
           onDayClick={this.handleDayClick}
+          onCloseClick={this.handleCloseClick}
+          slo={slo}
         />
       </div>
     );
@@ -96,7 +100,11 @@ class TimelineController extends PureComponent {
 
   hanldeResetClick = () => {
     this.props.navigateToLiveBoard();
-  }
+  };
+
+  handleCloseClick = () => {
+    this.setState({ isCalendarOpen: false });
+  };
 }
 
 const select = (state: State) => ({
@@ -106,7 +114,8 @@ const select = (state: State) => ({
   isLoading: state.history.isLoading,
   error: state.history.error,
   boardName: state.currentBoard,
-  isLoadingBoard: state.selectedBoardView.isLoading
+  isLoadingBoard: state.selectedBoardView.isLoading,
+  slo: state.selectedBoardView.data && state.selectedBoardView.data.slo
 });
 
 const actions = dispatch => ({

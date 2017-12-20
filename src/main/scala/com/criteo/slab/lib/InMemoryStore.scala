@@ -6,6 +6,7 @@ import java.time.{Instant, ZoneId}
 import java.util.concurrent.{Executors, TimeUnit}
 
 import com.criteo.slab.core.{Codec, Context, Store}
+import com.criteo.slab.lib.Values.Slo
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.concurrent.TrieMap
@@ -39,6 +40,14 @@ class InMemoryStore(
       cache.putIfAbsent((id, context.when.toEpochMilli), codec.encode(v))
       logger.info(s"Store updated, size: ${cache.size}")
     }
+  }
+
+  override def uploadSlo(id: String, context: Context, slo: Slo)(implicit codec: Codec[Slo, Any]): Future[Unit] = {
+    upload[Slo](id, context, slo)
+  }
+
+  def fetchSloHistory(id: String, from: Instant, until: Instant)(implicit codec: Codec[Slo, Any]): Future[Seq[(Long, Slo)]] = {
+    fetchHistory[Slo](id, from, until)(codec)
   }
 
   override def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Any]): Future[Option[T]] = {

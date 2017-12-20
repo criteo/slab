@@ -30,10 +30,11 @@ var config = {
           presets: ['react', 'es2015'],
           plugins: [
             'transform-class-properties',
-            'transform-object-rest-spread'
+            'transform-object-rest-spread',
+            'transform-exponentiation-operator'
           ]
         },
-        include: path.join(__dirname, 'src')
+        include: [path.join(__dirname, 'src')]
       },
       {
         test: /\.styl/,

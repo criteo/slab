@@ -2,10 +2,10 @@
 // transfrom data from APIs
 import _ from 'lodash';
 import moment from 'moment';
-import type { Stats, StatsEntry, BoardView, Layout } from '../state';
+import type { Stats, BoardView, Layout } from '../state';
 
 // combine board view and board layout
-export const combineViewAndLayout = (view: any, layout: Layout, links: Array<string> = []): BoardView => {
+export const combineViewAndLayout = (view: any, layout: Layout, links: Array<string> = [], slo: number = 0.97): BoardView => {
   // map from box name to [columnIndex, rowIndex, boxIndex]
   const map = new Map();
   layout.columns.forEach((col, i) =>
@@ -38,20 +38,19 @@ export const combineViewAndLayout = (view: any, layout: Layout, links: Array<str
     title: view.title,
     message: view.message,
     status: view.status,
-    links
+    links,
+    slo,
   };
 };
 
-// aggregate hourly statistics from API by local day
-export const aggregateStatsByDay = (stats: Stats): Stats =>
-  _(stats)
-    .toPairs()
-    .groupBy(pair => moment(parseInt(pair[0])).startOf('day').valueOf())
-    .mapValues(entries => _.reduce(entries, (acc: StatsEntry, [_, entry: StatsEntry]) => ({
-      successes: acc.successes + entry.successes,
-      warnings: acc.warnings + entry.warnings,
-      errors: acc.errors + entry.errors,
-      unknown: acc.unknown + entry.unknown,
-      total: acc.total + entry.total
-    }), { successes: 0, warnings: 0, errors: 0, unknown: 0, total: 0}))
-    .value();
+// aggregate hourly statistics from API by local day/month/year
+const aggregateStatsBy = (granularity: string, stats: Stats): Stats =>
+    _(stats)
+        .toPairs()
+        .groupBy(pair => moment(parseInt(pair[0])).startOf(granularity).valueOf())
+        .mapValues(percents => _.reduce(percents, (acc: number, [_, percent]) => (acc + parseFloat(percent)), 0) / percents.length)
+        .value();
+
+export const aggregateStatsByDay = (stats: Stats): Stats => aggregateStatsBy('day', stats);
+export const aggregateStatsByMonth = (stats: Stats): Stats => aggregateStatsBy('month', stats);
+export const aggregateStatsByYear = (stats: Stats): Stats => aggregateStatsBy('year', stats);

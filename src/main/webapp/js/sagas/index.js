@@ -3,7 +3,7 @@ import { delay } from 'redux-saga';
 import { navigate } from 'redux-url';
 import moment from 'moment';
 import * as api from '../api';
-import { combineViewAndLayout } from '../utils';
+import { combineViewAndLayout, aggregateStatsByDay, aggregateStatsByMonth, aggregateStatsByYear } from '../utils';
 import { setPollingInterval } from '../actions';
 
 // fetch the current view of the board
@@ -12,8 +12,8 @@ export function* fetchBoard(action, transformer = combineViewAndLayout) {
     const boards = yield call(fetchBoards);
     const boardView = yield call(api.fetchBoard, action.board);
     const config = boards.find(_ => _.title === boardView.title);
-    const { layout, links } = config;
-    yield put({ type: 'FETCH_BOARD_SUCCESS', payload: transformer(boardView, layout, links) });
+    const { layout, links, slo } = config;
+    yield put({ type: 'FETCH_BOARD_SUCCESS', payload: transformer(boardView, layout, links, slo) });
   } catch (error) {
     yield put({ type: 'FETCH_BOARD_FAILURE', payload: error });
   }
@@ -95,7 +95,13 @@ export function* handleSnapshotChange(action) {
 // fetch stats
 export function* fetchStats(action) {
   try {
-    const stats = yield call(api.fetchStats, action.board);
+    const hourlyStats = yield call(api.fetchStats, action.board);
+    const dailyStats = aggregateStatsByDay(hourlyStats);
+    const monthlyStats = aggregateStatsByMonth(hourlyStats);
+    const yearlyStats = aggregateStatsByYear(hourlyStats);
+
+    const stats = { daily: dailyStats, monthly: monthlyStats, yearly: yearlyStats };
+
     yield put({ type: 'FETCH_STATS_SUCCESS', payload: stats });
   } catch (error) {
     yield put({ type: 'FETCH_HISTORY_FAILURE', payload: error });
@@ -103,7 +109,14 @@ export function* fetchStats(action) {
 }
 
 export function* watchFetchStats() {
-  yield takeLatest('FETCH_STATS', fetchStats);
+  yield takeLatest('FETCH_STATS', handleFetchStats);
+}
+
+export function* handleFetchStats(action) {
+  const stats = yield select(state => state.stats.data);
+  if (!stats || !stats[action.startDate]) {
+    yield call(fetchStats, action);
+  }
 }
 
 // polling service

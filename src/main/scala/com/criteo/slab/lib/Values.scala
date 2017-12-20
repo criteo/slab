@@ -18,4 +18,11 @@ object Values {
     * @param underlying The latency value
     */
   case class Latency(val underlying: Long) extends AnyVal
+
+  /**
+    * A value representing a SLO number
+    *
+    * @param underlying The SLO
+    */
+  case class Slo(val underlying: Double) extends AnyVal
 }

@@ -1,0 +1,304 @@
+/* hide back of pane during swap */
+.front, .back {
+  backface-visibility: hidden
+  -webkit-backface-visibility: hidden
+  position: absolute !important
+  top: 0
+  left: 0
+}
+
+/* front pane, placed above back */
+.front {
+  z-index: 2
+  /* for firefox 31 */
+  transform: rotateY(0deg)
+}
+
+/* back, initially hidden pane */
+.back {
+  transform: rotateY(180deg)
+}
+
+.calendar-chart-wrapper {
+  position: absolute
+  left: 10px
+  bottom: 40px
+  width: 500px
+  height: 360px
+  padding: 40px
+  background: rgb(64, 69, 73)
+  perspective: 1000px
+  z-index: 100
+  transition: bottom 0.5s
+  overflow: hidden
+
+  .flipper {
+    width: 100%
+    height: 100%
+    transition: 0.5s
+    transform-style: preserve-3d
+
+    &.flipped {
+      transform: rotateY(180deg)
+    }
+  }
+
+  &.closed {
+    bottom: -550px
+  }
+
+  .close-button {
+    position: absolute
+    right: 10px
+    top: 10px
+    background: transparent
+    border: none
+    outline: 0
+    font-size: 20px
+    color: #ffffff
+
+    &:hover {
+      cursor: pointer
+      color: #DFDFDF
+    }
+  }
+
+  .flip-view-button {
+    position: absolute
+    right: 10px
+    bottom: 10px
+    background transparent
+    border: none
+    outline: 0
+    font-size: 18px
+    color: #ffffff
+
+    &.chart:before {
+      font-family: 'FontAwesome'
+      content: '\f080'
+    }
+
+    &.calendar:before {
+      font-family: 'FontAwesome'
+      content: '\f073'
+    }
+
+    &:hover {
+      cursor: pointer
+      color: #DFDFDF
+    }
+  }
+
+  .rdt.rdtStatic {
+    position: relative
+    width: 100%
+
+    .rdtPicker {
+      background: rgb(64, 69, 73)
+      border: none
+      width: 100%
+      padding: 0
+      color: #ffffff
+
+      th {
+        width: 40px
+        height: 40px
+        border-bottom: 0
+        text-align: center
+        vertical-align: middle
+        font-weight: 400
+
+        &:hover {
+          cursor: default
+        }
+
+        &.rdtSwitch, &.rdtPrev, &.rdtNext {
+          &:hover {
+              background: rgba(255, 255, 255, .3)
+              cursor: pointer
+            }
+        }
+
+      }
+
+      td {
+        position: relative
+        text-align: center
+        vertical-align: middle
+        padding-bottom: 5px
+
+        span {
+          font-weight: 500
+          pointer-events: none
+        }
+
+        .date-label {
+          display: inline
+        }
+
+        .percent-label {
+          display: none
+          font-size: 90%
+        }
+
+        &:not(.rdtOld):not(.rdtNew):not(.rdtDisabled) {
+          &.good:after, &.bad:after {
+            position: relative
+            left: 5px
+            font-size: 12px
+            font-family: 'FontAwesome'
+            vertical-align: middle
+          }
+          &.good:after {
+            color: $green
+            content: '\f058'
+          }
+          &.bad:after {
+            content: '\f057'
+            color: $red
+          }
+
+          &:hover {
+            &:after { display: none }
+            .date-label { display: none }
+            .percent-label { display: inline }
+          }
+        }
+
+        &.rdtToday:before {
+          border-bottom: 7px solid #ffffff
+        }
+
+        &.rdtDay {
+          height: 40px
+          width: 60px
+        }
+
+        &.rdtMonth,
+        &.rdtYear {
+          height: 93px
+          width: 80px
+        }
+
+        &.rdtOld,
+        &.rdtNew {
+          color: #666666
+
+          span {
+            cursor: not-allowed
+          }
+        }
+
+        &.rdtYear:hover,
+        &.rdtMonth:hover,
+        &.rdtDay:hover,
+        &.rdtHour:hover,
+        &.rdtMinute:hover,
+        &.rdtSecond:hover,
+        &.rdtTimeToggle:hover,
+        &.rdtActive,
+        &.rdtActive:hover {
+          background: rgba(255, 255, 255, .3)
+        }
+
+        &.rdtDisabled:hover, &.rdtOld:hover, &.rdtNew:hover {
+          background: rgba(255, 255, 255, 0)
+        }
+      }
+    }
+  }
+}
+
+.recharts-wrapper .recharts-surface {
+
+  .recharts-reference-line {
+    .recharts-reference-line-line {
+      stroke: $red
+      stroke-dasharray 5
+    }
+    .recharts-text.recharts-label {
+      font-size: 12px
+      fill: $red
+      stroke: none
+    }
+  }
+
+  .recharts-brush {
+
+    rect {
+      stroke: #cccccc
+      fill: #2b3238
+    }
+
+    .recharts-brush-texts {
+      font-size: 12px
+      stroke: #ffffff
+    }
+
+    .recharts-brush-slide {
+      fill: #ffffff
+    }
+
+    .recharts-brush-traveller rect {
+      fill: #ccccc
+    }
+  }
+
+  .recharts-bar .recharts-bar-rectangles .recharts-bar-rectangle .recharts-rectangle {
+    &.good {
+      stroke: none
+      fill: $green
+    }
+
+    &.bad {
+      stroke: none
+      fill: $red
+    }
+
+    .rectangle-tooltip-cursor path {
+      fill: #ffffff
+    }
+  }
+
+  .recharts-cartesian-axis {
+    font-size: 12px
+
+    .recharts-label {
+      fill: #ffffff
+      stroke: #ffffff
+    }
+
+    .recharts-cartesian-axis-line {
+      stroke: #ffffff
+    }
+
+    .recharts-cartesian-axis-tick {
+
+      .recharts-cartesian-axis-tick-line {
+        stroke: #ffffff
+      }
+      .recharts-text.recharts-cartesian-axis-tick-value {
+        stroke: none
+        fill: #ffffff
+      }
+    }
+  }
+}
+
+.custom-chart-tooltip {
+  background: rgba(0, 0, 0, .5)
+  padding: 10px
+  border-radius: 4px
+
+  .label-value {
+    font-size: 12px
+
+    .label {
+        font-weight: bold
+    }
+
+    .value {
+
+    }
+  }
+}

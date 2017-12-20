@@ -43,7 +43,7 @@ export function fetchHistory(board: string, date: ?string): FETCH_HISTORY {
   };
 }
 
-export type FETCH_STATS = { type: 'FETCH_STATS', board: string };
+export type FETCH_STATS = { type: 'FETCH_STATS', board: string};
 export type FETCH_STATS_SUCCESS = { type: 'FETCH_STATS_SUCCESS', payload: Object };
 export type FETCH_STATS_FAILURE = { type: 'FETCH_STATS_FAILURE', payload: string };
 

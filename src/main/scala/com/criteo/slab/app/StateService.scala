@@ -1,6 +1,6 @@
 package com.criteo.slab.app
 
-import java.time.Instant
+import java.time.{Instant, ZoneOffset, ZonedDateTime}
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.{Executors, TimeUnit}
 
@@ -14,7 +14,7 @@ import scalacache.caffeine.CaffeineCache
 private[slab] class StateService(
                                   val executors: Seq[Executor[_]],
                                   val interval: Int,
-                                  val statsDays: Int = 7
+                                  val statsDays: Int = 730
                                 )(implicit ec: ExecutionContext) {
 
   import StateService._
@@ -56,16 +56,43 @@ private[slab] class StateService(
       }
   }
 
-  // Stats of last n days
-  def stats(board: String): Future[Map[Long, Stats]] = memoize(Duration.create(12, TimeUnit.HOURS)) {
-    logger.info(s"Updating statistics of $board")
-    val now = Instant.now()
+  def stats(board: String): Future[Map[Long, Double]] = {
+    val now = ZonedDateTime.now(ZoneOffset.UTC)
     executors.find(_.board.title == board)
-      .fold(Future.failed(NotFoundError(s"$board does not exist")): Future[Map[Long, Stats]]) {
-        _
-          .fetchHistory(now.minus(statsDays, ChronoUnit.DAYS), now)
-          .map(getStatsByHour)
+      .fold(Future.failed(NotFoundError(s"$board does not exist")): Future[Map[Long, Double]]) {
+        executor =>
+
+          def getSloCacheDuration(from: ZonedDateTime): Duration =
+            if (from.plus(1, ChronoUnit.MONTHS).compareTo(now) > 0)
+            // expire cache fro current month more often
+              Duration.create(1, TimeUnit.HOURS)
+            else
+            // don't expire all caches in the same time
+              Duration.create(12, TimeUnit.HOURS).plus(Duration.create((Math.random() * 30).toInt, TimeUnit.MINUTES))
+
+          //cache only full months
+          def boardMonthlySloInner(board: String, from: ZonedDateTime, until: ZonedDateTime): Future[Map[Long, Double]] = memoize(getSloCacheDuration(from)) {
+            executor.fetchHourlySlo(from.toInstant, until.toInstant).map(_.toMap)
+          }
+
+          val from = now.minus(statsDays, ChronoUnit.DAYS)
+          val until = now
+
+          //extend the interval with one day in both directions to avoid timezone issues
+          val fromStartOfMonth = from.minus(1, ChronoUnit.DAYS).truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1)
+          val months = ChronoUnit.MONTHS.between(fromStartOfMonth, until.plus(1, ChronoUnit.DAYS)).toInt
+
+          val monthlyResults =
+            for {idx <- 0 to months} yield {
+              val from = fromStartOfMonth.plus(idx, ChronoUnit.MONTHS)
+              val to = fromStartOfMonth.plus(idx + 1, ChronoUnit.MONTHS)
+              boardMonthlySloInner(board, from, to)
+            }
+          val fromTs = from.toEpochSecond * 1000
+          val toTs = until.toEpochSecond * 1000
+          Future.sequence(monthlyResults).map(_.fold(Map.empty[Long, Double])(_ ++ _).filterKeys(ts => ts >= fromTs && ts < toTs))
       }
+
   }
 
   sys.addShutdownHook {

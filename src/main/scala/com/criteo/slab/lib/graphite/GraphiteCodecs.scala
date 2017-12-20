@@ -3,7 +3,7 @@ package com.criteo.slab.lib.graphite
 import java.time.Instant
 
 import com.criteo.slab.core.Codec
-import com.criteo.slab.lib.Values.{Latency, Version}
+import com.criteo.slab.lib.Values.{Latency, Slo, Version}
 import com.criteo.slab.lib.graphite.GraphiteStore.Repr
 
 import scala.util.Try
@@ -39,5 +39,15 @@ object GraphiteCodecs {
     )
 
     override def decode(v: Repr): Try[Instant] = Try(Instant.ofEpochMilli(v("datetime").toLong))
+  }
+
+  implicit val slo = new Codec[Slo, Repr] {
+    override def encode(v: Slo): Repr = Map(
+      "slo" -> v.underlying
+    )
+
+    override def decode(v: Repr): Try[Slo] = Try(
+      Slo(v("slo"))
+    )
   }
 }

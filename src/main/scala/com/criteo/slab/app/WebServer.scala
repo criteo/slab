@@ -1,10 +1,11 @@
 package com.criteo.slab.app
 
 import java.net.URLDecoder
+import java.text.DecimalFormat
 import java.time.{Duration, Instant}
 
 import com.criteo.slab.app.StateService.NotFoundError
-import com.criteo.slab.core.Executor.{FetchBoardHistory, RunBoard}
+import com.criteo.slab.core.Executor.{FetchBoardHistory, FetchBoardHourlySlo, RunBoard}
 import com.criteo.slab.core._
 import com.criteo.slab.utils.Jsonable
 import com.criteo.slab.utils.Jsonable._
@@ -28,7 +29,7 @@ import scala.util.control.NonFatal
   */
 case class WebServer(
                       val pollingInterval: Int = 60,
-                      val statsDays: Int = 7,
+                      val statsDays: Int = 730,
                       private val routeGenerator: StateService => PartialFunction[Request, Future[Response]] = _ => PartialFunction.empty,
                       private val executors: List[Executor[_]] = List.empty
                     )(implicit ec: ExecutionContext) {
@@ -42,6 +43,7 @@ case class WebServer(
     implicit
     runBoard: Case3.Aux[RunBoard.type, Board[L], Context, Boolean, Future[BoardView]],
     fetchBoardHistory: Case3.Aux[FetchBoardHistory.type, Board[L], Instant, Instant, Future[Seq[(Long, BoardView)]]],
+    fetchBoardHourlySlo: Case3.Aux[FetchBoardHourlySlo.type, Board[L], Instant, Instant, Future[Seq[(Long, Double)]]],
     store: Store[O]
   ): WebServer = {
     this.copy(executors = Executor(board) :: executors)
@@ -73,6 +75,8 @@ case class WebServer(
 
   private val logger = LoggerFactory.getLogger(this.getClass)
 
+  private val decimalFormat = new DecimalFormat("0.####")
+
   private implicit def stringEncoder = new Jsonable[String] {}
 
   private implicit def longStringEncoder = new Jsonable[(Long, String)] {}
@@ -88,7 +92,7 @@ case class WebServer(
   private val routes: PartialFunction[Request, Future[Response]] = {
     // Configs of boards
     case GET at url"/api/boards" => {
-      Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links) }.toJSON).map(jsonContentType)
+      Ok(boards.map { board => BoardConfig(board.title, board.layout, board.links, board.slo) }.toJSON).map(jsonContentType)
     }
     // Current board view
     case GET at url"/api/boards/$board" => {
@@ -143,7 +147,7 @@ case class WebServer(
     case GET at url"/api/boards/$board/stats" => {
       val boardName = URLDecoder.decode(board, "UTF-8")
       stateService.stats(boardName)
-        .map(_.toJSON)
+        .map(_.mapValues(decimalFormat.format)).map(_.toJSON)
         .map(Ok(_))
         .map(jsonContentType)
         .recoverWith(errorHandler)

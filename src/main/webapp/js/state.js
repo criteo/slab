@@ -33,7 +33,8 @@ export type BoardView = {
   status: Status,
   message: string,
   columns: Array<Column>,
-  links: Array<Link>
+  links: Array<Link>,
+  slo: number
 };
 
 export type Layout = {
@@ -46,16 +47,14 @@ export type BoardConfig = {
   links: Array<Link>
 };
 
-export type StatsEntry = {
-  successes: number,
-  warnings: number,
-  errors: number,
-  unknown: number,
-  total: number
+export type Stats = {
+  [k: ?number]: number
 };
 
-export type Stats = {
-  [k: ?number]: StatsEntry
+export type StatsGroup = {
+  daily: Stats,
+  monthly: Stats,
+  yearly: Stats
 };
 
 export type Route = {

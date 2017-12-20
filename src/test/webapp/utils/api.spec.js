@@ -1,4 +1,4 @@
-import { combineViewAndLayout, aggregateStatsByDay } from 'src/utils';
+import { combineViewAndLayout, aggregateStatsByDay, aggregateStatsByMonth, aggregateStatsByYear } from 'src/utils';
 import moment from 'moment';
 
 describe('api utils specs', () => {
@@ -111,7 +111,8 @@ describe('api utils specs', () => {
             }]
           }
         ],
-        links
+        links,
+        slo: 0.97
       });
     });
   });
@@ -119,52 +120,64 @@ describe('api utils specs', () => {
   describe('aggregateStatsByDay', () => {
     it('takes hourly stats and aggregate them into daily buckets', () => {
       const stats = {
-        [moment('2000-01-01 00:00').valueOf()]: {
-          successes: 1,
-          warnings: 1,
-          errors: 1,
-          unknown: 0,
-          total: 3
-        },
-        [moment('2000-01-01 23:00').valueOf()]: {
-          successes: 1,
-          warnings: 1,
-          errors: 1,
-          unknown: 0,
-          total: 3
-        },
-        [moment('2000-01-02 00:00').valueOf()]: {
-          successes: 3,
-          warnings: 2,
-          errors: 1,
-          unknown: 0,
-          total: 6
-        },
-        [moment('2000-01-02 23:59').valueOf()]: {
-          successes: 0,
-          warnings: 0,
-          errors: 0,
-          unknown: 3,
-          total: 3
-        },
+        [moment('2000-01-01 00:00').valueOf()]: 0.5,
+        [moment('2000-01-01 23:00').valueOf()]: 0.9,
+        [moment('2000-01-02 00:00').valueOf()]: 1,
+        [moment('2000-01-02 23:59').valueOf()]: 1,
       };
       const res = aggregateStatsByDay(stats);
       expect(res).to.deep.equal(
         {
-          [moment('2000-01-01 00:00').valueOf()]: {
-            successes: 2,
-            warnings: 2,
-            errors: 2,
-            unknown: 0,
-            total: 6
-          },
-          [moment('2000-01-02 00:00').valueOf()]: {
-            successes: 3,
-            warnings: 2,
-            errors: 1,
-            unknown: 3,
-            total: 9
-          },
+          [moment('2000-01-01 00:00').valueOf()]: 0.7,
+          [moment('2000-01-02 00:00').valueOf()]: 1,
+        }
+      );
+    });
+  });
+
+  describe('aggregateStatsByMonth', () => {
+    it('takes hourly stats and aggregate them into monthly buckets', () => {
+      const stats = {
+        [moment('2000-01-01 00:00').valueOf()]: 0.5,
+        [moment('2000-01-01 23:00').valueOf()]: 0.9,
+        [moment('2000-01-02 00:00').valueOf()]: 1,
+        [moment('2000-01-02 23:59').valueOf()]: 1,
+        [moment('2000-02-01 12:00').valueOf()]: 0.3,
+        [moment('2000-02-02 13:00').valueOf()]: 0.3,
+      };
+      const res = aggregateStatsByMonth(stats);
+      expect(res).to.deep.equal(
+        {
+          [moment('2000-01-01 00:00').valueOf()]: 0.85,
+          [moment('2000-02-01 00:00').valueOf()]: 0.3,
+        }
+      );
+    });
+  });
+
+  describe('aggregateStatsByYear', () => {
+    it('takes hourly stats and aggregate them into yearly buckets', () => {
+      const stats = {
+        [moment('2000-01-01 00:00').valueOf()]: 0.5,
+        [moment('2000-01-01 23:00').valueOf()]: 0.9,
+        [moment('2000-01-02 00:00').valueOf()]: 1,
+        [moment('2000-01-02 23:59').valueOf()]: 1,
+        [moment('2000-02-01 12:00').valueOf()]: 0.3,
+        [moment('2000-03-02 13:00').valueOf()]: 0.33,
+        [moment('2001-01-01 00:00').valueOf()]: 0.1,
+        [moment('2001-03-01 23:00').valueOf()]: 0.89,
+        [moment('2001-03-12 00:00').valueOf()]: 0.14,
+        [moment('2001-04-01 23:59').valueOf()]: 1,
+        [moment('2001-05-01 12:00').valueOf()]: 0.4,
+        [moment('2002-01-31 13:00').valueOf()]: 0.72,
+        [moment('2002-04-04 00:00').valueOf()]: 0.32,
+      };
+      const res = aggregateStatsByYear(stats);
+      expect(res).to.deep.equal(
+        {
+          [moment('2000-01-01 00:00').valueOf()]: 0.6716666666666665,
+          [moment('2001-01-01 00:00').valueOf()]: 0.506,
+          [moment('2002-01-01 00:00').valueOf()]: 0.52,
         }
       );
     });
