@@ -33,6 +33,48 @@ lazy val commonSettings = Seq(
           <organization>Criteo</organization>
           <organizationUrl>http://www.criteo.com</organizationUrl>
         </developer>
+        <developer>
+          <name>Guillaume Bort</name>
+          <email>g.bort@criteo.com</email>
+          <url>https://github.com/guillaumebort</url>
+          <organization>Criteo</organization>
+          <organizationUrl>http://www.criteo.com</organizationUrl>
+        </developer>
+        <developer>
+          <name>Justin Coffey</name>
+          <email>j.coffey@criteo.com</email>
+          <url>https://github.com/jqcoffey</url>
+          <organization>Criteo</organization>
+          <organizationUrl>http://www.criteo.com</organizationUrl>
+        </developer>
+        <developer>
+          <name>Vincent Guerci</name>
+          <email>v.guerci@criteo.com</email>
+          <url>https://github.com/vguerci</url>
+          <organization>Criteo</organization>
+          <organizationUrl>http://www.criteo.com</organizationUrl>
+        </developer>
+        <developer>
+          <name>Jean-Baptiste Catté</name>
+          <email>jb.catte@criteo.com</email>
+          <url>https://github.com/jbkt</url>
+          <organization>Criteo</organization>
+          <organizationUrl>http://www.criteo.com</organizationUrl>
+        </developer>
+        <developer>
+          <name>Tudor Mihordea</name>
+          <email>t.mihordea@criteo.com</email>
+          <url>https://github.com/tmihordea</url>
+          <organization>Criteo</organization>
+          <organizationUrl>http://www.criteo.com</organizationUrl>
+        </developer>
+        <developer>
+          <name>Cristian Rotundu</name>
+          <email>c.rotundu@criteo.com</email>
+          <url>https://github.com/crotundu</url>
+          <organization>Criteo</organization>
+          <organizationUrl>http://www.criteo.com</organizationUrl>
+        </developer>
       </developers>
   }
 )
