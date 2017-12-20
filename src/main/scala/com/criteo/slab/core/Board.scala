@@ -11,13 +11,15 @@ import shapeless.{HList, UnaryTCConstraint}
   * @param aggregate Aggregates its children boxes views
   * @param layout    The layout of the board
   * @param links     Defines links between boxes, will draw lines in the UI
+  * @param slo       Defines the SLO threshold for the calendar.
   */
 case class Board[B <: HList](
                               title: String,
                               boxes: B,
                               aggregate: (Map[Box[_], View], Context) => View,
                               layout: Layout,
-                              links: Seq[(Box[_], Box[_])] = Seq.empty
+                              links: Seq[(Box[_], Box[_])] = Seq.empty,
+                              slo: Double = 0.97
                             )(
                               implicit
                               constraint: UnaryTCConstraint[B, Box],

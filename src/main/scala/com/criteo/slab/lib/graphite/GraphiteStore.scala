@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit.SECONDS
 
 import com.criteo.slab.core._
+import com.criteo.slab.lib.Values.Slo
 import com.criteo.slab.lib.graphite.GraphiteStore.Repr
 import com.criteo.slab.utils
 import com.criteo.slab.utils.{HttpUtils, Jsonable}
@@ -20,15 +21,16 @@ import scala.util.{Failure, Success, Try}
 /**
   * A value store that uses Graphite
   *
-  * @param host              The host of the writing endpoint
-  * @param port              The port of the writing endpoint
-  * @param webHost           The URL of the Web host for reading
-  * @param checkInterval     Check interval in [[java.time.Duration Duration]]
-  * @param group             The group name of Graphite metrics
-  * @param serverTimeZone    The timezone of the server
-  * @param requestTimeout    Request timeout
-  * @param maxConnections    Max connections of the Http client
-  * @param ec                The execution context
+  * @param host           The host of the writing endpoint
+  * @param port           The port of the writing endpoint
+  * @param webHost        The URL of the Web host for reading
+  * @param checkInterval  Check interval in [[java.time.Duration Duration]]
+  * @param group          The group name of Graphite metrics
+  * @param sloGroup       The group name of Graphite metrics where SLO will be stored
+  * @param serverTimeZone The timezone of the server
+  * @param requestTimeout Request timeout
+  * @param maxConnections Max connections of the Http client
+  * @param ec             The execution context
   */
 class GraphiteStore(
                      host: String,
@@ -36,6 +38,7 @@ class GraphiteStore(
                      webHost: String,
                      checkInterval: Duration,
                      group: Option[String] = None,
+                     sloGroup: Option[String] = None,
                      serverTimeZone: ZoneId = ZoneId.systemDefault(),
                      requestTimeout: FiniteDuration = CDuration.create(60, SECONDS),
                      maxConnections: Int = 128
@@ -50,25 +53,37 @@ class GraphiteStore(
   private val DateFormatter = DateTimeFormatter.ofPattern("HH:mm_YYYYMMdd").withZone(serverTimeZone)
 
   private val GroupPrefix = group.map(_ + ".").getOrElse("")
+  private val SloGroupPrefix = sloGroup.map(_ + ".").getOrElse("")
 
   private val Get = HttpUtils.makeGet(new URL(webHost), maxConnections)
+
+  private def cleanId(id: String) = id.replaceAll("\\s", "-").replaceAll("[^0-9a-zA-Z-]", "").toLowerCase()
 
   // Returns a prefix of Graphite metrics in "groupId.id"
   private def getPrefix(id: String) = GroupPrefix + id
 
-  override def upload[T](id: String, context: Context, v: T)(implicit codec: Codec[T, Repr]): Future[Unit] = {
+  private def getSloPrefix(id: String) = SloGroupPrefix + cleanId(id)
+
+  private def sendToGraphite[T](prefixedId: String, context: Context, v: T)(implicit codec: Codec[T, Repr]): Future[Unit] = {
     utils.collectTries(codec.encode(v).toList.map { case (name, value) =>
-      send(host, port, s"${getPrefix(id)}.$name", value)
+      send(host, port, s"$prefixedId.$name", value)
     }) match {
       case Success(_) =>
-        logger.debug(s"succeeded in uploading $GroupPrefix$id")
+        logger.debug(s"succeeded in uploading $prefixedId")
         Future.successful()
       case Failure(e) =>
-        logger.debug(s"failed to upload $GroupPrefix$id", e)
+        logger.debug(s"failed to upload $prefixedId", e)
         Future.failed(e)
     }
   }
 
+  override def upload[T](id: String, context: Context, v: T)(implicit codec: Codec[T, Repr]): Future[Unit] = {
+    sendToGraphite(getPrefix(id), context, v)
+  }
+
+  override def uploadSlo(id: String, context: Context, slo: Slo)(implicit codec: Codec[Slo, Repr]): Future[Unit] = {
+    sendToGraphite(getSloPrefix(id), context, slo)
+  }
 
   override def fetch[T](id: String, context: Context)(implicit codec: Codec[T, Repr]): Future[Option[T]] = {
     val query = HttpUtils.makeQuery(Map(
@@ -93,10 +108,9 @@ class GraphiteStore(
     }
   }
 
-
-  override def fetchHistory[T](id: String, from: Instant, until: Instant)(implicit codec: Codec[T, Repr]): Future[Seq[(Long, T)]] = {
+  private def fetchGraphiteHistory[T](prefixedId: String, from: Instant, until: Instant)(implicit codec: Codec[T, Repr]): Future[Seq[(Long, T)]] = {
     val query = HttpUtils.makeQuery(Map(
-      "target" -> s"${getPrefix(id)}.*",
+      "target" -> s"$prefixedId.*",
       "from" -> s"${DateFormatter.format(from)}",
       "until" -> s"${DateFormatter.format(until)}",
       "format" -> "json",
@@ -104,20 +118,28 @@ class GraphiteStore(
     ))
     Get[String](s"/render$query", Map.empty, requestTimeout) flatMap { content =>
       Jsonable.parse[List[GraphiteMetric]](content, jsonFormat) map { metrics =>
-        groupMetrics(s"${getPrefix(id)}", metrics)
+        groupMetrics(s"$prefixedId", metrics)
       } match {
         case Success(metrics) =>
-          logger.debug(s"${getPrefix(id)}: fetched ${metrics.size} values")
+          logger.debug(s"$prefixedId: fetched ${metrics.size} values")
           Future.successful {
-            metrics.mapValues(codec.decode(_)).collect {
+            metrics.mapValues(codec.decode).collect {
               case (ts, Success(v)) => (ts, v)
             }.toList
           }
         case Failure(e) =>
-          logger.debug(s"${getPrefix(id)}: Invalid graphite metric, got $content")
+          logger.debug(s"$prefixedId}: Invalid graphite metric, got $content")
           Future.failed(e)
       }
     }
+  }
+
+  override def fetchHistory[T](id: String, from: Instant, until: Instant)(implicit codec: Codec[T, Repr]): Future[Seq[(Long, T)]] = {
+    fetchGraphiteHistory(getPrefix(id), from, until)
+  }
+
+  override def fetchSloHistory(id: String, from: Instant, until: Instant)(implicit codec: Codec[Slo, Repr]): Future[Seq[(Long, Slo)]] = {
+    fetchGraphiteHistory(getSloPrefix(id), from, until)
   }
 }
 

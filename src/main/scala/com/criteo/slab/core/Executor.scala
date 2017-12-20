@@ -1,8 +1,10 @@
 package com.criteo.slab.core
 
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 
-import com.criteo.slab.core.Executor.{FetchBoardHistory, RunBoard}
+import com.criteo.slab.core.Executor.{FetchBoardHistory, FetchBoardHourlySlo, RunBoard}
+import com.criteo.slab.lib.Values.Slo
 import org.slf4j.LoggerFactory
 import shapeless.ops.hlist.{Mapper, ToTraversable, ZipConst}
 import shapeless.poly.Case3
@@ -20,7 +22,8 @@ import scala.concurrent.{ExecutionContext, Future}
 private[slab] case class Executor[L <: HList](board: Board[L])(
   implicit
   runBoard: Case3.Aux[RunBoard.type, Board[L], Context, Boolean, Future[BoardView]],
-  fetchBoardHistory: Case3.Aux[FetchBoardHistory.type, Board[L], Instant, Instant, Future[Seq[(Long, BoardView)]]]
+  fetchBoardHistory: Case3.Aux[FetchBoardHistory.type, Board[L], Instant, Instant, Future[Seq[(Long, BoardView)]]],
+  fetchBoardHourlySlo: Case3.Aux[FetchBoardHourlySlo.type, Board[L], Instant, Instant, Future[Seq[(Long, Double)]]]
 ) {
   def apply(ctx: Option[Context] = None): Future[BoardView] = {
     RunBoard(board, ctx.getOrElse(Context.now), ctx.isDefined)
@@ -29,26 +32,44 @@ private[slab] case class Executor[L <: HList](board: Board[L])(
   def fetchHistory(from: Instant, until: Instant): Future[Seq[(Long, BoardView)]] = {
     FetchBoardHistory(board, from, until)
   }
+
+  def fetchHourlySlo(from: Instant, until: Instant): Future[Seq[(Long, Double)]] = {
+    FetchBoardHourlySlo(board, from, until)
+  }
+
 }
 
 private[slab] object Executor {
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   object RunBoard extends Poly3 {
-    implicit def f[L <: HList, A <: HList, B <: HList](
+    implicit def f[L <: HList, A <: HList, B <: HList, Repr](
                                                         implicit
                                                         zip: ZipConst.Aux[(Context, Boolean), L, A],
                                                         mapper: Mapper.Aux[RunBox.type, A, B],
                                                         to: ToTraversable.Aux[B, List, Future[(Box[_], BoxView)]],
-                                                        ec: ExecutionContext
+                                                        ec: ExecutionContext,
+                                                        store: Store[Repr],
+                                                        codec: Codec[Slo, Repr]
                                                       ): Case.Aux[Board[L], Context, Boolean, Future[BoardView]] =
       at { (board, context, isReplay) =>
         Future.sequence {
           board.boxes.zipConst(context -> isReplay).map(RunBox).toList[Future[(Box[_], BoxView)]]
-        } map { pairs =>
+        } flatMap { pairs =>
           val bv = pairs.toMap
           val aggView = board.aggregate(bv.mapValues(_.toView), context)
-          BoardView(board.title, aggView.status, aggView.message, bv.values.toList)
+          val boardView = BoardView(board.title, aggView.status, aggView.message, bv.values.toList)
+          if (!isReplay) {
+            val slo = if (boardView.status == Status.Error) Slo(0) else Slo(1)
+            store.uploadSlo(board.title, context, slo)
+              .map(_ => boardView)
+              .recover { case e =>
+                logger.error(e.getMessage, e)
+                boardView
+              }
+          } else {
+            Future.successful(boardView)
+          }
         }
       }
   }
@@ -121,6 +142,29 @@ private[slab] object Executor {
       }
       .map { case (view, maybeValue) =>
         (check, (CheckView(check.title, view.status, view.message, view.label), maybeValue))
+      }
+  }
+
+  object FetchBoardHourlySlo extends Poly3 {
+    private def avg(values: Seq[Slo]): Double = {
+      val size = values.size
+      if (size > 0) values.map(_.underlying).sum / size else 0
+    }
+
+    implicit def f[L <: HList, Repr](
+                                      implicit
+                                      ec: ExecutionContext,
+                                      store: Store[Repr],
+                                      codec: Codec[Slo, Repr]
+                                    ): Case.Aux[Board[L], Instant, Instant, Future[Seq[(Long, Double)]]] =
+      at { (board, from, until) =>
+        store.fetchSloHistory(board.title, from, until).map { values =>
+          values.map {
+            case (ts, value) => Instant.ofEpochMilli(ts).truncatedTo(ChronoUnit.HOURS).toEpochMilli -> value
+          }.groupBy(_._1).map {
+            case (hour, list) => hour -> avg(list.map(_._2))
+          }.toSeq
+        }
       }
   }
 

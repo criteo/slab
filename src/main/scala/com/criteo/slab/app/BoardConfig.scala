@@ -14,7 +14,8 @@ import org.json4s.{CustomSerializer, Serializer}
 private[slab] case class BoardConfig(
                                       title: String,
                                       layout: Layout,
-                                      links: Seq[(Box[_], Box[_])] = Seq.empty
+                                      links: Seq[(Box[_], Box[_])] = Seq.empty,
+                                      slo: Double
                                     )
 
 object BoardConfig {

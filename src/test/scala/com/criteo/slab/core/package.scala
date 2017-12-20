@@ -2,6 +2,7 @@ package com.criteo.slab
 
 import java.time.Instant
 
+import com.criteo.slab.lib.Values.Slo
 import shapeless.HNil
 
 import scala.concurrent.Future
@@ -67,6 +68,13 @@ package object core {
     override def decode(v: String): Try[Int] = Try(v.toInt)
   }
 
+  implicit def codecSlo = new Codec[Slo, String] {
+
+    override def encode(v: Slo): String = v.underlying.toString
+
+    override def decode(v: String): Try[Slo] = Try(Slo(v.toDouble))
+  }
+
   implicit def codecString = new Codec[String, String] {
     override def encode(v: String): String = v
 
@@ -79,5 +87,9 @@ package object core {
     override def fetch[T](id: String, context: Context)(implicit ev: Codec[T, String]): Future[Option[T]] = Future.successful(ev.decode("100").toOption)
 
     override def fetchHistory[T](id: String, from: Instant, until: Instant)(implicit ev: Codec[T, String]): Future[Seq[(Long, T)]] = Future.successful(List.empty)
+
+    override def uploadSlo(id: String, context: Context, v: Slo)(implicit codec: Codec[Slo, String]): Future[Unit] = Future.successful(())
+
+    def fetchSloHistory(id: String, from: Instant, until: Instant)(implicit codec: Codec[Slo, String]): Future[Seq[(Long, Slo)]] = Future.successful(List.empty)
   }
 }
