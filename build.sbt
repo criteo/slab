@@ -1,6 +1,8 @@
+import scala.sys.process.Process
+
 lazy val commonSettings = Seq(
   organization := "com.criteo",
-  version := "0.4.9",
+  version := "0.4.7",
   scalaVersion := "2.12.2",
   crossScalaVersions := Seq("2.11.8", "2.12.2"),
   credentials += Credentials(
@@ -121,11 +123,11 @@ lazy val example = (project in file("example"))
 lazy val buildWebapp = taskKey[Unit]("build webapp")
 
 buildWebapp := {
-  "npm install" !
+  Process("npm install") !
 
-  "npm run build -- -p --env.out=target/scala-2.11/classes" !
+  Process("npm run build -- -p --env.out=target/scala-2.11/classes") !
 
-  "npm run build -- -p --env.out=target/scala-2.12/classes" !
+  Process("npm run build -- -p --env.out=target/scala-2.12/classes") !
 }
 
-packageBin in Compile <<= (packageBin in Compile) dependsOn buildWebapp
+packageBin in Compile := ((packageBin in Compile) dependsOn buildWebapp).value

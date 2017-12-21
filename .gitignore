@@ -2,6 +2,7 @@
 target/
 project/*
 !project/*.sbt
+!project/build.properties
 node_modules/
 examples/
 dist/
