@@ -451,6 +451,22 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.InMemoryStore">InMemoryStore</a> → <a href="../core/Store.html" class="extype" name="com.criteo.slab.core.Store">Store</a></dd></dl></div>
+    </li><li name="com.criteo.slab.lib.InMemoryStore#fetchSloHistory" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fetchSloHistory(id:String,from:java.time.Instant,until:java.time.Instant)(implicitcodec:com.criteo.slab.core.Codec[com.criteo.slab.lib.Values.Slo,Any]):scala.concurrent.Future[Seq[(Long,com.criteo.slab.lib.Values.Slo)]]"></a><a id="fetchSloHistory(String,Instant,Instant)(Codec[Slo,Any]):Future[Seq[(Long,Slo)]]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/InMemoryStore.html#fetchSloHistory(id:String,from:java.time.Instant,until:java.time.Instant)(implicitcodec:com.criteo.slab.core.Codec[com.criteo.slab.lib.Values.Slo,Any]):scala.concurrent.Future[Seq[(Long,com.criteo.slab.lib.Values.Slo)]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fetchSloHistory</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="from">from: <span class="extype" name="java.time.Instant">Instant</span></span>, <span name="until">until: <span class="extype" name="java.time.Instant">Instant</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="codec">codec: <a href="../core/Codec.html" class="extype" name="com.criteo.slab.core.Codec">Codec</a>[<a href="Values$$Slo.html" class="extype" name="com.criteo.slab.lib.Values.Slo">Slo</a>, <span class="extype" name="scala.Any">Any</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Seq">Seq</span>[(<span class="extype" name="scala.Long">Long</span>, <a href="Values$$Slo.html" class="extype" name="com.criteo.slab.lib.Values.Slo">Slo</a>)]]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.InMemoryStore">InMemoryStore</a> → <a href="../core/Store.html" class="extype" name="com.criteo.slab.core.Store">Store</a></dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
@@ -614,6 +630,22 @@
       </span>
       <span class="symbol">
         <span class="name">upload</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="context">context: <a href="../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>, <span name="v">v: <span class="extype" name="com.criteo.slab.lib.InMemoryStore.upload.T">T</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="codec">codec: <a href="../core/Codec.html" class="extype" name="com.criteo.slab.core.Codec">Codec</a>[<span class="extype" name="com.criteo.slab.lib.InMemoryStore.upload.T">T</span>, <span class="extype" name="scala.Any">Any</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.InMemoryStore">InMemoryStore</a> → <a href="../core/Store.html" class="extype" name="com.criteo.slab.core.Store">Store</a></dd></dl></div>
+    </li><li name="com.criteo.slab.lib.InMemoryStore#uploadSlo" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="uploadSlo(id:String,context:com.criteo.slab.core.Context,slo:com.criteo.slab.lib.Values.Slo)(implicitcodec:com.criteo.slab.core.Codec[com.criteo.slab.lib.Values.Slo,Any]):scala.concurrent.Future[Unit]"></a><a id="uploadSlo(String,Context,Slo)(Codec[Slo,Any]):Future[Unit]"></a>
+      <span class="permalink">
+      <a href="../../../../com/criteo/slab/lib/InMemoryStore.html#uploadSlo(id:String,context:com.criteo.slab.core.Context,slo:com.criteo.slab.lib.Values.Slo)(implicitcodec:com.criteo.slab.core.Codec[com.criteo.slab.lib.Values.Slo,Any]):scala.concurrent.Future[Unit]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uploadSlo</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="context">context: <a href="../core/Context.html" class="extype" name="com.criteo.slab.core.Context">Context</a></span>, <span name="slo">slo: <a href="Values$$Slo.html" class="extype" name="com.criteo.slab.lib.Values.Slo">Slo</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="codec">codec: <a href="../core/Codec.html" class="extype" name="com.criteo.slab.core.Codec">Codec</a>[<a href="Values$$Slo.html" class="extype" name="com.criteo.slab.lib.Values.Slo">Slo</a>, <span class="extype" name="scala.Any">Any</span>]</span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<span class="extype" name="scala.Unit">Unit</span>]</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.criteo.slab.lib.InMemoryStore">InMemoryStore</a> → <a href="../core/Store.html" class="extype" name="com.criteo.slab.core.Store">Store</a></dd></dl></div>
