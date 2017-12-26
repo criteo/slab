@@ -2,7 +2,7 @@ import scala.sys.process.Process
 
 lazy val commonSettings = Seq(
   organization := "com.criteo",
-  version := "0.4.7",
+  version := "0.4.8",
   scalaVersion := "2.12.2",
   crossScalaVersions := Seq("2.11.8", "2.12.2"),
   credentials += Credentials(
