@@ -3,8 +3,8 @@ import scala.sys.process.Process
 lazy val commonSettings = Seq(
   organization := "com.criteo",
   version := "0.4.8",
-  scalaVersion := "2.12.2",
-  crossScalaVersions := Seq("2.11.8", "2.12.2"),
+  scalaVersion := "2.12.4",
+  crossScalaVersions := Seq("2.11.8", "2.12.4"),
   credentials += Credentials(
     "Sonatype Nexus Repository Manager",
     "oss.sonatype.org",
@@ -92,14 +92,16 @@ lazy val root = (project in file("."))
   .settings(
     name := "slab",
     libraryDependencies ++= Seq(
-      "org.json4s" %% "json4s-native" % "3.4.2",
-      "org.scalatest" %% "scalatest" % "3.0.1" % Test,
-      "org.mockito" % "mockito-core" % "2.7.0" % Test,
       "org.slf4j" % "slf4j-api" % "1.7.25",
-      "com.criteo.lolhttp" %% "lolhttp" % "0.6.1",
+      "org.json4s" %% "json4s-native" % "3.4.2",
+      "com.criteo.lolhttp" %% "lolhttp" % "0.9.1",
       "com.github.cb372" %% "scalacache-core" % "0.9.4",
       "com.github.cb372" %% "scalacache-caffeine" % "0.9.4",
-      "com.chuusai" %% "shapeless" % "2.3.2"
+      "com.chuusai" %% "shapeless" % "2.3.2",
+      "org.typelevel" %% "cats-core" % "1.0.1",
+      "org.typelevel" %% "cats-effect" % "0.7",
+      "org.scalatest" %% "scalatest" % "3.0.1" % Test,
+      "org.mockito" % "mockito-core" % "2.7.0" % Test
     )
   )
 

@@ -5,6 +5,7 @@ package com.criteo.slab.example
 
 import java.net.URLDecoder
 
+import cats.effect.IO
 import com.criteo.slab.app.StateService.NotFoundError
 import com.criteo.slab.app.WebServer
 import com.criteo.slab.lib.InMemoryStore
@@ -32,14 +33,16 @@ object Launcher {
       .withRoutes(stateService => {
         case GET at "/api/heartbeat" => Ok("ok")
         case GET at url"/api/boards/$board/status" =>
-          stateService
-            .current(URLDecoder.decode(board, "UTF-8")).map(view => Ok(view.status.name))
-            .recover {
-              case NotFoundError(message) => NotFound(message)
-              case e =>
-                logger.error(e.getMessage, e)
-                InternalServerError()
-            }
+          IO.fromFuture(IO(
+            stateService
+              .current(URLDecoder.decode(board, "UTF-8")).map(view => Ok(view.status.name))
+              .recover {
+                case NotFoundError(message) => NotFound(message)
+                case e =>
+                  logger.error(e.getMessage, e)
+                  InternalServerError()
+              }
+          ))
       })
       // Attach a board to the server
       .attach(board)

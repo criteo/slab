@@ -4,7 +4,8 @@ import java.net.{URL, URLEncoder}
 import java.time.Instant
 import java.util.concurrent.TimeUnit.SECONDS
 
-import lol.http.{Client, ContentDecoder, HttpString, Get, Response}
+import cats.effect.IO
+import lol.http.{Client, ContentDecoder, Get, HttpString, Response}
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration.{Duration, FiniteDuration}
@@ -39,12 +40,12 @@ object HttpUtils {
     val fullURL = s"${url.getProtocol}://${url.getHost}:${port}$path"
     logger.info(s"Requesting $fullURL")
     val start = Instant.now
-    Client(url.getHost, port, url.getProtocol) runAndStop { client =>
+    Client(url.getHost, port, url.getProtocol).runAndStop { client =>
       client.run(request, timeout = timeout) { res =>
         logger.info(s"Response from $fullURL, status: ${res.status}, ${Instant.now.toEpochMilli - start.toEpochMilli}ms")
         handleResponse(res, fullURL)
-      } recoverWith handleError(fullURL)
-    }
+      }
+    }.unsafeToFuture().recoverWith(handleError(fullURL))
   }
 
   /** Make a HTTP Get client of which the connection is kept open
@@ -73,19 +74,21 @@ object HttpUtils {
 
   private def encodeURI(in: String) = URLEncoder.encode(in, "UTF-8").replace("+", "%20")
 
-  private def handleResponse[A: ContentDecoder](res: Response, url: String)(implicit ec: ExecutionContext): Future[A] = {
+  private def handleResponse[A: ContentDecoder](res: Response, url: String)(implicit ec: ExecutionContext): IO[A] = {
     if (res.status < 400)
       res.readAs[A]
     else
-      res
-        .readAs[String]
-        .recoverWith { case e =>
-          logger.error(e.getMessage, e)
-          Future.successful("Unable to get the message")
+      res.readAs[String].attempt
+        .map {
+          case Left(e) =>
+            logger.error(e.getMessage, e)
+            "Unable to get the message"
+          case Right(message) =>
+            message
         }
         .flatMap { message =>
           logger.info(s"Request to $url has failed, status: ${res.status}, message: $message")
-          Future.failed(FailedRequestException(res))
+          IO.raiseError(FailedRequestException(res))
         }
   }
 
@@ -103,7 +106,7 @@ object HttpUtils {
   case class FailedRequestException(response: Response) extends Exception
 
   /**
-    * It be used to send GET requests using the same client
+    * Send GET requests using the same HTTP client
     *
     * @param client         The client
     * @param defaultHeaders Default request headers
@@ -122,7 +125,7 @@ object HttpUtils {
       client.run(request, timeout = timeout) { res: Response =>
         logger.info(s"Response from $fullURL, status: ${res.status}, ${Instant.now.toEpochMilli - start.toEpochMilli}ms")
         handleResponse(res, fullURL)
-      } recoverWith handleError(fullURL)
+      }.unsafeToFuture().recoverWith(handleError(fullURL))
     }
   }
 
