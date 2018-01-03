@@ -130,11 +130,7 @@ lazy val example = (project in file("example"))
 lazy val buildWebapp = taskKey[Unit]("build webapp")
 
 buildWebapp := {
-  Process("npm install") !
-
-  Process("npm run build -- -p --env.out=target/scala-2.11/classes") !
-
-  Process("npm run build -- -p --env.out=target/scala-2.12/classes") !
+  Process(s"npm run build -- -p --env.out=${crossTarget.value}/classes") !
 }
 
 packageBin in Compile := ((packageBin in Compile) dependsOn buildWebapp).value
