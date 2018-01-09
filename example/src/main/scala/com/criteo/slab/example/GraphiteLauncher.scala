@@ -19,7 +19,7 @@ object GraphiteLauncher {
       host <- sys.env.get("GRAPHITE_HOST")
       port <- sys.env.get("GRAPHITE_PORT").map(_.toInt)
       webHost <- sys.env.get("GRAPHITE_WEB_HOST")
-    } yield new GraphiteStore(host, port, webHost, Duration.ofSeconds(60), Some("slab.example"))
+    } yield new GraphiteStore(host, port, webHost, Duration.ofSeconds(60), Some("slab.example"), Some("slab.example.slo"))
     implicit val store = maybeStore match {
       case Some(s) =>
         logger.info("[Slab Example] using Graphite store")
