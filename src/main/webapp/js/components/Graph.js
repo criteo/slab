@@ -89,9 +89,10 @@ class Graph extends Component {
 export default Graph;
 
 const getBox = (el: HTMLElement): { x: number, y: number } => {
+  let rect = el.getBoundingClientRect();
   return {
-    x: el.getBoundingClientRect().left + (el.getBoundingClientRect().right - el.getBoundingClientRect().left) / 2,
-    y: el.getBoundingClientRect().top + (el.getBoundingClientRect().bottom - el.getBoundingClientRect().top) / 2
+    x: rect.left + (rect.right - rect.left) / 2,
+    y: rect.top + (rect.bottom - rect.top) / 2
   };
 };
 
