@@ -10,8 +10,19 @@ type Props = {
   board: BoardView
 };
 
+type State = {
+  hoveredBoxTitle: string
+};
+
 class Graph extends Component {
   props: Props;
+  state: State;
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hoveredBoxTitle: ''
+    };
+  }
 
   render() {
     const { board } = this.props;
@@ -32,7 +43,13 @@ class Graph extends Component {
                       <h2>{row.title}</h2>
                       {
                         row.boxes.map(box => (
-                          <Box box={box} key={box.title} ref={box.title} />
+                          <Box
+                            box={box}
+                            key={box.title}
+                            ref={box.title}
+                            onMouseEnter={() => this.setState({ hoveredBoxTitle: box.title })}
+                            onMouseLeave={() => this.setState({ hoveredBoxTitle: '' })}
+                          />
                         ))
                       }
                     </section>
@@ -67,18 +84,23 @@ class Graph extends Component {
   drawLines = () => {
     let lines = findDOMNode(this.refs.lines);
     const { board } = this.props;
+    let hoveredTitle = this.state.hoveredBoxTitle;
     if(lines && board) {
       document.title = board.title;
       lines.innerHTML = board.links
         .map(([from, to]) => {
-          return [findDOMNode(this.refs[from]), findDOMNode(this.refs[to])];
+          return [from, to, findDOMNode(this.refs[from]), findDOMNode(this.refs[to])];
         })
-        .filter(([to, from]) => to && from)
-        .reduce((html, [to, from]) => {
+        .filter(([_from, _to, fromNode, toNode]) => toNode && fromNode)
+        .reduce((html, [from, to, fromNode, toNode]) => {
+          let extraClass = '';
+          if (hoveredTitle === from || hoveredTitle === to) {
+            extraClass = ' hoveredPath';
+          }
           return html + `
             <g>
-              <path d="${spline(from, to)}" class="bgLine" />
-              <path d="${spline(from, to)}" class="fgLine" />
+              <path d="${spline(fromNode, toNode)}" class="bgLine${extraClass}" />
+              <path d="${spline(fromNode, toNode)}" class="fgLine${extraClass}" />
             </g>
           `;
         }, '');
