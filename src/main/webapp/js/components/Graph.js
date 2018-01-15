@@ -120,7 +120,15 @@ const getBox = (el: HTMLElement): { x: number, y: number } => {
 
 const spline = (from: HTMLElement, to: HTMLElement): string => {
   let fromBox = getBox(from), toBox = getBox(to);
-  let a = fromBox.x < toBox.x ? fromBox : toBox, b = fromBox.x < toBox.x ? toBox : fromBox;
+  let a, b;
+  // Exact comparison can mess up during a hover animation.
+  if (Math.abs(fromBox.x - toBox.x) < 5) {
+    // Here we prefer to draw the line bottom to top because it makes the arc
+    // look closer to left -> right.
+    a = fromBox.y > toBox.y ? fromBox : toBox, b = fromBox.y > toBox.y ? toBox : fromBox;
+  } else {
+    a = fromBox.x < toBox.x ? fromBox : toBox, b = fromBox.x < toBox.x ? toBox : fromBox;
+  }
   let n = Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2)) * .75;
   return `M${a.x},${a.y} C${a.x + n},${a.y} ${b.x - n},${b.y} ${b.x},${b.y}`;
 };
