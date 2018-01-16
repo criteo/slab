@@ -5,7 +5,9 @@ import type { Box, Check } from '../state';
 import BoxModal from './BoxModal';
 
 type Props = {
-  box: Box
+  box: Box,
+  onMouseEnter: () => void,
+  onMouseLeave: () => void
 };
 
 type State = {
@@ -25,7 +27,12 @@ class BoxView extends Component {
   render() {
     const { box } = this.props;
     return (
-      <div className={`box ${box.status} background`} onClick={this.handleBoxClick}>
+      <div
+        className={`box ${box.status} background`}
+        onClick={this.handleBoxClick}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
+      >
         <h3>{ box.title }</h3>
         { box.message ? <strong>{ box.message }</strong> : null }
         <div className="checks">

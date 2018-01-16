@@ -10,8 +10,19 @@ type Props = {
   board: BoardView
 };
 
+type State = {
+  hoveredBoxTitle: string
+};
+
 class Graph extends Component {
   props: Props;
+  state: State;
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hoveredBoxTitle: ''
+    };
+  }
 
   render() {
     const { board } = this.props;
@@ -32,7 +43,13 @@ class Graph extends Component {
                       <h2>{row.title}</h2>
                       {
                         row.boxes.map(box => (
-                          <Box box={box} key={box.title} ref={box.title} />
+                          <Box
+                            box={box}
+                            key={box.title}
+                            ref={box.title}
+                            onMouseEnter={() => this.setState({ hoveredBoxTitle: box.title })}
+                            onMouseLeave={() => this.setState({ hoveredBoxTitle: '' })}
+                          />
                         ))
                       }
                     </section>
@@ -67,18 +84,23 @@ class Graph extends Component {
   drawLines = () => {
     let lines = findDOMNode(this.refs.lines);
     const { board } = this.props;
+    let hoveredTitle = this.state.hoveredBoxTitle;
     if(lines && board) {
       document.title = board.title;
       lines.innerHTML = board.links
         .map(([from, to]) => {
-          return [findDOMNode(this.refs[from]), findDOMNode(this.refs[to])];
+          return [from, to, findDOMNode(this.refs[from]), findDOMNode(this.refs[to])];
         })
-        .filter(([to, from]) => to && from)
-        .reduce((html, [to, from]) => {
+        .filter(([_from, _to, fromNode, toNode]) => toNode && fromNode)
+        .reduce((html, [from, to, fromNode, toNode]) => {
+          let extraClass = '';
+          if (hoveredTitle === from || hoveredTitle === to) {
+            extraClass = ' hoveredPath';
+          }
           return html + `
             <g>
-              <path d="${spline(from, to)}" class="bgLine" />
-              <path d="${spline(from, to)}" class="fgLine" />
+              <path d="${spline(fromNode, toNode)}" class="bgLine${extraClass}" />
+              <path d="${spline(fromNode, toNode)}" class="fgLine${extraClass}" />
             </g>
           `;
         }, '');
@@ -89,15 +111,24 @@ class Graph extends Component {
 export default Graph;
 
 const getBox = (el: HTMLElement): { x: number, y: number } => {
+  let rect = el.getBoundingClientRect();
   return {
-    x: el.getBoundingClientRect().left + (el.getBoundingClientRect().right - el.getBoundingClientRect().left) / 2,
-    y: el.getBoundingClientRect().top + (el.getBoundingClientRect().bottom - el.getBoundingClientRect().top) / 2
+    x: rect.left + (rect.right - rect.left) / 2,
+    y: rect.top + (rect.bottom - rect.top) / 2
   };
 };
 
 const spline = (from: HTMLElement, to: HTMLElement): string => {
   let fromBox = getBox(from), toBox = getBox(to);
-  let a = fromBox.x < toBox.x ? fromBox : toBox, b = fromBox.x < toBox.x ? toBox : fromBox;
+  let a, b;
+  // Exact comparison can mess up during a hover animation.
+  if (Math.abs(fromBox.x - toBox.x) < 5) {
+    // Here we prefer to draw the line bottom to top because it makes the arc
+    // look closer to left -> right.
+    a = fromBox.y > toBox.y ? fromBox : toBox, b = fromBox.y > toBox.y ? toBox : fromBox;
+  } else {
+    a = fromBox.x < toBox.x ? fromBox : toBox, b = fromBox.x < toBox.x ? toBox : fromBox;
+  }
   let n = Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2)) * .75;
   return `M${a.x},${a.y} C${a.x + n},${a.y} ${b.x - n},${b.y} ${b.x},${b.y}`;
 };
