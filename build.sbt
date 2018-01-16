@@ -102,7 +102,9 @@ lazy val root = (project in file("."))
       "org.typelevel" %% "cats-effect" % "0.7",
       "org.scalatest" %% "scalatest" % "3.0.1" % Test,
       "org.mockito" % "mockito-core" % "2.7.0" % Test
-    )
+    ),
+    // Disable parallel execution until it stops causing deadlocks with Mockito
+    parallelExecution in Test := false
   )
 
 lazy val example = (project in file("example"))
