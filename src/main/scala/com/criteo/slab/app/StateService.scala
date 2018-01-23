@@ -35,7 +35,11 @@ private[slab] class StateService(
   // Current board view
   def current(board: String): Future[BoardView] = get[BoardView, NoSerialization](board) flatMap {
     case Some(boardView) => Future.successful(boardView)
-    case None => Future.failed(NotFoundError(s"$board does not exist"))
+    case None =>
+      if (executors.exists(_.board.title == board))
+        Future.failed(NotReadyError(s"$board is not ready"))
+      else
+        Future.failed(NotFoundError(s"$board does not exist"))
   }
 
   // All available board views
@@ -112,7 +116,11 @@ private[slab] class StateService(
 
 object StateService {
 
+  // Error when the requested board does not exist
   case class NotFoundError(message: String) extends Exception(message)
+
+  // Error when the requested board is not ready (initializing)
+  case class NotReadyError(message: String) extends Exception(message)
 
   // get aggregated statistics by hour
   def getStatsByHour(history: Seq[(Long, BoardView)]): Map[Long, Stats] = {

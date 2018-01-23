@@ -6,7 +6,7 @@ import java.time.{Duration, Instant}
 
 import cats.Eval
 import cats.effect.IO
-import com.criteo.slab.app.StateService.NotFoundError
+import com.criteo.slab.app.StateService.{NotFoundError, NotReadyError}
 import com.criteo.slab.core.Executor.{FetchBoardHistory, FetchBoardHourlySlo, RunBoard}
 import com.criteo.slab.core._
 import com.criteo.slab.utils.Jsonable
@@ -184,6 +184,8 @@ case class WebServer(
   private def errorHandler: PartialFunction[Throwable, Response] = {
     case f: NotFoundError =>
       NotFound(f.message)
+    case f: NotReadyError =>
+      Response(412)(f.message)
     case NonFatal(e) =>
       logger.error(e.getMessage, e)
       InternalServerError()
