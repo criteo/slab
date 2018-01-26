@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import type { State, Route, BoardView } from '../state';
 import Graph from './Graph';
 import BoardList from './BoardList';
+import ErrorPage from './ErrorPage';
 
 type Props = {
   isLoading: boolean,
@@ -22,11 +23,7 @@ class App extends Component {
   render() {
     const { error, board, route } = this.props;
     if (error)
-      return (
-        <h1 style={{ color: '#ff9800' }} className="info">
-          {error}
-        </h1>
-      );
+      return <ErrorPage message={error}/>;
     if (route.path === 'BOARDS') return <BoardList />;
     if (route.path === 'BOARD') {
       if (board)
