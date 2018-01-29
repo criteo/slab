@@ -66,11 +66,11 @@ class InMemoryStore(
                               )(implicit ev: Codec[T, Any]): Future[Seq[(Long, T)]] = {
     logger.debug(s"Fetching the history of $id from ${format(from)} until ${format(until)}, cache size: ${cache.size}")
     Future.successful {
-      cache withFilter { case ((_id, ts), _) =>
+      cache.withFilter { case ((_id, ts), _) =>
         _id == id && ts >= from.toEpochMilli && ts <= until.toEpochMilli
-      } map { case ((_, ts), repr) =>
+      }.map { case ((_, ts), repr) =>
         (ts, ev.decode(repr).get)
-      } toList
+      }.toList
     }
   }
 

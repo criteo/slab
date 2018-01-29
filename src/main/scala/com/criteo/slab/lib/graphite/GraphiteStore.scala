@@ -70,7 +70,7 @@ class GraphiteStore(
     }) match {
       case Success(_) =>
         logger.debug(s"succeeded in uploading $prefixedId")
-        Future.successful()
+        Future.successful(())
       case Failure(e) =>
         logger.debug(s"failed to upload $prefixedId", e)
         Future.failed(e)

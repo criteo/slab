@@ -2,6 +2,7 @@ package com.criteo.slab.utils
 
 import org.json4s.native.Serialization
 import org.json4s.{DefaultFormats, Formats, Serializer}
+import scala.language.higherKinds
 
 import scala.util.Try
 

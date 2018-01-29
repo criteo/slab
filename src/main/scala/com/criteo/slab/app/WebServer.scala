@@ -167,10 +167,10 @@ case class WebServer(
     }
     // Static resources
     case GET at url"/$file.$ext" => {
-      ClasspathResource(s"/$file.$ext").fold(NotFound())(r => Ok(r))
+      ClasspathResource(s"/$file.$ext").fold(NotFound)(r => Ok(r))
     }
     case req if req.method == GET && !req.url.startsWith("/api") => {
-      ClasspathResource("/index.html").fold(NotFound())(r => Ok(r))
+      ClasspathResource("/index.html").fold(NotFound)(r => Ok(r))
     }
   }
 
@@ -188,7 +188,7 @@ case class WebServer(
       Response(412)(f.message)
     case NonFatal(e) =>
       logger.error(e.getMessage, e)
-      InternalServerError()
+      InternalServerError
   }
 
   private def jsonContentType(res: Response) = res.addHeaders(HttpString("content-type") -> HttpString("application/json"))

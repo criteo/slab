@@ -40,7 +40,7 @@ object Launcher {
                 case NotFoundError(message) => NotFound(message)
                 case e =>
                   logger.error(e.getMessage, e)
-                  InternalServerError()
+                  InternalServerError
               }
           ))
       })

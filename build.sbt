@@ -5,6 +5,7 @@ lazy val commonSettings = Seq(
   version := "0.4.10",
   scalaVersion := "2.12.4",
   crossScalaVersions := Seq("2.11.8", "2.12.4"),
+  scalacOptions := Seq("-deprecation"),
   credentials += Credentials(
     "Sonatype Nexus Repository Manager",
     "oss.sonatype.org",
