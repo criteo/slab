@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 import scalacache.caffeine.CaffeineCache
+import scalacache.modes.scalaFuture._
 
 private[slab] class StateService(
                                   val executors: Seq[Executor[_]],
@@ -24,7 +25,9 @@ private[slab] class StateService(
 
   private val logger = LoggerFactory.getLogger(this.getClass)
 
-  private implicit val scalaCache = ScalaCache(CaffeineCache())
+  private implicit lazy val boardCache = CaffeineCache[BoardView]
+  private implicit lazy val historyCache = CaffeineCache[Map[Long, String]]
+  private implicit lazy val sloCache = CaffeineCache[Map[Long, Double]]
 
   private lazy val scheduler = Executors.newSingleThreadScheduledExecutor()
 
@@ -33,7 +36,7 @@ private[slab] class StateService(
   }
 
   // Current board view
-  def current(board: String): Future[BoardView] = get[BoardView, NoSerialization](board) flatMap {
+  def current(board: String): Future[BoardView] = get[Future, BoardView](board).flatMap {
     case Some(boardView) => Future.successful(boardView)
     case None =>
       if (executors.exists(_.board.title == board))
@@ -45,11 +48,11 @@ private[slab] class StateService(
   // All available board views
   def all(): Future[Seq[BoardView]] =
     Future
-      .sequence(executors.map { e => get[BoardView, NoSerialization](e.board.title) })
+      .sequence(executors.map { e => get[Future, BoardView](e.board.title) })
       .map(_.collect { case Some(boardView) => boardView })
 
   // History of last 24 hours
-  def history(board: String): Future[Map[Long, String]] = memoize(Duration.create(10, TimeUnit.MINUTES)) {
+  def history(board: String): Future[Map[Long, String]] = memoizeF[Future, Map[Long, String]](Some(Duration.create(10, TimeUnit.MINUTES))) {
     logger.info(s"Updating history of $board")
     val now = Instant.now
     executors.find(_.board.title == board)
@@ -75,9 +78,10 @@ private[slab] class StateService(
               Duration.create(12, TimeUnit.HOURS).plus(Duration.create((Math.random() * 30).toInt, TimeUnit.MINUTES))
 
           //cache only full months
-          def boardMonthlySloInner(board: String, from: ZonedDateTime, until: ZonedDateTime): Future[Map[Long, Double]] = memoize(getSloCacheDuration(from)) {
-            executor.fetchHourlySlo(from.toInstant, until.toInstant).map(_.toMap)
-          }
+          def boardMonthlySloInner(board: String, from: ZonedDateTime, until: ZonedDateTime): Future[Map[Long, Double]] =
+            memoizeF(Some(getSloCacheDuration(from))) {
+              executor.fetchHourlySlo(from.toInstant, until.toInstant).map(_.toMap)
+            }
 
           val from = now.minus(statsDays, ChronoUnit.DAYS)
           val until = now
