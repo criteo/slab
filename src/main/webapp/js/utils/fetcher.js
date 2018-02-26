@@ -5,7 +5,7 @@ const resolve = res => {
   return res.text();
 };
 
-const fetcher = (url, options) =>
+export const fetcher = (url, options) =>
 fetch(url, options)
 .then(
   res => Promise.all([resolve(res), Promise.resolve(res)]),
@@ -22,5 +22,3 @@ fetch(url, options)
   else
     return Promise.reject(response);
 });
-
-export { fetcher };

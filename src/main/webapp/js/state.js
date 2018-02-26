@@ -64,7 +64,7 @@ export type Route = {
 
 export type Link = [string, string];
 
-type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
+export type Status = 'Unknown' | 'Success' | 'Error' | 'Warning';
 
 export type State = {
   currentBoard: ?string,

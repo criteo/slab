@@ -5,6 +5,7 @@ import type { State, Route, BoardView } from '../state';
 import Graph from './Graph';
 import BoardList from './BoardList';
 import ErrorPage from './ErrorPage';
+import StatusFavicon from './StatusFavicon';
 
 type Props = {
   isLoading: boolean,
@@ -26,14 +27,17 @@ class App extends Component {
       return <ErrorPage message={error}/>;
     if (route.path === 'BOARDS') return <BoardList />;
     if (route.path === 'BOARD') {
-      if (board)
+      if (board) {
+        document.title = board.title;
         return (
           <div>
+            <StatusFavicon status={board.status}/>
             <Graph
               board={board}
             />
           </div>
         );
+      }
       else
         return (
           <h1 style={{ color: '#BABABA' }} className="info">

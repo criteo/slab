@@ -56,7 +56,7 @@ var config = {
       filename: 'index.html',
       template: path.resolve(baseDir, 'public/index.ejs'),
       inject: false,
-      title: 'Slab'
+      title: 'SLAB'
     }),
     new CopyWebpackPlugin(
       [
