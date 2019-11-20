@@ -2,7 +2,7 @@ import scala.sys.process.Process
 
 lazy val commonSettings = Seq(
   organization := "com.criteo",
-  version := "0.4.13",
+  version := "0.5",
   scalaVersion := "2.12.4",
   crossScalaVersions := Seq("2.11.8", "2.12.4"),
   scalacOptions := Seq("-deprecation"),
