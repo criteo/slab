@@ -18,9 +18,9 @@ lazy val commonSettings = Seq(
     else
       Opts.resolver.sonatypeStaging
   ),
-  pgpPassphrase := sys.env.get("SONATYPE_PASSWORD").map(_.toArray),
-  pgpSecretRing := file(".travis/secring.gpg"),
-  pgpPublicRing := file(".travis/pubring.gpg"),
+  pgpPassphrase := sys.env.get("MAVEN_SECRING_PASSWORD").map(_.toArray),
+  pgpSecretRing := file("secring.gpg"),
+  pgpPublicRing := file("pubring.gpg"),
   pomExtra in Global := {
     <url>https://github.com/criteo/slab</url>
     <licenses>
